@@ -7,6 +7,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { MapPin, Calendar, Heart, Navigation, Package, ClipboardList, Gift, Car, Plane, Home, ChevronDown } from "lucide-react";
 import MagicStudio from "./components/MagicStudio";
+import Floating, { FloatingElement } from "./components/ui/parallax-floating";
 
 const FadeInWhenVisible = ({ children, delay = 0, y = 20, x = 0 }: { children: React.ReactNode, delay?: number, y?: number, x?: number }) => (
   <motion.div
@@ -58,24 +59,66 @@ const Hero = () => {
 
   return (
     <section ref={containerRef} className="relative pt-32 pb-24 overflow-hidden min-h-screen flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Animated Photo Collage */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          <motion.div style={{ y: y1 }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-3">
+      <Floating sensitivity={-1} className="overflow-hidden z-0">
+        {/* 1. Top-Left corner */}
+        <FloatingElement depth={0.5} className="top-[5%] left-[2%] md:left-[5%]">
+          <motion.div style={{ y: y1 }} className="w-32 h-40 md:w-48 md:h-60 rounded-xl overflow-hidden shadow-2xl transform -rotate-3">
             <img src="https://picsum.photos/seed/capetown/600/800" alt="Cape Town" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
-          <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-6 mt-12">
+        </FloatingElement>
+        
+        {/* 2. Top-Right corner */}
+        <FloatingElement depth={1} className="top-[8%] right-[2%] md:right-[5%]">
+          <motion.div style={{ y: y2 }} className="w-40 h-32 md:w-60 md:h-48 rounded-xl overflow-hidden shadow-2xl transform rotate-6">
             <img src="https://picsum.photos/seed/safari/800/600" alt="Couple" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
-          <motion.div style={{ y: y1, rotate }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-2">
+        </FloatingElement>
+        
+        {/* 3. Bottom-Left corner */}
+        <FloatingElement depth={2} className="top-[75%] left-[2%] md:left-[5%]">
+          <motion.div style={{ y: y1, rotate }} className="w-36 h-48 md:w-52 md:h-64 rounded-xl overflow-hidden shadow-2xl transform -rotate-2">
             <img src="https://picsum.photos/seed/fynbos/600/800" alt="Fynbos" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
-          <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-3 mt-6">
+        </FloatingElement>
+        
+        {/* 4. Bottom-Right corner */}
+        <FloatingElement depth={1.5} className="top-[80%] right-[2%] md:right-[5%]">
+          <motion.div style={{ y: y2 }} className="w-48 h-36 md:w-64 md:h-48 rounded-xl overflow-hidden shadow-2xl transform rotate-3">
             <img src="https://picsum.photos/seed/cederberg/800/600" alt="Cederberg" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
-        </div>
+        </FloatingElement>
 
-        <div className="text-center max-w-4xl mx-auto">
+        {/* 5. Middle-Left edge */}
+        <FloatingElement depth={0.8} className="top-[40%] left-[-2%] md:left-[2%]">
+          <motion.div style={{ y: y1 }} className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden shadow-2xl transform rotate-12 opacity-90">
+            <img src="https://picsum.photos/seed/wine/400/400" alt="Wine" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+        </FloatingElement>
+
+        {/* 6. Middle-Right edge */}
+        <FloatingElement depth={1.2} className="top-[45%] right-[-2%] md:right-[2%]">
+          <motion.div style={{ y: y2 }} className="w-28 h-28 md:w-36 md:h-36 rounded-xl overflow-hidden shadow-2xl transform -rotate-6 opacity-90">
+            <img src="https://picsum.photos/seed/ocean/400/400" alt="Ocean" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+        </FloatingElement>
+
+        {/* 7. Top-Center edge */}
+        <FloatingElement depth={1.8} className="top-[2%] left-[40%] hidden md:block">
+          <motion.div style={{ y: y1 }} className="w-32 h-24 md:w-40 md:h-28 rounded-xl overflow-hidden shadow-2xl transform -rotate-12 opacity-90">
+            <img src="https://picsum.photos/seed/mountain/600/400" alt="Mountain" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+        </FloatingElement>
+
+        {/* 8. Bottom-Center edge */}
+        <FloatingElement depth={0.9} className="top-[85%] right-[40%] hidden md:block">
+          <motion.div style={{ y: y2 }} className="w-36 h-24 md:w-48 md:h-32 rounded-xl overflow-hidden shadow-2xl transform -rotate-3 opacity-90">
+            <img src="https://picsum.photos/seed/trail/600/400" alt="Trail" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+        </FloatingElement>
+      </Floating>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10 pointer-events-none">
+        <div className="text-center max-w-4xl mx-auto mt-20 md:mt-0">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -108,23 +151,6 @@ const Hero = () => {
             </div>
           </FadeInWhenVisible>
         </div>
-
-        {/* Animated Photo Collage */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          <motion.div style={{ y: y1 }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-3">
-            <img src="https://picsum.photos/seed/capetown/600/800" alt="Cape Town" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
-          </motion.div>
-          <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-6 mt-12">
-            <img src="https://picsum.photos/seed/safari/800/600" alt="Couple" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
-          </motion.div>
-          <motion.div style={{ y: y1, rotate }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-2">
-            <img src="https://picsum.photos/seed/fynbos/600/800" alt="Fynbos" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
-          </motion.div>
-          <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-3 mt-6">
-            <img src="https://picsum.photos/seed/cederberg/800/600" alt="Cederberg" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
-          </motion.div>
-        </div>
-
       </div>
 
       <motion.div 
