@@ -81,7 +81,7 @@ const Hero = () => {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <h1 className="font-serif text-7xl md:text-[120px] font-black text-rust mb-2 leading-[0.8] tracking-tighter uppercase">
-              COAST CAMP
+              Wedding Camp
             </h1>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -89,7 +89,7 @@ const Hero = () => {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="font-serif text-4xl md:text-6xl text-rust font-black uppercase tracking-tight mb-8"
             >
-              WITH NICK & ALLISON
+              Amber and Piv
             </motion.h2>
           </motion.div>
           
@@ -101,9 +101,9 @@ const Hero = () => {
 
           <FadeInWhenVisible delay={1}>
             <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 text-sm font-bold uppercase tracking-[0.2em] text-neutral-900">
-              <div>SEPTEMBER 1-4, 2022</div>
+              <div>22 June, 2026</div>
               <div className="hidden md:block w-1.5 h-1.5 bg-neutral-900 rounded-full"></div>
-              <div>ELK, CALIFORNIA</div>
+              <div>Wolfkop</div>
             </div>
           </FadeInWhenVisible>
         </div>
@@ -397,7 +397,7 @@ const Footer = () => (
         whileHover={{ scale: 1.05 }}
         className="font-serif text-4xl font-black mb-10 tracking-tighter cursor-default text-forest uppercase"
       >
-        COAST CAMP
+        A&P
       </motion.div>
       <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-forest/60 mb-12">
         {["RSVP", "Story", "Travel", "Packing", "Schedule", "Registry"].map((item) => (
