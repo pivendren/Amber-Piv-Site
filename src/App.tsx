@@ -355,32 +355,46 @@ const ScheduleTimeline = () => (
         <div className="space-y-32">
           {[
             {
-              year: "2018",
-              title: "Meeting in the City",
+              year: "Fri 19 - Sat 20 June",
+              title: "Arrival in Cape Town",
               Illustration: MeetingIllustration,
               side: "left",
-              text: "We met at a small coffee shop. A shared love for adventure and nature sparked an immediate connection.",
+              text: "Folks begin arriving in the Mother City. Take some time to settle in and enjoy the sea air.",
             },
             {
-              year: "2020",
-              title: "West Coast Road Trip",
+              year: "Saturday 08:00",
+              title: "Green Point Parkrun",
+              Illustration: HikingIllustration,
+              side: "right",
+              text: "A 5km dash (or stroll) through Green Point Park. A great chance to stretch the legs before the drive.",
+            },
+            {
+              year: "Saturday 14:00",
+              title: "Check-in at Wolfkop",
               Illustration: RoadTripIllustration,
-              side: "right",
-              text: "Our first big road trip up the West Coast. From the rugged cliffs to the serene beaches, we knew this was it.",
-            },
-            {
-              year: "2021",
-              title: "The Proposal",
-              Illustration: ProposalIllustration,
               side: "left",
-              text: "During a weekend getaway in Elk, Piv proposed at sunset overlooking the Pacific. It was pure magic.",
+              text: "Supply run in CPT, then hitting the N7 north. Check-in opens at 14:00 at Wolfkop Nature Reserve.",
             },
             {
-              year: "2022",
-              title: "The Wedding",
-              Illustration: WeddingIllustration,
+              year: "Sunday 13:00",
+              title: "The Community Lunch",
+              Illustration: ScheduleIllustration,
               side: "right",
-              text: "We are so excited to begin our married life together, surrounded by our loved ones at WEDDING CAMP.",
+              text: "A large, lazy Sunday lunch at 'basecamp'. Relaxation and mountain views are the order of the day.",
+            },
+            {
+              year: "Monday 16:00",
+              title: "The Sunset Wedding",
+              Illustration: WeddingIllustration,
+              side: "left",
+              text: "The main event. A sunset ceremony followed by photos, then a celebratory braai for the rest of the eve.",
+            },
+            {
+              year: "Tuesday 10:00",
+              title: "Walk & Farewell",
+              Illustration: ProposalIllustration,
+              side: "right",
+              text: "One last mountain walk in the morning before checking out and heading home.",
             },
           ].map((item, i) => (
             <div
