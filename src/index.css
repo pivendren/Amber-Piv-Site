@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+
+  --color-rust: #a64d32;
+  --color-forest: #3a5a40;
+  --color-cream: #f5f2ed;
+  --color-sand: #e5e0d8;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-neutral-900 font-sans;
+  }
+}
+
+.topo-bg {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 Q 30 10 30 30 T 50 50 T 70 70 T 90 90' stroke='%23d1ccc4' fill='transparent' stroke-width='0.5'/%3E%3Cpath d='M0 20 Q 20 20 20 40 T 40 60 T 60 80 T 80 100' stroke='%23d1ccc4' fill='transparent' stroke-width='0.5'/%3E%3Cpath d='M20 0 Q 20 20 40 20 T 60 40 T 80 60 T 100 80' stroke='%23d1ccc4' fill='transparent' stroke-width='0.5'/%3E%3C/svg%3E");
+}
