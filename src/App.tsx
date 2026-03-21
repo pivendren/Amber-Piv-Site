@@ -6,6 +6,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { MapPin, Calendar, Heart, Navigation, Package, ClipboardList, Gift, Car, Plane, Home, ChevronDown } from "lucide-react";
+import MagicStudio from "./components/MagicStudio";
 
 const FadeInWhenVisible = ({ children, delay = 0, y = 20, x = 0 }: { children: React.ReactNode, delay?: number, y?: number, x?: number }) => (
   <motion.div
@@ -61,16 +62,16 @@ const Hero = () => {
         {/* Animated Photo Collage */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
           <motion.div style={{ y: y1 }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-3">
-            <img src="https://picsum.photos/seed/wedding1/600/800" alt="Coast" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+            <img src="https://picsum.photos/seed/capetown/600/800" alt="Cape Town" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
           <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-6 mt-12">
-            <img src="https://picsum.photos/seed/wedding2/800/600" alt="Couple" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+            <img src="https://picsum.photos/seed/safari/800/600" alt="Couple" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
           <motion.div style={{ y: y1, rotate }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-2">
-            <img src="https://picsum.photos/seed/wedding3/600/800" alt="Forest" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+            <img src="https://picsum.photos/seed/fynbos/600/800" alt="Fynbos" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
           <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-3 mt-6">
-            <img src="https://picsum.photos/seed/wedding4/800/600" alt="Beach" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+            <img src="https://picsum.photos/seed/cederberg/800/600" alt="Cederberg" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
           </motion.div>
         </div>
 
@@ -107,6 +108,23 @@ const Hero = () => {
             </div>
           </FadeInWhenVisible>
         </div>
+
+        {/* Animated Photo Collage */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          <motion.div style={{ y: y1 }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-3">
+            <img src="https://picsum.photos/seed/capetown/600/800" alt="Cape Town" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+          <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-6 mt-12">
+            <img src="https://picsum.photos/seed/safari/800/600" alt="Couple" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+          <motion.div style={{ y: y1, rotate }} className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl transform -rotate-2">
+            <img src="https://picsum.photos/seed/fynbos/600/800" alt="Fynbos" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+          <motion.div style={{ y: y2 }} className="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl transform rotate-3 mt-6">
+            <img src="https://picsum.photos/seed/cederberg/800/600" alt="Cederberg" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+          </motion.div>
+        </div>
+
       </div>
 
       <motion.div 
@@ -128,22 +146,32 @@ const InfoGrid = () => (
       <div className="flex flex-col gap-4">
         {/* RSVP */}
         <FadeInWhenVisible>
-          <motion.div whileHover={{ y: -5 }} id="rsvp" className="bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[200px] rounded-lg shadow-sm">
-            <h2 className="font-serif text-5xl font-black mb-4 uppercase tracking-widest text-transparent" style={{ WebkitTextStroke: '1px #e3d3a4' }}>RSVP</h2>
+          <motion.a 
+            href="#rsvp"
+            whileHover={{ scale: 0.97 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="group block bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[200px] rounded-lg shadow-sm relative overflow-hidden"
+          >
+            <h2 className="font-serif text-5xl font-black mb-4 uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>RSVP</h2>
             <p className="text-xs leading-relaxed text-center font-medium">
               Please let us know if you can or cannot come ASAP.<br/>The deadline is <strong>June 3rd</strong>.
             </p>
-          </motion.div>
+          </motion.a>
         </FadeInWhenVisible>
 
         {/* Our Story */}
         <FadeInWhenVisible delay={0.1}>
-          <motion.div whileHover={{ y: -5 }} id="story" className="relative group overflow-hidden h-[500px] rounded-lg shadow-sm">
-            <img src="https://picsum.photos/seed/story-cover/800/1000" alt="Our Story" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-[#e3d3a4]">
+          <motion.a 
+            href="#story"
+            whileHover={{ scale: 0.97 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="group block relative overflow-hidden h-[500px] rounded-lg shadow-sm"
+          >
+            <img src="https://picsum.photos/seed/wolfkop/800/1000" alt="Our Story" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-[#e3d3a4] transition-colors duration-500 group-hover:bg-black/20">
               <h2 className="font-sans text-3xl font-black uppercase tracking-widest">OUR STORY</h2>
             </div>
-          </motion.div>
+          </motion.a>
         </FadeInWhenVisible>
       </div>
 
@@ -151,10 +179,15 @@ const InfoGrid = () => (
       <div className="md:col-span-2 flex flex-col gap-4">
         {/* Location & Lodging */}
         <FadeInWhenVisible delay={0.2}>
-          <motion.div whileHover={{ y: -5 }} className="bg-[#e3d3a4] p-8 flex flex-col h-[250px] rounded-lg shadow-sm relative overflow-hidden">
+          <motion.a 
+            href="#travel"
+            whileHover={{ scale: 0.97 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="group block bg-[#e3d3a4] p-8 flex flex-col h-[250px] rounded-lg shadow-sm relative overflow-hidden"
+          >
             <h2 className="font-sans text-3xl font-black text-[#5a6045] uppercase tracking-widest relative z-10">LOCATION & LODGING</h2>
             {/* SVG Background */}
-            <div className="absolute inset-0 w-full h-full pointer-events-none">
+            <div className="absolute inset-0 w-full h-full pointer-events-none transition-transform duration-700 group-hover:scale-105 group-hover:translate-y-2">
               <svg viewBox="0 0 400 200" className="w-full h-full stroke-[#5a6045] fill-none stroke-[1.5] opacity-80" preserveAspectRatio="xMidYMax slice">
                 {/* Dots/Stars */}
                 <g fill="#5a6045" stroke="none">
@@ -170,34 +203,37 @@ const InfoGrid = () => (
                 <path d="M 10 30 L 40 30 Q 50 30 50 40 L 20 40" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M 220 50 L 280 50 Q 290 50 290 60 L 240 60" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M 320 20 L 380 20 Q 390 20 390 30 L 340 30" strokeLinecap="round" strokeLinejoin="round" />
-                {/* Cliff */}
-                <path d="M 230 200 L 240 120 Q 245 100 260 100 L 400 100" />
-                <path d="M 230 200 L 235 120" />
-                {/* Tent */}
-                <path d="M 260 100 L 280 60 L 300 100 Z" />
-                <path d="M 280 60 L 280 100" />
-                <path d="M 270 100 L 280 80 L 290 100" />
-                {/* Trees */}
-                <path d="M 310 100 L 310 50 M 300 90 L 310 70 L 320 90 M 305 70 L 310 50 L 315 70 M 300 100 L 310 80 L 320 100" />
-                <path d="M 340 100 L 340 40 M 330 90 L 340 60 L 350 90 M 335 60 L 340 40 L 345 60 M 330 100 L 340 70 L 350 100" />
-                <path d="M 370 100 L 370 50 M 360 90 L 370 70 L 380 90 M 365 70 L 370 50 L 375 70 M 360 100 L 370 80 L 380 100" />
-                {/* Water Lines */}
-                <path d="M 0 120 Q 20 125 40 120 T 80 120 T 120 120 T 160 120 T 200 120 T 235 120" />
-                <path d="M 10 150 Q 30 155 50 150 T 90 150 T 130 150 T 170 150 T 210 150 T 232 150" />
-                <path d="M 0 180 Q 20 185 40 180 T 80 180 T 120 180 T 160 180 T 200 180 T 230 180" />
+                {/* Mountains */}
+                <path d="M 0 160 L 60 80 L 120 140 L 200 50 L 280 130 L 340 60 L 400 120" strokeLinejoin="round" />
+                <path d="M 0 160 L 60 80 L 60 200 M 120 140 L 120 200 M 200 50 L 200 200 M 280 130 L 280 200 M 340 60 L 340 200" strokeDasharray="4 4" opacity="0.5" />
+                {/* Safari Tent */}
+                <path d="M 240 160 L 260 110 L 280 160 Z" fill="#e3d3a4" strokeLinejoin="round" />
+                <path d="M 260 110 L 260 160" />
+                <path d="M 250 160 L 260 140 L 270 160" />
+                {/* Fynbos/Bushes */}
+                <path d="M 180 160 L 180 140 M 175 145 L 180 140 L 185 145" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M 320 160 L 320 145 M 315 150 L 320 145 L 325 150" strokeLinecap="round" strokeLinejoin="round" />
+                {/* River */}
+                <path d="M 0 180 Q 50 190 100 180 T 200 180 T 300 180 T 400 180" />
+                <path d="M 20 190 Q 70 200 120 190 T 220 190 T 320 190 T 400 190" />
               </svg>
             </div>
-          </motion.div>
+          </motion.a>
         </FadeInWhenVisible>
 
         {/* Bottom Row of Col 2 & 3 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
           {/* Packing List */}
           <FadeInWhenVisible delay={0.3}>
-            <motion.div whileHover={{ y: -5 }} id="packing" className="bg-[#455860] text-[#e3d3a4] p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm relative overflow-hidden">
+            <motion.a 
+              href="#packing"
+              whileHover={{ scale: 0.97 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="group block bg-[#455860] text-[#e3d3a4] p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm relative overflow-hidden"
+            >
               <h2 className="font-sans text-3xl font-black uppercase tracking-widest mb-8 relative z-10">PACKING LIST</h2>
               {/* SVGs */}
-              <div className="flex-1 w-full relative">
+              <div className="flex-1 w-full relative transition-transform duration-700 group-hover:scale-110 group-hover:-translate-y-4">
                 <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full stroke-[#e3d3a4] fill-none stroke-[2]" strokeLinecap="round" strokeLinejoin="round">
                   {/* Backpack */}
                   <g transform="translate(10, 20)">
@@ -225,23 +261,33 @@ const InfoGrid = () => (
                   </g>
                 </svg>
               </div>
-            </motion.div>
+            </motion.a>
           </FadeInWhenVisible>
 
           {/* Schedule & Registry */}
           <div className="flex flex-col gap-4">
             {/* Schedule */}
             <FadeInWhenVisible delay={0.4}>
-              <motion.div whileHover={{ y: -5 }} id="schedule" className="bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm">
-                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent" style={{ WebkitTextStroke: '1px #e3d3a4' }}>SCHEDULE</h2>
-              </motion.div>
+              <motion.a 
+                href="#schedule"
+                whileHover={{ scale: 0.97 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="group block bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm relative overflow-hidden"
+              >
+                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>SCHEDULE</h2>
+              </motion.a>
             </FadeInWhenVisible>
 
             {/* Registry */}
             <FadeInWhenVisible delay={0.5}>
-              <motion.div whileHover={{ y: -5 }} id="registry" className="bg-[#73734f] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm">
-                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent" style={{ WebkitTextStroke: '1px #e3d3a4' }}>REGISTRY</h2>
-              </motion.div>
+              <motion.a 
+                href="#registry"
+                whileHover={{ scale: 0.97 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="group block bg-[#73734f] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm relative overflow-hidden"
+              >
+                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>REGISTRY</h2>
+              </motion.a>
             </FadeInWhenVisible>
           </div>
         </div>
@@ -279,10 +325,10 @@ const StoryTimeline = () => (
 
         <div className="space-y-32">
           {[
-            { year: "2015", title: "The Adventure Begins", img: "story1", side: "left", text: "We met on a group hike in Elk, CA. Nick offered Allison a snack, and we ended up talking the whole way down. We discovered our shared love for exploration." },
-            { year: "2017", title: "First Road Trip", img: "story2", side: "right", text: "Our first cross-country road trip solidified our bond. From national parks to hidden beaches, we explored together." },
-            { year: "2020", title: "The Proposal", img: "story3", side: "left", text: "On a surprise trip back to Elk, Nick proposed at sunset on our favorite coastal trail. It was a perfect moment." },
-            { year: "2022", title: "Our Greatest Adventure", img: "story4", side: "right", text: "We are so excited to begin our married life together, surrounded by our loved ones, back where it all started." }
+            { year: "2018", title: "Meeting in the Mother City", img: "capetown-coffee", side: "left", text: "We met at a small coffee shop in Gardens, Cape Town. A shared love for rooibos tea and mountain trails sparked an immediate connection." },
+            { year: "2020", title: "West Coast Road Trip", img: "paternoster", side: "right", text: "Our first big road trip up the West Coast. From the white sands of Paternoster to the rugged peaks of the Cederberg, we knew this was it." },
+            { year: "2023", title: "The Proposal", img: "wolfkop-sunset", side: "left", text: "During a weekend getaway at Wolfkop Camping Villages, Piv proposed at sunset overlooking the Olifants River. It was pure magic." },
+            { year: "2026", title: "The Wedding", img: "celebration", side: "right", text: "We are so excited to begin our married life together, surrounded by our loved ones, back where our favorite memories were made." }
           ].map((item, i) => (
             <div key={i} className={`relative flex flex-col md:flex-row items-center gap-12 ${item.side === 'right' ? 'md:flex-row-reverse' : ''}`}>
               <div className="md:w-1/2 flex justify-center">
@@ -332,7 +378,7 @@ const TravelDetails = () => (
             <Car className="w-24 h-24 text-rust mb-10 stroke-[0.5]" />
             <h3 className="font-serif text-4xl font-bold text-forest mb-6">DRIVING</h3>
             <p className="text-base text-neutral-600 leading-relaxed font-light max-w-md">
-              From SF/Oakland: Approx. 3-4 hours north on Highway 1. Enjoy the scenic route!
+              From Cape Town: Take the N7 North for about 2 hours towards Citrusdal. The scenic route through the Piekenierskloof Pass is beautiful.
             </p>
           </motion.div>
         </FadeInWhenVisible>
@@ -344,7 +390,7 @@ const TravelDetails = () => (
             <Plane className="w-24 h-24 text-rust mb-10 stroke-[0.5]" />
             <h3 className="font-serif text-4xl font-bold text-forest mb-6">FLYING</h3>
             <p className="text-base text-neutral-600 leading-relaxed font-light max-w-md">
-              Nearest airports: SFO or OAK. Rent a car for the final leg.
+              Nearest airport: Cape Town International (CPT). Rent a car and enjoy the scenic drive up the West Coast.
             </p>
           </motion.div>
         </FadeInWhenVisible>
@@ -359,9 +405,9 @@ const TravelDetails = () => (
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {[
-          { name: "Elk Cove Inn", desc: "Charming inn with ocean views.", icon: Home },
-          { name: "Manchester State Park", desc: "Beachside camping spots available.", icon: Navigation },
-          { name: "The Harbor House Inn", desc: "Luxury accommodation nearby.", icon: Home }
+          { name: "Wolfkop Camping Villages", desc: "Luxury canvas tents on the Olifants River.", icon: Home },
+          { name: "Citrusdal Country Lodge", desc: "Comfortable rooms in the heart of town.", icon: Navigation },
+          { name: "Cederberg Ridge", desc: "Wilderness lodge for a premium stay.", icon: Home }
         ].map((place, i) => (
           <div key={i}>
             <FadeInWhenVisible delay={i * 0.1}>
@@ -408,7 +454,7 @@ const Footer = () => (
       </div>
       <div className="w-full h-px bg-forest/10 mb-10"></div>
       <div className="text-[10px] text-forest/40 uppercase tracking-[0.4em] font-medium">
-        © 2022 Nick & Allison — Made with Love
+        © 2026 Amber & Piv — Made with Love in the Western Cape
       </div>
     </div>
   </footer>
@@ -422,6 +468,7 @@ export default function App() {
       <InfoGrid />
       <StoryTimeline />
       <TravelDetails />
+      <MagicStudio />
       <Footer />
     </div>
   );
