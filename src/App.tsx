@@ -8,6 +8,8 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { MapPin, Calendar, Heart, Navigation, Package, ClipboardList, Gift, Car, Plane, Home, ChevronDown } from "lucide-react";
 import Floating, { FloatingElement } from "./components/ui/parallax-floating";
 
+import Lottie from "lottie-react";
+
 const FadeInWhenVisible = ({ children, delay = 0, y = 20, x = 0 }: { children: React.ReactNode, delay?: number, y?: number, x?: number }) => (
   <motion.div
     initial={{ opacity: 0, y, x }}
@@ -26,21 +28,21 @@ const Navbar = () => (
     transition={{ duration: 0.8, ease: "circOut" }}
     className="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b border-black/5 px-6 py-4 flex justify-between items-center"
   >
-    <div className="font-serif font-bold text-xl tracking-tight text-forest">COAST CAMP</div>
+    <div className="font-display font-bold text-xl tracking-tight text-wedding-brown">COAST CAMP</div>
     <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600">
-      {["RSVP", "Story", "Travel", "Packing", "Schedule", "Registry"].map((item) => (
-        <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-rust transition-colors relative group">
+      {["Story", "Travel", "Packing"].map((item) => (
+        <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-wedding-brown transition-colors relative group">
           {item}
-          <span className="absolute -bottom-1 left-0 w-0 h-px bg-rust transition-all duration-300 group-hover:w-full"></span>
+          <span className="absolute -bottom-1 left-0 w-0 h-px bg-wedding-brown transition-all duration-300 group-hover:w-full"></span>
         </a>
       ))}
     </div>
     <motion.button 
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="bg-rust text-white px-6 py-2 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-rust/90 transition-colors shadow-lg shadow-rust/20"
+      className="bg-wedding-brown text-white px-6 py-2 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-wedding-brown/90 transition-colors shadow-lg shadow-wedding-brown/20"
     >
-      RSVP
+      Contact Us
     </motion.button>
   </motion.nav>
 );
@@ -54,108 +56,101 @@ const Hero = () => {
 
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 5]);
 
   return (
-    <section ref={containerRef} className="relative pt-32 pb-24 overflow-hidden min-h-screen flex flex-col justify-center">
-      <Floating sensitivity={-1} className="overflow-hidden z-0">
-        {/* 1. Top-Left corner */}
-        <FloatingElement depth={0.5} className="top-[5%] left-[2%] md:left-[5%]">
-          <motion.div style={{ y: y1 }} className="w-32 h-40 md:w-48 md:h-60 rounded-xl overflow-hidden shadow-2xl transform -rotate-3">
-            <img src="https://picsum.photos/seed/capetown/600/800" alt="Cape Town" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+    <section ref={containerRef} className="relative pt-32 pb-24 overflow-hidden min-h-screen flex flex-col justify-center bg-[#f8f8f8]">
+      <div className="absolute inset-0 opacity-40 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white/50"></div>
+      </div>
+
+      <Floating sensitivity={-0.5} className="overflow-hidden z-0">
+        {/* 1. Top Left - Vertical */}
+        <FloatingElement depth={0.4} className="top-[5%] left-[2%] md:left-[4%]">
+          <motion.div style={{ y: y1 }} className="w-36 h-52 md:w-56 md:h-80 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/hiking-couple/600/800" alt="Hiking" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
           </motion.div>
         </FloatingElement>
         
-        {/* 2. Top-Right corner */}
-        <FloatingElement depth={1} className="top-[8%] right-[2%] md:right-[5%]">
-          <motion.div style={{ y: y2 }} className="w-40 h-32 md:w-60 md:h-48 rounded-xl overflow-hidden shadow-2xl transform rotate-6">
-            <img src="https://picsum.photos/seed/safari/800/600" alt="Couple" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
-          </motion.div>
-        </FloatingElement>
-        
-        {/* 3. Bottom-Left corner */}
-        <FloatingElement depth={2} className="top-[75%] left-[2%] md:left-[5%]">
-          <motion.div style={{ y: y1, rotate }} className="w-36 h-48 md:w-52 md:h-64 rounded-xl overflow-hidden shadow-2xl transform -rotate-2">
-            <img src="https://picsum.photos/seed/fynbos/600/800" alt="Fynbos" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
-          </motion.div>
-        </FloatingElement>
-        
-        {/* 4. Bottom-Right corner */}
-        <FloatingElement depth={1.5} className="top-[80%] right-[2%] md:right-[5%]">
-          <motion.div style={{ y: y2 }} className="w-48 h-36 md:w-64 md:h-48 rounded-xl overflow-hidden shadow-2xl transform rotate-3">
-            <img src="https://picsum.photos/seed/cederberg/800/600" alt="Cederberg" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+        {/* 2. Top Center - Horizontal */}
+        <FloatingElement depth={0.6} className="top-[2%] left-[35%] md:left-[38%]">
+          <motion.div style={{ y: y2 }} className="w-48 h-32 md:w-72 md:h-48 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/coast-view/800/600" alt="Coast" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
           </motion.div>
         </FloatingElement>
 
-        {/* 5. Middle-Left edge */}
-        <FloatingElement depth={0.8} className="top-[40%] left-[-2%] md:left-[2%]">
-          <motion.div style={{ y: y1 }} className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden shadow-2xl transform rotate-12 opacity-90">
-            <img src="https://picsum.photos/seed/wine/400/400" alt="Wine" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+        {/* 3. Top Right - Horizontal */}
+        <FloatingElement depth={0.3} className="top-[8%] right-[2%] md:right-[6%]">
+          <motion.div style={{ y: y1 }} className="w-44 h-32 md:w-64 md:h-44 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/campfire-night/800/600" alt="Campfire" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
           </motion.div>
         </FloatingElement>
 
-        {/* 6. Middle-Right edge */}
-        <FloatingElement depth={1.2} className="top-[45%] right-[-2%] md:right-[2%]">
-          <motion.div style={{ y: y2 }} className="w-28 h-28 md:w-36 md:h-36 rounded-xl overflow-hidden shadow-2xl transform -rotate-6 opacity-90">
-            <img src="https://picsum.photos/seed/ocean/400/400" alt="Ocean" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+        {/* 4. Middle Left - Vertical */}
+        <FloatingElement depth={0.7} className="top-[45%] left-[-2%] md:left-[1%]">
+          <motion.div style={{ y: y2 }} className="w-32 h-48 md:w-52 md:h-72 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/beach-walk/600/800" alt="Beach" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
           </motion.div>
         </FloatingElement>
 
-        {/* 7. Top-Center edge */}
-        <FloatingElement depth={1.8} className="top-[2%] left-[40%] hidden md:block">
-          <motion.div style={{ y: y1 }} className="w-32 h-24 md:w-40 md:h-28 rounded-xl overflow-hidden shadow-2xl transform -rotate-12 opacity-90">
-            <img src="https://picsum.photos/seed/mountain/600/400" alt="Mountain" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+        {/* 5. Middle Right - Vertical */}
+        <FloatingElement depth={0.5} className="top-[48%] right-[-2%] md:right-[1%]">
+          <motion.div style={{ y: y1 }} className="w-32 h-48 md:w-52 md:h-72 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/ocean-couple/600/800" alt="Ocean" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
           </motion.div>
         </FloatingElement>
 
-        {/* 8. Bottom-Center edge */}
-        <FloatingElement depth={0.9} className="top-[85%] right-[40%] hidden md:block">
-          <motion.div style={{ y: y2 }} className="w-36 h-24 md:w-48 md:h-32 rounded-xl overflow-hidden shadow-2xl transform -rotate-3 opacity-90">
-            <img src="https://picsum.photos/seed/trail/600/400" alt="Trail" className="w-full h-full object-cover scale-110" referrerPolicy="no-referrer" />
+        {/* 6. Bottom Left - Horizontal */}
+        <FloatingElement depth={0.8} className="bottom-[5%] left-[5%] md:left-[8%]">
+          <motion.div style={{ y: y2 }} className="w-48 h-36 md:w-72 md:h-52 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/fire-beach/800/600" alt="Fire" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          </motion.div>
+        </FloatingElement>
+
+        {/* 7. Bottom Center - Horizontal */}
+        <FloatingElement depth={0.4} className="bottom-[2%] left-[38%] md:left-[40%]">
+          <motion.div style={{ y: y1 }} className="w-48 h-32 md:w-72 md:h-44 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/cliffs/800/600" alt="Cliffs" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          </motion.div>
+        </FloatingElement>
+
+        {/* 8. Bottom Right - Vertical */}
+        <FloatingElement depth={0.9} className="bottom-[8%] right-[5%] md:right-[8%]">
+          <motion.div style={{ y: y2 }} className="w-36 h-52 md:w-56 md:h-80 rounded-sm overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/seed/forest-couple/600/800" alt="Forest" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
           </motion.div>
         </FloatingElement>
       </Floating>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 pointer-events-none">
-        <div className="text-center max-w-4xl mx-auto mt-20 md:mt-0">
+        <div className="text-center max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
+            className="flex flex-col items-center"
           >
-            <h1 className="font-serif text-7xl md:text-[120px] font-black text-rust mb-2 leading-[0.8] tracking-tighter uppercase">
-              Wedding Camp
+            <h1 className="font-display text-6xl md:text-8xl font-bold text-wedding-brown mb-0 leading-tight uppercase tracking-tight">
+              COAST CAMP
             </h1>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="font-serif text-4xl md:text-6xl text-rust font-black uppercase tracking-tight mb-8"
-            >
-              Amber and Piv
-            </motion.h2>
-          </motion.div>
-          
-          <FadeInWhenVisible delay={0.8}>
-            <p className="text-xl md:text-2xl text-neutral-800 mb-10 font-medium tracking-tight">
+            <h2 className="font-display text-4xl md:text-6xl text-wedding-brown font-bold uppercase tracking-tight mb-8">
+              WITH NICK & ALLISON
+            </h2>
+            
+            <p className="text-xl md:text-2xl text-neutral-800 mb-4 font-normal tracking-tight">
               Join us as we celebrate our marriage
             </p>
-          </FadeInWhenVisible>
 
-          <FadeInWhenVisible delay={1}>
-            <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 text-sm font-bold uppercase tracking-[0.2em] text-neutral-900">
-              <div>22 June, 2026</div>
-              <div className="hidden md:block w-1.5 h-1.5 bg-neutral-900 rounded-full"></div>
-              <div>Wolfkop</div>
+            <div className="text-sm md:text-base font-bold uppercase tracking-widest text-neutral-900">
+              SEPTEMBER 1-4, 2022 | ELK, CALIFORNIA
             </div>
-          </FadeInWhenVisible>
+          </motion.div>
         </div>
       </div>
 
       <motion.div 
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-neutral-300"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-neutral-400"
       >
         <ChevronDown className="w-8 h-8" />
       </motion.div>
@@ -164,166 +159,261 @@ const Hero = () => {
 };
 
 const InfoGrid = () => (
-  <section className="bg-[#d4c3a3] py-12">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+  <section id="packing" className="bg-[#d4c3a3] py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-4">
       
-      {/* Column 1 */}
-      <div className="flex flex-col gap-4">
-        {/* RSVP */}
-        <FadeInWhenVisible>
-          <motion.a 
-            href="#rsvp"
-            whileHover={{ scale: 0.97 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group block bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[200px] rounded-lg shadow-sm relative overflow-hidden"
-          >
-            <h2 className="font-serif text-5xl font-black mb-4 uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>RSVP</h2>
-            <p className="text-xs leading-relaxed text-center font-medium">
-              Please let us know if you can or cannot come ASAP.<br/>The deadline is <strong>June 3rd</strong>.
-            </p>
-          </motion.a>
-        </FadeInWhenVisible>
+      {/* Location & Lodging - Full Width */}
+      <FadeInWhenVisible>
+        <motion.a 
+          href="#travel"
+          whileHover={{ scale: 0.99 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="group block bg-[#e3d3a4] p-12 flex flex-col md:flex-row items-center justify-between min-h-[350px] rounded-lg shadow-sm relative overflow-hidden"
+        >
+          <div className="relative z-10 max-w-md">
+            <h2 className="font-display text-4xl md:text-6xl font-bold text-[#5a6045] uppercase tracking-tight mb-4">LOCATION & LODGING</h2>
+            <p className="text-[#5a6045]/80 text-lg font-medium">Join us in the beautiful Western Cape. Explore the rugged coastline and find your perfect stay.</p>
+          </div>
 
+          {/* Lottie Animation Container */}
+          <div className="w-full md:w-1/2 h-[250px] md:h-[300px] relative z-10 pointer-events-none">
+            <Lottie 
+              animationData={{
+                v: "5.5.7",
+                fr: 30,
+                ip: 0,
+                op: 120,
+                w: 500,
+                h: 500,
+                nm: "Western Cape",
+                ddd: 0,
+                assets: [],
+                layers: [
+                  {
+                    ddd: 0, ind: 1, ty: 4, nm: "Sun", sr: 1,
+                    ks: {
+                      o: { a: 0, k: 100, ix: 11 },
+                      r: { a: 0, k: 0, ix: 10 },
+                      p: {
+                        a: 1,
+                        k: [
+                          { i: { x: [0.833], y: [0.833] }, o: { x: [0.167], y: [0.167] }, t: 0, s: [250, 450] },
+                          { i: { x: [0.833], y: [0.833] }, o: { x: [0.167], y: [0.167] }, t: 60, s: [250, 100] },
+                          { t: 120, s: [250, 450] }
+                        ],
+                        ix: 2
+                      },
+                      a: { a: 0, k: [0, 0, 0], ix: 1 },
+                      s: { a: 0, k: [100, 100, 100], ix: 6 }
+                    },
+                    ao: 0,
+                    shapes: [{
+                      ty: "gr", it: [
+                        { d: 1, ty: "el", s: { a: 0, k: [100, 100], ix: 2 }, p: { a: 0, k: [0, 0], ix: 3 }, nm: "Sun Shape" },
+                        { ty: "fl", c: { a: 0, k: [0.95, 0.8, 0.4, 1], ix: 4 }, o: { a: 0, k: 100, ix: 5 }, r: 1 },
+                        { ty: "tr", p: { a: 0, k: [0, 0], ix: 2 }, a: { a: 0, k: [0, 0], ix: 1 }, s: { a: 0, k: [100, 100], ix: 3 }, r: { a: 0, k: 0, ix: 6 }, o: { a: 0, k: 100, ix: 7 } }
+                      ]
+                    }]
+                  },
+                  {
+                    ddd: 0, ind: 2, ty: 4, nm: "Cloud 1", sr: 1,
+                    ks: {
+                      o: { a: 0, k: 60, ix: 11 },
+                      p: {
+                        a: 1,
+                        k: [
+                          { i: { x: [0.833], y: [0.833] }, o: { x: [0.167], y: [0.167] }, t: 0, s: [-100, 150] },
+                          { t: 120, s: [600, 150] }
+                        ],
+                        ix: 2
+                      },
+                      a: { a: 0, k: [0, 0, 0], ix: 1 },
+                      s: { a: 0, k: [100, 100, 100], ix: 6 }
+                    },
+                    shapes: [{
+                      ty: "gr", it: [
+                        { d: 1, ty: "el", s: { a: 0, k: [80, 40], ix: 2 }, p: { a: 0, k: [0, 0], ix: 3 } },
+                        { d: 1, ty: "el", s: { a: 0, k: [50, 50], ix: 2 }, p: { a: 0, k: [-20, -10], ix: 3 } },
+                        { d: 1, ty: "el", s: { a: 0, k: [50, 50], ix: 2 }, p: { a: 0, k: [20, -10], ix: 3 } },
+                        { ty: "fl", c: { a: 0, k: [1, 1, 1, 1], ix: 4 }, o: { a: 0, k: 100, ix: 5 }, r: 1 },
+                        { ty: "tr", p: { a: 0, k: [0, 0], ix: 2 }, a: { a: 0, k: [0, 0], ix: 1 }, s: { a: 0, k: [100, 100], ix: 3 }, r: { a: 0, k: 0, ix: 6 }, o: { a: 0, k: 100, ix: 7 } }
+                      ]
+                    }]
+                  },
+                  {
+                    ddd: 0, ind: 3, ty: 4, nm: "Table Mountain", sr: 1,
+                    ks: {
+                      o: { a: 0, k: 100, ix: 11 },
+                      p: { a: 0, k: [250, 300], ix: 2 },
+                      a: { a: 0, k: [0, 0, 0], ix: 1 },
+                      s: { a: 0, k: [100, 100, 100], ix: 6 }
+                    },
+                    shapes: [{
+                      ty: "gr", it: [
+                        {
+                          ty: "sh",
+                          ks: {
+                            a: 0,
+                            k: {
+                              i: [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
+                              o: [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
+                              v: [[-300, 200], [-180, 200], [-150, 50], [-120, 0], [120, 0], [150, 50], [180, 200], [300, 200]],
+                              c: true
+                            },
+                            ix: 2
+                          }
+                        },
+                        { ty: "fl", c: { a: 0, k: [0.15, 0.18, 0.12, 1], ix: 4 }, o: { a: 0, k: 100, ix: 5 }, r: 1 },
+                        { ty: "tr", p: { a: 0, k: [0, 0], ix: 2 }, a: { a: 0, k: [0, 0], ix: 1 }, s: { a: 0, k: [100, 100], ix: 3 }, r: { a: 0, k: 0, ix: 6 }, o: { a: 0, k: 100, ix: 7 } }
+                      ]
+                    }]
+                  },
+                  {
+                    ddd: 0, ind: 4, ty: 4, nm: "Ocean", sr: 1,
+                    ks: {
+                      o: { a: 0, k: 100, ix: 11 },
+                      p: { a: 0, k: [250, 450], ix: 2 },
+                      a: { a: 0, k: [0, 0, 0], ix: 1 },
+                      s: { a: 0, k: [100, 100, 100], ix: 6 }
+                    },
+                    shapes: [{
+                      ty: "gr", it: [
+                        { ty: "rc", p: { a: 0, k: [0, 0], ix: 2 }, s: { a: 0, k: [600, 150], ix: 3 }, r: { a: 0, k: 0, ix: 4 } },
+                        { ty: "fl", c: { a: 0, k: [0.2, 0.4, 0.6, 1], ix: 4 }, o: { a: 0, k: 100, ix: 5 }, r: 1 },
+                        { ty: "tr", p: { a: 0, k: [0, 0], ix: 2 }, a: { a: 0, k: [0, 0], ix: 1 }, s: { a: 0, k: [100, 100], ix: 3 }, r: { a: 0, k: 0, ix: 6 }, o: { a: 0, k: 100, ix: 7 } }
+                      ]
+                    }]
+                  },
+                  {
+                    ddd: 0, ind: 5, ty: 4, nm: "Fynbos", sr: 1,
+                    ks: {
+                      o: { a: 0, k: 100, ix: 11 },
+                      p: { a: 0, k: [250, 480], ix: 2 },
+                      a: { a: 0, k: [0, 0, 0], ix: 1 },
+                      s: { a: 0, k: [100, 100, 100], ix: 6 }
+                    },
+                    shapes: [
+                      {
+                        ty: "gr", it: [
+                          { d: 1, ty: "el", s: { a: 0, k: [20, 40], ix: 2 }, p: { a: 0, k: [-180, 0], ix: 3 } },
+                          { d: 1, ty: "el", s: { a: 0, k: [15, 30], ix: 2 }, p: { a: 0, k: [-150, 10], ix: 3 } },
+                          { d: 1, ty: "el", s: { a: 0, k: [25, 45], ix: 2 }, p: { a: 0, k: [120, 0], ix: 3 } },
+                          { d: 1, ty: "el", s: { a: 0, k: [10, 20], ix: 2 }, p: { a: 0, k: [160, 15], ix: 3 } },
+                          { ty: "fl", c: { a: 0, k: [0.2, 0.3, 0.1, 1], ix: 4 }, o: { a: 0, k: 100, ix: 5 }, r: 1 },
+                          { ty: "tr", p: { a: 0, k: [0, 0], ix: 2 }, a: { a: 0, k: [0, 0], ix: 1 }, s: { a: 0, k: [100, 100], ix: 3 }, r: { a: 0, k: 0, ix: 6 }, o: { a: 0, k: 100, ix: 7 } }
+                        ]
+                      },
+                      {
+                        ty: "gr", it: [
+                          { d: 1, ty: "el", s: { a: 0, k: [6, 6], ix: 2 }, p: { a: 0, k: [-180, -15], ix: 3 } },
+                          { d: 1, ty: "el", s: { a: 0, k: [5, 5], ix: 2 }, p: { a: 0, k: [120, -18], ix: 3 } },
+                          { ty: "fl", c: { a: 0, k: [0.8, 0.4, 0.6, 1], ix: 4 }, o: { a: 0, k: 100, ix: 5 }, r: 1 },
+                          { ty: "tr", p: { a: 0, k: [0, 0], ix: 2 }, a: { a: 0, k: [0, 0], ix: 1 }, s: { a: 0, k: [100, 100], ix: 3 }, r: { a: 0, k: 0, ix: 6 }, o: { a: 0, k: 100, ix: 7 } }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }}
+              loop={true}
+              className="w-full h-full"
+            />
+          </div>
+          
+          {/* Subtle SVG Background Overlay */}
+          <div className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+            <svg viewBox="0 0 400 200" className="w-full h-full stroke-[#5a6045] fill-none stroke-[1]" preserveAspectRatio="xMidYMax slice">
+              <path d="M 0 180 Q 50 190 100 180 T 200 180 T 300 180 T 400 180" />
+              <path d="M 20 190 Q 70 200 120 190 T 220 190 T 320 190 T 400 190" />
+            </svg>
+          </div>
+        </motion.a>
+      </FadeInWhenVisible>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Our Story */}
-        <FadeInWhenVisible delay={0.1}>
+        <FadeInWhenVisible>
           <motion.a 
             href="#story"
             whileHover={{ scale: 0.97 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group block relative overflow-hidden h-[500px] rounded-lg shadow-sm"
+            className="group block relative overflow-hidden h-[450px] rounded-lg shadow-sm"
           >
             <img src="https://picsum.photos/seed/wolfkop/800/1000" alt="Our Story" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-[#e3d3a4] transition-colors duration-500 group-hover:bg-black/20">
-              <h2 className="font-sans text-3xl font-black uppercase tracking-widest">OUR STORY</h2>
+              <h2 className="font-display text-3xl font-black uppercase tracking-widest">OUR STORY</h2>
             </div>
           </motion.a>
         </FadeInWhenVisible>
-      </div>
 
-      {/* Columns 2 & 3 */}
-      <div className="md:col-span-2 flex flex-col gap-4">
-        {/* Location & Lodging */}
-        <FadeInWhenVisible delay={0.2}>
+        {/* Packing List */}
+        <FadeInWhenVisible delay={0.1}>
           <motion.a 
-            href="#travel"
+            href="#packing"
             whileHover={{ scale: 0.97 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group block bg-[#e3d3a4] p-8 flex flex-col h-[250px] rounded-lg shadow-sm relative overflow-hidden"
+            className="group block bg-[#455860] text-[#e3d3a4] p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm relative overflow-hidden"
           >
-            <h2 className="font-sans text-3xl font-black text-[#5a6045] uppercase tracking-widest relative z-10">LOCATION & LODGING</h2>
-            {/* SVG Background */}
-            <div className="absolute inset-0 w-full h-full pointer-events-none transition-transform duration-700 group-hover:scale-105 group-hover:translate-y-2">
-              <svg viewBox="0 0 400 200" className="w-full h-full stroke-[#5a6045] fill-none stroke-[1.5] opacity-80" preserveAspectRatio="xMidYMax slice">
-                {/* Dots/Stars */}
-                <g fill="#5a6045" stroke="none">
-                  <circle cx="20" cy="40" r="1" /> <circle cx="50" cy="80" r="1" /> <circle cx="80" cy="30" r="1" />
-                  <circle cx="120" cy="60" r="1" /> <circle cx="150" cy="20" r="1" /> <circle cx="180" cy="90" r="1" />
-                  <circle cx="220" cy="40" r="1" /> <circle cx="250" cy="70" r="1" /> <circle cx="280" cy="30" r="1" />
-                  <circle cx="320" cy="80" r="1" /> <circle cx="350" cy="20" r="1" /> <circle cx="380" cy="60" r="1" />
-                  <circle cx="10" cy="120" r="1" /> <circle cx="40" cy="160" r="1" /> <circle cx="70" cy="110" r="1" />
-                  <circle cx="110" cy="140" r="1" /> <circle cx="140" cy="180" r="1" /> <circle cx="170" cy="130" r="1" />
-                  <circle cx="210" cy="170" r="1" /> <circle cx="240" cy="120" r="1" /> <circle cx="270" cy="160" r="1" />
+            <h2 className="font-display text-3xl font-black uppercase tracking-widest mb-8 relative z-10">PACKING LIST</h2>
+            <div className="flex-1 w-full relative transition-transform duration-700 group-hover:scale-110 group-hover:-translate-y-4">
+              <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full stroke-[#e3d3a4] fill-none stroke-[2]" strokeLinecap="round" strokeLinejoin="round">
+                <g transform="translate(10, 20)">
+                  <rect x="10" y="20" width="40" height="50" rx="10" />
+                  <path d="M 15 20 Q 30 0 45 20" />
+                  <rect x="15" y="40" width="30" height="25" rx="5" />
+                  <line x1="25" y1="45" x2="35" y2="45" />
+                  <path d="M 10 30 Q 0 40 5 60" />
+                  <path d="M 50 30 Q 60 40 55 60" />
                 </g>
-                {/* Clouds */}
-                <path d="M 10 30 L 40 30 Q 50 30 50 40 L 20 40" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M 220 50 L 280 50 Q 290 50 290 60 L 240 60" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M 320 20 L 380 20 Q 390 20 390 30 L 340 30" strokeLinecap="round" strokeLinejoin="round" />
-                {/* Mountains */}
-                <path d="M 0 160 L 60 80 L 120 140 L 200 50 L 280 130 L 340 60 L 400 120" strokeLinejoin="round" />
-                <path d="M 0 160 L 60 80 L 60 200 M 120 140 L 120 200 M 200 50 L 200 200 M 280 130 L 280 200 M 340 60 L 340 200" strokeDasharray="4 4" opacity="0.5" />
-                {/* Safari Tent */}
-                <path d="M 240 160 L 260 110 L 280 160 Z" fill="#e3d3a4" strokeLinejoin="round" />
-                <path d="M 260 110 L 260 160" />
-                <path d="M 250 160 L 260 140 L 270 160" />
-                {/* Fynbos/Bushes */}
-                <path d="M 180 160 L 180 140 M 175 145 L 180 140 L 185 145" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M 320 160 L 320 145 M 315 150 L 320 145 L 325 150" strokeLinecap="round" strokeLinejoin="round" />
-                {/* River */}
-                <path d="M 0 180 Q 50 190 100 180 T 200 180 T 300 180 T 400 180" />
-                <path d="M 20 190 Q 70 200 120 190 T 220 190 T 320 190 T 400 190" />
+                <g transform="translate(80, 10)">
+                  <path d="M 30 10 Q 40 0 50 10 L 70 20 Q 80 30 75 50 L 70 70 Q 60 80 50 75 L 50 80 Q 40 85 30 80 L 30 75 Q 20 80 10 70 L 5 50 Q 0 30 10 20 Z" />
+                  <line x1="40" y1="10" x2="40" y2="82" />
+                  <path d="M 10 20 Q 20 30 30 30 M 10 40 Q 20 50 30 50 M 10 60 Q 20 70 30 70" />
+                  <path d="M 70 20 Q 60 30 50 30 M 70 40 Q 60 50 50 50 M 70 60 Q 60 70 50 70" />
+                  <path d="M 30 30 Q 40 35 50 30 M 30 50 Q 40 55 50 50 M 30 70 Q 40 75 50 70" />
+                </g>
+                <g transform="translate(30, 110)">
+                  <path d="M 40 10 L 50 30 L 70 35 L 80 50 L 80 60 L 10 60 L 5 50 L 10 40 L 20 40 L 30 20 Z" />
+                  <path d="M 10 60 L 10 65 Q 45 70 80 65 L 80 60" />
+                  <path d="M 40 10 Q 50 20 60 15 M 45 15 Q 55 25 65 20 M 50 20 Q 60 30 70 25" />
+                  <path d="M 30 20 L 40 40" />
+                </g>
               </svg>
             </div>
           </motion.a>
         </FadeInWhenVisible>
 
-        {/* Bottom Row of Col 2 & 3 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
-          {/* Packing List */}
-          <FadeInWhenVisible delay={0.3}>
+        {/* Schedule & Registry */}
+        <div className="flex flex-col gap-4">
+          <FadeInWhenVisible delay={0.2}>
             <motion.a 
-              href="#packing"
+              href="#schedule"
               whileHover={{ scale: 0.97 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="group block bg-[#455860] text-[#e3d3a4] p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm relative overflow-hidden"
+              className="group block bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm relative overflow-hidden"
             >
-              <h2 className="font-sans text-3xl font-black uppercase tracking-widest mb-8 relative z-10">PACKING LIST</h2>
-              {/* SVGs */}
-              <div className="flex-1 w-full relative transition-transform duration-700 group-hover:scale-110 group-hover:-translate-y-4">
-                <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full stroke-[#e3d3a4] fill-none stroke-[2]" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Backpack */}
-                  <g transform="translate(10, 20)">
-                    <rect x="10" y="20" width="40" height="50" rx="10" />
-                    <path d="M 15 20 Q 30 0 45 20" />
-                    <rect x="15" y="40" width="30" height="25" rx="5" />
-                    <line x1="25" y1="45" x2="35" y2="45" />
-                    <path d="M 10 30 Q 0 40 5 60" />
-                    <path d="M 50 30 Q 60 40 55 60" />
-                  </g>
-                  {/* Puffer Jacket */}
-                  <g transform="translate(80, 10)">
-                    <path d="M 30 10 Q 40 0 50 10 L 70 20 Q 80 30 75 50 L 70 70 Q 60 80 50 75 L 50 80 Q 40 85 30 80 L 30 75 Q 20 80 10 70 L 5 50 Q 0 30 10 20 Z" />
-                    <line x1="40" y1="10" x2="40" y2="82" />
-                    <path d="M 10 20 Q 20 30 30 30 M 10 40 Q 20 50 30 50 M 10 60 Q 20 70 30 70" />
-                    <path d="M 70 20 Q 60 30 50 30 M 70 40 Q 60 50 50 50 M 70 60 Q 60 70 50 70" />
-                    <path d="M 30 30 Q 40 35 50 30 M 30 50 Q 40 55 50 50 M 30 70 Q 40 75 50 70" />
-                  </g>
-                  {/* Boot */}
-                  <g transform="translate(30, 110)">
-                    <path d="M 40 10 L 50 30 L 70 35 L 80 50 L 80 60 L 10 60 L 5 50 L 10 40 L 20 40 L 30 20 Z" />
-                    <path d="M 10 60 L 10 65 Q 45 70 80 65 L 80 60" />
-                    <path d="M 40 10 Q 50 20 60 15 M 45 15 Q 55 25 65 20 M 50 20 Q 60 30 70 25" />
-                    <path d="M 30 20 L 40 40" />
-                  </g>
-                </svg>
-              </div>
+              <h2 className="font-display text-4xl font-black uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>SCHEDULE</h2>
             </motion.a>
           </FadeInWhenVisible>
 
-          {/* Schedule & Registry */}
-          <div className="flex flex-col gap-4">
-            {/* Schedule */}
-            <FadeInWhenVisible delay={0.4}>
-              <motion.a 
-                href="#schedule"
-                whileHover={{ scale: 0.97 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="group block bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm relative overflow-hidden"
-              >
-                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>SCHEDULE</h2>
-              </motion.a>
-            </FadeInWhenVisible>
-
-            {/* Registry */}
-            <FadeInWhenVisible delay={0.5}>
-              <motion.a 
-                href="#registry"
-                whileHover={{ scale: 0.97 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="group block bg-[#73734f] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm relative overflow-hidden"
-              >
-                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>REGISTRY</h2>
-              </motion.a>
-            </FadeInWhenVisible>
-          </div>
+          <FadeInWhenVisible delay={0.3}>
+            <motion.a 
+              href="#registry"
+              whileHover={{ scale: 0.97 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="group block bg-[#73734f] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm relative overflow-hidden"
+            >
+              <h2 className="font-display text-4xl font-black uppercase tracking-widest text-transparent group-hover:text-[#e3d3a4] transition-colors duration-300" style={{ WebkitTextStroke: '1px #e3d3a4' }}>REGISTRY</h2>
+            </motion.a>
+          </FadeInWhenVisible>
         </div>
       </div>
-
     </div>
   </section>
 );
 
 const StoryTimeline = () => (
-  <section className="bg-cream py-32 topo-bg relative overflow-hidden">
+  <section id="story" className="bg-cream py-32 topo-bg relative overflow-hidden">
     <div className="max-w-5xl mx-auto px-6">
       <FadeInWhenVisible>
         <div className="text-center mb-24">
@@ -350,10 +440,10 @@ const StoryTimeline = () => (
 
         <div className="space-y-32">
           {[
-            { year: "2018", title: "Meeting in the Mother City", img: "capetown-coffee", side: "left", text: "We met at a small coffee shop in Gardens, Cape Town. A shared love for rooibos tea and mountain trails sparked an immediate connection." },
-            { year: "2020", title: "West Coast Road Trip", img: "paternoster", side: "right", text: "Our first big road trip up the West Coast. From the white sands of Paternoster to the rugged peaks of the Cederberg, we knew this was it." },
-            { year: "2023", title: "The Proposal", img: "wolfkop-sunset", side: "left", text: "During a weekend getaway at Wolfkop Camping Villages, Piv proposed at sunset overlooking the Olifants River. It was pure magic." },
-            { year: "2026", title: "The Wedding", img: "celebration", side: "right", text: "We are so excited to begin our married life together, surrounded by our loved ones, back where our favorite memories were made." }
+            { year: "2018", title: "Meeting in the City", img: "city-coffee", side: "left", text: "We met at a small coffee shop. A shared love for adventure and nature sparked an immediate connection." },
+            { year: "2020", title: "West Coast Road Trip", img: "coast-road", side: "right", text: "Our first big road trip up the West Coast. From the rugged cliffs to the serene beaches, we knew this was it." },
+            { year: "2021", title: "The Proposal", img: "proposal-elk", side: "left", text: "During a weekend getaway in Elk, Nick proposed at sunset overlooking the Pacific. It was pure magic." },
+            { year: "2022", title: "The Wedding", img: "celebration-wedding", side: "right", text: "We are so excited to begin our married life together, surrounded by our loved ones at Coast Camp." }
           ].map((item, i) => (
             <div key={i} className={`relative flex flex-col md:flex-row items-center gap-12 ${item.side === 'right' ? 'md:flex-row-reverse' : ''}`}>
               <div className="md:w-1/2 flex justify-center">
@@ -466,20 +556,20 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
       <motion.div 
         whileHover={{ scale: 1.05 }}
-        className="font-serif text-4xl font-black mb-10 tracking-tighter cursor-default text-forest uppercase"
+        className="font-display text-4xl font-black mb-10 tracking-tighter cursor-default text-wedding-brown uppercase"
       >
-        A&P
+        N&A
       </motion.div>
-      <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-forest/60 mb-12">
-        {["RSVP", "Story", "Travel", "Packing", "Schedule", "Registry"].map((item) => (
-          <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-forest transition-colors">
+      <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-wedding-brown/60 mb-12">
+        {["Story", "Travel", "Packing"].map((item) => (
+          <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-wedding-brown transition-colors">
             {item}
           </a>
         ))}
       </div>
-      <div className="w-full h-px bg-forest/10 mb-10"></div>
-      <div className="text-[10px] text-forest/40 uppercase tracking-[0.4em] font-medium">
-        © 2026 Amber & Piv — Made with Love in the Western Cape
+      <div className="w-full h-px bg-wedding-brown/10 mb-10"></div>
+      <div className="text-[10px] text-wedding-brown/40 uppercase tracking-[0.4em] font-medium">
+        © 2022 Nick & Allison — Made with Love
       </div>
     </div>
   </footer>
