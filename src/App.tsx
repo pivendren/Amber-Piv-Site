@@ -17,6 +17,7 @@ import {
   Plane,
   Home,
   ChevronDown,
+  Shirt,
 } from "lucide-react";
 import Floating, { FloatingElement } from "./components/ui/parallax-floating";
 import {
@@ -588,6 +589,78 @@ const TravelDetails = () => (
   </section>
 );
 
+const PackingList = () => (
+  <section id="packing" className="bg-white py-32">
+    <div className="max-w-7xl mx-auto px-6">
+      <FadeInWhenVisible>
+        <div className="text-center mb-20">
+          <h2 className="font-serif text-3xl md:text-6xl font-bold text-forest mb-6 tracking-tight uppercase">
+            PACKING LIST
+          </h2>
+          <div className="w-24 h-1 bg-rust/20 mx-auto rounded-full"></div>
+        </div>
+      </FadeInWhenVisible>
+
+      <div className="max-w-4xl mx-auto">
+        <FadeInWhenVisible>
+          <div className="bg-sand/20 p-10 md:p-16 rounded-3xl border border-forest/5 shadow-sm overflow-hidden relative group">
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+                <div>
+                  <h3 className="font-serif text-4xl font-bold text-forest mb-2">
+                    Mountain Essentials
+                  </h3>
+                  <p className="text-rust font-bold tracking-widest text-xs uppercase">
+                    Early Winter & Active Days
+                  </p>
+                </div>
+                <Shirt className="w-16 h-16 text-rust stroke-[0.5]" />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="space-y-10">
+                  {[
+                    {
+                      title: "The Active Gear",
+                      items: ["Walking/Hiking Shoes (expect mud!)", "Workout / Gym Gear", "Spare Socks"],
+                    },
+                    {
+                      title: "Stay Warm",
+                      items: ["Thick Puffer / Winter Jacket", "Beanie & Scarf", "Thermal Layers"],
+                    },
+                    {
+                      title: "Mountain Comfort",
+                      items: ["Comfy Loungewear", "Warm Pajamas", "Indoor Slippers"],
+                    },
+                  ].map((category, i) => (
+                    <div key={i}>
+                      <h4 className="font-serif text-xl font-bold text-forest mb-4 border-b border-forest/10 pb-2">
+                        {category.title}
+                      </h4>
+                      <ul className="text-sm text-neutral-600 font-light space-y-3">
+                        {category.items.map((item, j) => (
+                          <li key={j} className="flex items-center gap-3">
+                            <div className="w-1 h-1 bg-rust rounded-full" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="relative h-full min-h-[400px] flex items-center justify-center bg-sand/10 rounded-2xl border border-forest/5 overflow-hidden">
+                  <PackingListIllustration className="w-full h-full p-8" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeInWhenVisible>
+      </div>
+    </div>
+  </section>
+);
+
 const Footer = () => (
   <footer className="bg-sand py-20 relative overflow-hidden">
     {/* Forest line art background */}
@@ -636,6 +709,7 @@ export default function App() {
       <InfoGrid />
       <ScheduleTimeline />
       <TravelDetails />
+      <PackingList />
       <Footer />
     </div>
   );
