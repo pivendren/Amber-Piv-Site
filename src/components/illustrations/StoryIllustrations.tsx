@@ -20,7 +20,7 @@ export const MeetingIllustration = ({ className = "" }: { className?: string }) 
     <rect width="800" height="600" fill={colors.cream} />
     {/* Sun */}
     <circle cx="200" cy="200" r="80" fill={colors.sand} />
-    
+
     {/* Table Mountain Silhouette */}
     <path
       d="M0 600 L0 450 L150 400 L250 350 L550 350 L650 400 L800 480 L800 600 Z"
@@ -35,7 +35,7 @@ export const MeetingIllustration = ({ className = "" }: { className?: string }) 
 
     {/* Urban / Cafe foreground abstract */}
     <rect x="-50" y="500" width="900" height="100" fill={colors.forest} />
-    
+
     {/* Stylized Coffee Cup and Protea/Fynbos */}
     <g transform="translate(350, 420)">
       {/* Table arc */}
@@ -69,7 +69,7 @@ export const RoadTripIllustration = ({ className = "" }: { className?: string })
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="800" height="600" fill={colors.cream} />
-    
+
     {/* Ocean & Coastline Background */}
     <rect y="300" width="800" height="300" fill={colors.sand} opacity="0.4" />
     <path d="M 0 320 Q 200 350 400 300 T 800 310 L 800 600 L 0 600 Z" fill={colors.dark} opacity="0.1" />
@@ -77,7 +77,7 @@ export const RoadTripIllustration = ({ className = "" }: { className?: string })
 
     {/* The Road */}
     <path d="M -100 600 Q 150 450 400 350 Q 550 300 700 280 L 720 280 Q 550 310 400 370 Q 150 470 -50 600 Z" fill={colors.sand} />
-    
+
     {/* Car / Van */}
     <g transform="translate(180, 480)">
       <rect x="-40" y="-30" width="80" height="40" rx="10" fill={colors.rust} />
@@ -108,7 +108,7 @@ export const ProposalIllustration = ({ className = "" }: { className?: string })
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="800" height="600" fill={colors.rust} opacity="0.1" />
-    
+
     {/* Giant Setting Sun */}
     <circle cx="400" cy="350" r="180" fill={colors.rust} opacity="0.2" />
     <circle cx="400" cy="350" r="140" fill={colors.rust} opacity="0.4" />
@@ -140,7 +140,7 @@ export const WeddingIllustration = ({ className = "" }: { className?: string }) 
     xmlns="http://www.w3.org/2000/svg"
   >
     <rect width="800" height="600" fill={colors.cream} />
-    
+
     {/* Wolfkop Mountains */}
     <path d="M 0 600 L 0 250 L 200 150 L 450 300 L 600 200 L 800 350 L 800 600 Z" fill={colors.forest} opacity="0.1" />
     <path d="M 0 600 L 0 350 L 250 250 L 500 400 L 700 300 L 800 450 L 800 600 Z" fill={colors.forest} opacity="0.2" />

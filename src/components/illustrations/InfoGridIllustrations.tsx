@@ -159,3 +159,221 @@ export const PackingListIllustration = ({ className = "" }: { className?: string
     </g>
   </svg>
 );
+
+export const CitrusdalIllustration = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 1200 600" className={ `w-full h-full ${className}` } fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="600" fill={colors.cream} opacity="0.03" />
+
+    {/* Rugged Cederberg Mountains */}
+    <path 
+      d="M 0 450 L 100 350 L 250 200 L 400 380 L 550 250 L 700 420 L 850 300 L 1000 450 L 1200 300 L 1200 600 L 0 600 Z" 
+      fill={colors.forest} 
+      opacity="0.08" 
+    />
+
+    {/* Olifants River Winding through valley */}
+    <path 
+      d="M 0 520 Q 300 480 600 520 T 1200 500 L 1200 600 L 0 600 Z" 
+      fill={colors.sand} 
+      opacity="0.1" 
+    />
+
+    {/* Citrus Groves (Orchard pattern) */}
+    <g opacity="0.15">
+      {[...Array(8)].map((_, i) => (
+        <g key={i} transform={ `translate(${100 + i * 140}, 500)` }>
+          {/* Tree trunk */}
+          <rect x="-2" y="0" width="4" height="20" fill={colors.brown} />
+          {/* Tree canopy */}
+          <circle cx="0" cy="-20" r="30" fill={colors.forest} />
+          {/* Oranges */}
+          <circle cx="-10" cy="-25" r="4" fill={colors.rust} />
+          <circle cx="15" cy="-15" r="4" fill={colors.rust} />
+          <circle cx="5" cy="-35" r="4" fill={colors.rust} />
+        </g>
+      ))}
+      {[...Array(7)].map((_, i) => (
+        <g key={i} transform={ `translate(${170 + i * 140}, 560)` }>
+          <rect x="-2" y="0" width="4" height="20" fill={colors.brown} />
+          <circle cx="0" cy="-20" r="25" fill={colors.forest} />
+          <circle cx="-8" cy="-20" r="3" fill={colors.rust} />
+          <circle cx="10" cy="-10" r="3" fill={colors.rust} />
+        </g>
+      ))}
+    </g>
+
+    {/* Fynbos Accents (King Protea) */}
+    <g transform="translate(1050, 600) scale(0.8)" opacity="0.2">
+      <path d="M 0 0 L 0 -220" stroke={colors.forest} strokeWidth="12" strokeLinecap="round" />
+      <circle cx="0" cy="-220" r="40" fill={colors.rust} />
+      <path d="M -15 -210 L -45 -290 L 0 -250 L 45 -290 L 15 -210 Z" fill={colors.sand} />
+    </g>
+  </svg>
+);
+
+export const WesternCapeMapIllustration = ({ className = "" }: { className?: string }) => (
+  <svg viewBox="0 0 500 700" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      {/* Paper Texture Filter */}
+      <filter id="paperTexture" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
+        <feDiffuseLighting in="noise" lightingColor="#f4e4bc" surfaceScale="2" result="diffuse">
+          <feDistantLight azimuth="45" elevation="60" />
+        </feDiffuseLighting>
+      </filter>
+      {/* Subtle Shadow for Folds */}
+      <filter id="foldShadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+        <feOffset dx="2" dy="2" result="offsetblur" />
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="0.3" />
+        </feComponentTransfer>
+        <feMerge>
+          <feMergeNode />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    {/* The Physical Paper Aspect */}
+    <g filter="url(#foldShadow)">
+      {/* Hand-cut/Burnt Edges Shape */}
+      <path 
+        d="M 20 20 Q 50 15 100 22 T 200 18 T 300 25 T 400 15 T 480 22 L 475 100 Q 485 200 478 350 T 482 550 T 475 680 L 400 675 Q 300 682 200 675 T 100 685 T 25 678 L 22 550 Q 15 350 22 200 T 18 20 Z" 
+        fill="#f4e4bc" 
+        stroke="#2c1a11" 
+        strokeWidth="2" 
+      />
+      {/* Paper Texture Overlay */}
+      <path 
+        d="M 20 20 Q 50 15 100 22 T 200 18 T 300 25 T 400 15 T 480 22 L 475 100 Q 485 200 478 350 T 482 550 T 475 680 L 400 675 Q 300 682 200 675 T 100 685 T 25 678 L 22 550 Q 15 350 22 200 T 18 20 Z" 
+        filter="url(#paperTexture)" 
+        opacity="0.6" 
+      />
+      
+      {/* Burnt/Charred Edge Depth */}
+      <path 
+        d="M 20 20 Q 50 15 100 22 T 200 18 T 300 25 T 400 15 T 480 22 L 475 100 Q 485 200 478 350 T 482 550 T 475 680 L 400 675 Q 300 682 200 675 T 100 685 T 25 678 L 22 550 Q 15 350 22 200 T 18 20 Z" 
+        fill="none" 
+        stroke="#4a3023" 
+        strokeWidth="12" 
+        opacity="0.1" 
+        strokeLinejoin="round" 
+      />
+
+      {/* Realistic Folds/Creases */}
+      <path d="M 20 230 Q 250 210 480 250" stroke="#ad8b60" strokeWidth="1" opacity="0.3" fill="none" />
+      <path d="M 250 20 Q 230 350 270 680" stroke="#ad8b60" strokeWidth="1" opacity="0.3" fill="none" />
+      <path d="M 20 460 Q 250 480 475 440" stroke="#ad8b60" strokeWidth="1" opacity="0.3" fill="none" />
+    </g>
+
+    {/* MAP CONTENT - INK STYLE */}
+    <g transform="translate(10, 10) scale(0.95)" opacity="0.9">
+      {/* Lattice/Grid Lines (Nautical/Pirate style) */}
+      <g opacity="0.1" stroke={colors.brown}>
+        {[...Array(6)].map((_, i) => (
+          <line key={`v-${i}`} x1={i * 80 + 40} y1="40" x2={i * 80 + 40} y2="640" strokeWidth="0.5" />
+        ))}
+        {[...Array(8)].map((_, i) => (
+          <line key={`h-${i}`} x1="40" y1={i * 80 + 40} x2="440" y2={i * 80 + 40} strokeWidth="0.5" />
+        ))}
+      </g>
+
+      {/* The Main Voyage Path (Dashed/Dotted) */}
+      <path 
+        d="M 120 580 Q 200 520 180 400 T 220 250 T 180 120" 
+        stroke={colors.rust} 
+        strokeWidth="3" 
+        strokeDasharray="8 6" 
+        strokeLinecap="round" 
+        filter="url(#foldShadow)"
+      />
+
+      {/* ORNATE COMPASS ROSE */}
+      <g transform="translate(420, 120) scale(0.8)">
+        <circle cx="0" cy="0" r="35" stroke={colors.brown} strokeWidth="0.5" strokeDasharray="2 2" />
+        <path d="M 0 -60 L 12 0 L 0 60 L -12 0 Z" fill={colors.brown} />
+        <path d="M -60 0 L 0 -12 L 60 0 L 0 12 Z" fill={colors.brown} />
+        <path d="M -40 -40 L 40 40 M -40 40 L 40 -40" stroke={colors.brown} strokeWidth="1" />
+        <text x="-8" y="-75" fill={colors.brown} className="font-serif font-black" fontSize="24">N</text>
+      </g>
+
+      {/* ANNOTATED ATTRACTIONS (Plain English) */}
+      
+      {/* 1. Cape Town (The Start) */}
+      <g transform="translate(120, 580)">
+        <path d="M -15 0 L 15 0 L 0 -25 Z" fill={colors.forest} stroke={colors.dark} strokeWidth="0.5" />
+        <text x="25" y="5" fill={colors.dark} className="font-serif font-bold italic" fontSize="14">Cape Town / Airport</text>
+        <path d="M 0 -35 L 5 -45 L -5 -45 Z" fill={colors.rust} opacity="0.6" /> {/* Small Plane icon */}
+      </g>
+
+      {/* 2. Durbanville Hills (Wine) */}
+      <g transform="translate(200, 480)">
+        <circle cx="0" cy="0" r="8" fill={colors.brown} />
+        <path d="M -5 -8 L 5 -8 L 0 4 Z" fill={colors.rust} />
+        <text x="15" y="5" fill={colors.dark} className="font-serif" fontSize="12">Durbanville Wine Area</text>
+      </g>
+
+      {/* 3. Malmesbury Wheat Fields */}
+      <g transform="translate(150, 380)">
+        <path d="M -5 10 Q 0 -15 5 10" stroke="#d4af37" strokeWidth="2" fill="none" />
+        <path d="M -15 15 Q -10 -10 -5 15" stroke="#d4af37" strokeWidth="2" fill="none" />
+        <text x="15" y="5" fill={colors.dark} className="font-serif" fontSize="12">Malmesbury Wheat Fields</text>
+      </g>
+
+      {/* 4. Piekenierskloof Pass (The Mountain Pass) */}
+      <g transform="translate(230, 240)">
+        <path d="M -20 -10 L 0 -40 L 25 -10 Z" fill={colors.forest} opacity="0.8" />
+        <path d="M -15 0 Q 0 -15 15 0 T 45 0" stroke={colors.brown} strokeWidth="2" fill="none" />
+        <text x="25" y="-45" fill={colors.dark} className="font-serif font-bold" fontSize="14">Mountain Pass</text>
+      </g>
+
+      {/* 5. Wolfkop (X marks the SPOT) */}
+      <g transform="translate(180, 120)">
+        <path 
+          d="M -25 -25 L 25 25 M 25 -25 L -25 25" 
+          stroke={colors.brown} 
+          strokeWidth="10" 
+          strokeLinecap="round" 
+        />
+        <path 
+          d="M -25 -25 L 25 25 M 25 -25 L -25 25" 
+          stroke={colors.rust} 
+          strokeWidth="6" 
+          strokeLinecap="round" 
+        />
+        <text x="40" y="5" fill={colors.rust} className="font-serif font-black uppercase tracking-widest" fontSize="20">Wolfkop</text>
+        <rect x="40" y="15" width="80" height="2" fill={colors.rust} opacity="0.3" />
+        
+        {/* Hand-sketched Treasure Chest icon */}
+        <g transform="translate(-10, 40) scale(0.6)">
+          <rect x="0" y="0" width="40" height="25" fill={colors.brown} />
+          <path d="M 0 0 C 0 -20 40 -20 40 0" fill={colors.brown} stroke={colors.dark} strokeWidth="1" />
+          <rect x="18" y="2" width="4" height="6" fill="#f1c40f" />
+        </g>
+      </g>
+
+      {/* SKETCHY DECORATIONS */}
+      {/* Sea Monster (Olifants River serpent?) */}
+      <g transform="translate(60, 280) scale(0.7)" opacity="0.15">
+        <path d="M 0 0 Q 30 -60 60 0 T 120 0 T 180 -30" stroke={colors.forest} strokeWidth="8" strokeLinecap="round" fill="none" />
+        <circle cx="170" cy="-35" r="5" fill={colors.dark} />
+      </g>
+
+      {/* Simple Boat */}
+      <g transform="translate(80, 450) scale(0.5)" opacity="0.2">
+        <path d="M -40 0 L 40 0 L 30 20 L -30 20 Z" fill={colors.brown} />
+        <line x1="0" y1="0" x2="0" y2="-40" stroke={colors.dark} strokeWidth="2" />
+        <path d="M 0 -40 L 20 -10 L 0 -10 Z" fill={colors.cream} />
+      </g>
+
+      {/* Lat/Long markers */}
+      <text x="20" y="320" fill={colors.brown} opacity="0.4" fontSize="10" transform="rotate(-90 20 320)">32.4° S</text>
+      <text x="240" y="660" fill={colors.brown} opacity="0.4" fontSize="10">18.9° E</text>
+    </g>
+
+    {/* Hand-drawn 'stain' effects */}
+    <circle cx="380" cy="580" r="30" fill={colors.brown} opacity="0.05" />
+    <circle cx="50" cy="120" r="40" fill={colors.brown} opacity="0.03" />
+  </svg>
+);

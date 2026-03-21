@@ -39,6 +39,8 @@ import {
   LocationLodgingIllustration,
   ScheduleIllustration,
   PackingListIllustration,
+  CitrusdalIllustration,
+  WesternCapeMapIllustration,
 } from "./components/illustrations/InfoGridIllustrations";
 
 const FadeInWhenVisible = ({
@@ -73,7 +75,7 @@ const Navbar = () => (
       WEDDING CAMP
     </div>
     <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600">
-      {["Story", "Travel", "Packing"].map((item) => (
+      {["Schedule", "Travel", "Packing"].map((item) => (
         <a
           key={item}
           href={`#${item.toLowerCase()}`}
@@ -234,7 +236,7 @@ const Hero = () => {
             </p>
 
             <div className="text-sm md:text-base font-bold uppercase tracking-widest text-neutral-900">
-              22 June 2026 | Wolfkop, Cape Town
+              22 June 2026 | Wolfkop Nature Reserve, Citrusdal
             </div>
           </motion.div>
         </div>
@@ -280,10 +282,10 @@ const InfoGrid = () => (
       </FadeInWhenVisible>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Our Story */}
+        {/* Our Schedule */}
         <FadeInWhenVisible>
           <motion.a
-            href="#story"
+            href="#Schedule"
             whileHover={{ scale: 0.97 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="group block relative overflow-hidden h-[450px] rounded-lg shadow-sm"
@@ -318,9 +320,9 @@ const InfoGrid = () => (
   </section>
 );
 
-const StoryTimeline = () => (
+const ScheduleTimeline = () => (
   <section
-    id="story"
+    id="Schedule"
     className="bg-cream py-32 topo-bg relative overflow-hidden"
   >
     <div className="max-w-5xl mx-auto px-6">
@@ -334,7 +336,7 @@ const StoryTimeline = () => (
             <Heart className="w-8 h-8 text-forest fill-forest/10" />
           </motion.div>
           <h2 className="font-serif text-6xl md:text-7xl font-bold text-neutral-800 tracking-tight">
-            Our Story
+            Schedule
           </h2>
         </div>
       </FadeInWhenVisible>
@@ -426,91 +428,161 @@ const TravelDetails = () => (
     <div className="max-w-7xl mx-auto px-6">
       <FadeInWhenVisible>
         <div className="text-center mb-20">
-          <h2 className="font-serif text-6xl font-bold text-forest mb-6 tracking-tight">
+          <h2 className="font-serif text-3xl md:text-6xl font-bold text-forest mb-6 tracking-tight uppercase">
             GETTING THERE
           </h2>
           <div className="w-24 h-1 bg-rust/20 mx-auto rounded-full"></div>
         </div>
       </FadeInWhenVisible>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-32">
+      <div className="max-w-4xl mx-auto mb-32">
         <FadeInWhenVisible>
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-cream p-16 rounded-3xl border border-forest/5 flex flex-col items-center text-center shadow-sm"
-          >
-            <Car className="w-24 h-24 text-rust mb-10 stroke-[0.5]" />
-            <h3 className="font-serif text-4xl font-bold text-forest mb-6">
-              DRIVING
-            </h3>
-            <p className="text-base text-neutral-600 leading-relaxed font-light max-w-md">
-              From Cape Town: Take the N7 North for about 2 hours towards
-              Citrusdal. The scenic route through the Piekenierskloof Pass is
-              beautiful.
-            </p>
-          </motion.div>
-        </FadeInWhenVisible>
-        <FadeInWhenVisible delay={0.2}>
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-cream p-16 rounded-3xl border border-forest/5 flex flex-col items-center text-center shadow-sm"
-          >
-            <Plane className="w-24 h-24 text-rust mb-10 stroke-[0.5]" />
-            <h3 className="font-serif text-4xl font-bold text-forest mb-6">
-              FLYING
-            </h3>
-            <p className="text-base text-neutral-600 leading-relaxed font-light max-w-md">
-              Nearest airport: Cape Town International (CPT). Rent a car and
-              enjoy the scenic drive up the West Coast.
-            </p>
-          </motion.div>
+          <div className="bg-sand/20 p-10 md:p-16 rounded-3xl border border-forest/5 shadow-sm overflow-hidden relative group">
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+                <div>
+                  <h3 className="font-serif text-4xl font-bold text-forest mb-2">
+                    Cape Town to Citrusdal
+                  </h3>
+                  <p className="text-rust font-bold tracking-widest text-xs uppercase">
+                    Fly in. Drive out.
+                  </p>
+                </div>
+                <Car className="w-16 h-16 text-rust stroke-[0.5]" />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="prose prose-neutral max-w-none">
+                  <h4 className="font-serif text-2xl font-bold text-forest mb-4">
+                    Flights
+                  </h4>
+                  <p className="text-sm text-neutral-700 leading-relaxed font-light mb-6">
+                    Most guests are flying into **Cape Town International
+                    Airport (CPT)** between Friday and Saturday before the main
+                    event on 22 June.
+                  </p>
+
+                  <h4 className="font-serif text-2xl font-bold text-forest mb-4">
+                    The Scenic Drive
+                  </h4>
+                  <p className="text-sm text-neutral-700 leading-relaxed font-light mb-4">
+                    Citrusdal is a comfortable 2-hour drive (170km) north from
+                    Cape Town on the N7 highway.
+                  </p>
+                  <ul className="text-sm text-neutral-600 font-light space-y-2 mb-8 list-none italic">
+                    <li className="flex gap-2">
+                      <span className="text-rust">•</span> Take the **N7 North**
+                      towards Malmesbury.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-rust">•</span> Continue through
+                      Moorreesburg and Piketberg.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-rust">•</span> Ascend the beautiful
+                      **Piekenierskloof Pass**.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-rust">•</span> Descending into the
+                      valley, take the Citrusdal turnoff.
+                    </li>
+                  </ul>
+
+                  <div className="flex gap-4 p-4 bg-forest/5 rounded-2xl border border-forest/10 items-center">
+                    <Plane className="w-8 h-8 text-rust" />
+                    <p className="text-xs text-neutral-500 font-light">
+                      We recommend hiring a car at the airport for the weekend's
+                      flexibility.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="relative h-[400px] md:h-auto min-h-[400px] bg-sand/10 rounded-2xl border border-forest/5 overflow-hidden">
+                  <WesternCapeMapIllustration className="absolute inset-0 w-full h-full p-4" />
+                </div>
+              </div>
+            </div>
+          </div>
         </FadeInWhenVisible>
       </div>
 
       <FadeInWhenVisible>
         <div className="text-center mb-20">
-          <h2 className="font-serif text-6xl font-bold text-forest mb-6 tracking-tight">
-            WHERE TO STAY
+          <h2 className="font-serif text-3xl md:text-6xl font-bold text-forest mb-6 tracking-tight uppercase">
+            STAYING IN THE MOUNTAINS
           </h2>
           <div className="w-24 h-1 bg-rust/20 mx-auto rounded-full"></div>
         </div>
       </FadeInWhenVisible>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {[
-          {
-            name: "Wolfkop Camping Villages",
-            desc: "Luxury canvas tents on the Olifants River.",
-            icon: Home,
-          },
-          {
-            name: "Citrusdal Country Lodge",
-            desc: "Comfortable rooms in the heart of town.",
-            icon: Navigation,
-          },
-          {
-            name: "Cederberg Ridge",
-            desc: "Wilderness lodge for a premium stay.",
-            icon: Home,
-          },
-        ].map((place, i) => (
-          <div key={i}>
-            <FadeInWhenVisible delay={i * 0.1}>
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-sand/20 p-10 rounded-2xl border border-forest/5 flex flex-col items-center text-center group"
-              >
-                <place.icon className="w-16 h-16 text-rust mb-8 stroke-[0.5] group-hover:scale-110 transition-transform" />
-                <h4 className="font-serif text-2xl font-bold text-forest mb-3">
-                  {place.name}
-                </h4>
-                <p className="text-sm text-neutral-500 font-light">
-                  {place.desc}
+      <div className="max-w-4xl mx-auto">
+        <FadeInWhenVisible>
+          <div className="bg-sand/20 p-10 md:p-16 rounded-3xl border border-forest/5 shadow-sm overflow-hidden relative group">
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+                <div>
+                  <h3 className="font-serif text-4xl font-bold text-forest mb-2">
+                    Wolfkop Nature Reserve
+                  </h3>
+                  <p className="text-rust font-bold tracking-widest text-xs uppercase">
+                    Our Wedding Venue & Basecamp
+                  </p>
+                </div>
+                <Home className="w-16 h-16 text-rust stroke-[0.5]" />
+              </div>
+
+              <div className="prose prose-neutral max-w-none mb-12">
+                <p className="text-lg text-neutral-700 leading-relaxed font-light mb-6">
+                  Nestled in the golden rock formations of the Citrusdal valley,
+                  Wolfkop offers an extraordinary mountain retreat. We've chosen
+                  this sanctuary for its rugged beauty and serene atmosphere.
                 </p>
-              </motion.div>
-            </FadeInWhenVisible>
+                <p className="text-base text-neutral-600 leading-relaxed font-light mb-8">
+                  We have booked for all guests and allocated cottages to
+                  groups. Check in for your specific house upon arrival.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+                {[
+                  {
+                    title: "Relaxation",
+                    desc: "Wood-fired hot tubs and private plunge pools at most houses.",
+                  },
+                  {
+                    title: "Comfort",
+                    desc: "Luxury king-size beds, en-suite bathrooms, and indoor fireplaces.",
+                  },
+                  {
+                    title: "Adventure",
+                    desc: "Private hiking trails, MTB tracks, and spectacular valley views.",
+                  },
+                  {
+                    title: "Loadshedding Free",
+                    desc: "Many houses are equipped with solar power for an uninterrupted stay.",
+                  },
+                ].map((feature, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="w-1 h-full bg-rust/30 rounded-full" />
+                    <div>
+                      <h4 className="font-bold text-xs uppercase tracking-widest text-forest mb-1">
+                        {feature.title}
+                      </h4>
+                      <p className="text-sm text-neutral-500 font-light">
+                        {feature.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Subtle Citrusdal Background Illustration */}
+            <div className="absolute inset-0 opacity-[0.2] pointer-events-none -z-0">
+              <CitrusdalIllustration className="w-full h-full object-cover" />
+            </div>
           </div>
-        ))}
+        </FadeInWhenVisible>
       </div>
     </div>
   </section>
@@ -538,7 +610,7 @@ const Footer = () => (
         A&P
       </motion.div>
       <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-wedding-brown/60 mb-12">
-        {["Story", "Travel", "Packing"].map((item) => (
+        {["Schedule", "Travel", "Packing"].map((item) => (
           <a
             key={item}
             href={`#${item.toLowerCase()}`}
@@ -562,7 +634,7 @@ export default function App() {
       <Navbar />
       <Hero />
       <InfoGrid />
-      <StoryTimeline />
+      <ScheduleTimeline />
       <TravelDetails />
       <Footer />
     </div>
