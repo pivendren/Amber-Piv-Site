@@ -27,14 +27,20 @@ const Navbar = () => (
   >
     <div className="font-serif font-bold text-xl tracking-tight text-forest">COAST CAMP</div>
     <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600">
-      {["Story", "Travel", "Packing", "Schedule"].map((item) => (
+      {["RSVP", "Story", "Travel", "Packing", "Schedule", "Registry"].map((item) => (
         <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-rust transition-colors relative group">
           {item}
           <span className="absolute -bottom-1 left-0 w-0 h-px bg-rust transition-all duration-300 group-hover:w-full"></span>
         </a>
       ))}
     </div>
-    <div className="w-[100px]"></div> {/* Spacer to balance logo if needed, or just remove button */}
+    <motion.button 
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-rust text-white px-6 py-2 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-rust/90 transition-colors shadow-lg shadow-rust/20"
+    >
+      RSVP
+    </motion.button>
   </motion.nav>
 );
 
@@ -115,92 +121,132 @@ const Hero = () => {
 };
 
 const InfoGrid = () => (
-  <section className="bg-white py-12">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Our Story */}
-      <FadeInWhenVisible>
-        <motion.div 
-          whileHover={{ y: -5 }}
-          id="story" className="relative group overflow-hidden min-h-[600px] rounded-sm shadow-sm"
-        >
-          <img src="https://picsum.photos/seed/story-cover/800/1000" alt="Our Story" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
-          <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-end p-12 text-center text-white">
-            <h2 className="font-serif text-5xl font-black mb-2 uppercase tracking-tight">OUR STORY</h2>
-            <p className="text-base opacity-90 font-medium tracking-tight">From the first hike to the biggest adventure.</p>
-          </div>
-        </motion.div>
-      </FadeInWhenVisible>
-
-      {/* Location */}
-      <FadeInWhenVisible delay={0.2}>
-        <motion.div 
-          whileHover={{ y: -5 }}
-          className="bg-sand p-12 flex flex-col items-center text-center justify-between min-h-[600px] rounded-sm topo-bg border border-black/5"
-        >
-          <div className="w-full flex flex-col items-center pt-12">
-            <div className="flex gap-4 mb-8">
-              <div className="w-20 h-20 border-2 border-forest/20 rounded-sm flex items-center justify-center">
-                <Navigation className="w-10 h-10 text-forest stroke-[1.5]" />
-              </div>
-              <div className="w-20 h-20 border-2 border-forest/20 rounded-sm flex items-center justify-center">
-                <MapPin className="w-10 h-10 text-forest stroke-[1.5]" />
-              </div>
-            </div>
-            <h2 className="font-serif text-4xl font-black text-forest mb-6 uppercase leading-none tracking-tighter">LOCATION & LODGING</h2>
-            <p className="text-base text-neutral-800 leading-relaxed max-w-[280px] font-medium tracking-tight">
-              Locate snore your coastal the venue at the Olis, californ, and nearmore momwhere of your uncer coastal cliff loya.
+  <section className="bg-[#d4c3a3] py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      
+      {/* Column 1 */}
+      <div className="flex flex-col gap-4">
+        {/* RSVP */}
+        <FadeInWhenVisible>
+          <motion.div whileHover={{ y: -5 }} id="rsvp" className="bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[200px] rounded-lg shadow-sm">
+            <h2 className="font-serif text-5xl font-black mb-4 uppercase tracking-widest text-transparent" style={{ WebkitTextStroke: '1px #e3d3a4' }}>RSVP</h2>
+            <p className="text-xs leading-relaxed text-center font-medium">
+              Please let us know if you can or cannot come ASAP.<br/>The deadline is <strong>June 3rd</strong>.
             </p>
-          </div>
-          <div className="w-full mt-8 opacity-40">
-            <div className="h-32 w-full border-t-2 border-forest/30 relative overflow-hidden">
-               <div className="absolute bottom-0 left-0 w-full h-16 bg-forest/5 skew-y-3"></div>
-               <div className="absolute bottom-4 right-10 w-12 h-12 border-2 border-forest/20 rotate-45"></div>
+          </motion.div>
+        </FadeInWhenVisible>
+
+        {/* Our Story */}
+        <FadeInWhenVisible delay={0.1}>
+          <motion.div whileHover={{ y: -5 }} id="story" className="relative group overflow-hidden h-[500px] rounded-lg shadow-sm">
+            <img src="https://picsum.photos/seed/story-cover/800/1000" alt="Our Story" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-[#e3d3a4]">
+              <h2 className="font-sans text-3xl font-black uppercase tracking-widest">OUR STORY</h2>
             </div>
-          </div>
-        </motion.div>
-      </FadeInWhenVisible>
+          </motion.div>
+        </FadeInWhenVisible>
+      </div>
 
-      {/* Packing List */}
-      <FadeInWhenVisible>
-        <motion.div 
-          whileHover={{ y: -5 }}
-          id="packing" className="bg-forest text-white p-12 flex flex-col items-center text-center justify-center min-h-[500px] rounded-sm"
-        >
-          <div className="grid grid-cols-2 gap-8 mb-12">
-            <Package className="w-16 h-16 text-sand/40 stroke-[1]" />
-            <div className="w-16 h-16 border-2 border-sand/20 rounded-sm"></div>
-            <div className="w-16 h-16 border-2 border-sand/20 rounded-sm"></div>
-            <ClipboardList className="w-16 h-16 text-sand/40 stroke-[1]" />
-          </div>
-          <h2 className="font-serif text-5xl font-black mb-6 uppercase tracking-tight">PACKING LIST</h2>
-          <p className="text-base leading-relaxed opacity-90 max-w-[280px] font-medium tracking-tight">
-            Keep some rorotorioovse:tlire essentials to packets, and jackts, boots, and more.
-          </p>
-        </motion.div>
-      </FadeInWhenVisible>
+      {/* Columns 2 & 3 */}
+      <div className="md:col-span-2 flex flex-col gap-4">
+        {/* Location & Lodging */}
+        <FadeInWhenVisible delay={0.2}>
+          <motion.div whileHover={{ y: -5 }} className="bg-[#e3d3a4] p-8 flex flex-col h-[250px] rounded-lg shadow-sm relative overflow-hidden">
+            <h2 className="font-sans text-3xl font-black text-[#5a6045] uppercase tracking-widest relative z-10">LOCATION & LODGING</h2>
+            {/* SVG Background */}
+            <div className="absolute inset-0 w-full h-full pointer-events-none">
+              <svg viewBox="0 0 400 200" className="w-full h-full stroke-[#5a6045] fill-none stroke-[1.5] opacity-80" preserveAspectRatio="xMidYMax slice">
+                {/* Dots/Stars */}
+                <g fill="#5a6045" stroke="none">
+                  <circle cx="20" cy="40" r="1" /> <circle cx="50" cy="80" r="1" /> <circle cx="80" cy="30" r="1" />
+                  <circle cx="120" cy="60" r="1" /> <circle cx="150" cy="20" r="1" /> <circle cx="180" cy="90" r="1" />
+                  <circle cx="220" cy="40" r="1" /> <circle cx="250" cy="70" r="1" /> <circle cx="280" cy="30" r="1" />
+                  <circle cx="320" cy="80" r="1" /> <circle cx="350" cy="20" r="1" /> <circle cx="380" cy="60" r="1" />
+                  <circle cx="10" cy="120" r="1" /> <circle cx="40" cy="160" r="1" /> <circle cx="70" cy="110" r="1" />
+                  <circle cx="110" cy="140" r="1" /> <circle cx="140" cy="180" r="1" /> <circle cx="170" cy="130" r="1" />
+                  <circle cx="210" cy="170" r="1" /> <circle cx="240" cy="120" r="1" /> <circle cx="270" cy="160" r="1" />
+                </g>
+                {/* Clouds */}
+                <path d="M 10 30 L 40 30 Q 50 30 50 40 L 20 40" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M 220 50 L 280 50 Q 290 50 290 60 L 240 60" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M 320 20 L 380 20 Q 390 20 390 30 L 340 30" strokeLinecap="round" strokeLinejoin="round" />
+                {/* Cliff */}
+                <path d="M 230 200 L 240 120 Q 245 100 260 100 L 400 100" />
+                <path d="M 230 200 L 235 120" />
+                {/* Tent */}
+                <path d="M 260 100 L 280 60 L 300 100 Z" />
+                <path d="M 280 60 L 280 100" />
+                <path d="M 270 100 L 280 80 L 290 100" />
+                {/* Trees */}
+                <path d="M 310 100 L 310 50 M 300 90 L 310 70 L 320 90 M 305 70 L 310 50 L 315 70 M 300 100 L 310 80 L 320 100" />
+                <path d="M 340 100 L 340 40 M 330 90 L 340 60 L 350 90 M 335 60 L 340 40 L 345 60 M 330 100 L 340 70 L 350 100" />
+                <path d="M 370 100 L 370 50 M 360 90 L 370 70 L 380 90 M 365 70 L 370 50 L 375 70 M 360 100 L 370 80 L 380 100" />
+                {/* Water Lines */}
+                <path d="M 0 120 Q 20 125 40 120 T 80 120 T 120 120 T 160 120 T 200 120 T 235 120" />
+                <path d="M 10 150 Q 30 155 50 150 T 90 150 T 130 150 T 170 150 T 210 150 T 232 150" />
+                <path d="M 0 180 Q 20 185 40 180 T 80 180 T 120 180 T 160 180 T 200 180 T 230 180" />
+              </svg>
+            </div>
+          </motion.div>
+        </FadeInWhenVisible>
 
-      {/* Schedule */}
-      <FadeInWhenVisible delay={0.2}>
-        <motion.div 
-          whileHover={{ y: -5 }}
-          id="schedule" className="bg-rust text-white p-12 flex flex-col items-center text-center justify-center min-h-[500px] rounded-sm"
-        >
-          <h2 className="font-serif text-6xl font-black mb-10 uppercase tracking-tight">SCHEDULE</h2>
-          <div className="space-y-8 text-sm font-bold uppercase tracking-[0.1em]">
-            {[
-              { day: "Monday", time: "6:00 am — 8:30 pm" },
-              { day: "Tuesday", time: "2:30 am — 2:30 pm" },
-              { day: "Wednesday", time: "3:30 am — 2:30 pm" },
-              { day: "Thursday", time: "3:00 am — 3:30 pm" }
-            ].map((item, i) => (
-              <div key={i}>
-                <p className="text-white/60 mb-1 text-[10px] tracking-[0.2em]">{item.day}</p>
-                <p className="text-xl font-black">{item.time}</p>
+        {/* Bottom Row of Col 2 & 3 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+          {/* Packing List */}
+          <FadeInWhenVisible delay={0.3}>
+            <motion.div whileHover={{ y: -5 }} id="packing" className="bg-[#455860] text-[#e3d3a4] p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm relative overflow-hidden">
+              <h2 className="font-sans text-3xl font-black uppercase tracking-widest mb-8 relative z-10">PACKING LIST</h2>
+              {/* SVGs */}
+              <div className="flex-1 w-full relative">
+                <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full stroke-[#e3d3a4] fill-none stroke-[2]" strokeLinecap="round" strokeLinejoin="round">
+                  {/* Backpack */}
+                  <g transform="translate(10, 20)">
+                    <rect x="10" y="20" width="40" height="50" rx="10" />
+                    <path d="M 15 20 Q 30 0 45 20" />
+                    <rect x="15" y="40" width="30" height="25" rx="5" />
+                    <line x1="25" y1="45" x2="35" y2="45" />
+                    <path d="M 10 30 Q 0 40 5 60" />
+                    <path d="M 50 30 Q 60 40 55 60" />
+                  </g>
+                  {/* Puffer Jacket */}
+                  <g transform="translate(80, 10)">
+                    <path d="M 30 10 Q 40 0 50 10 L 70 20 Q 80 30 75 50 L 70 70 Q 60 80 50 75 L 50 80 Q 40 85 30 80 L 30 75 Q 20 80 10 70 L 5 50 Q 0 30 10 20 Z" />
+                    <line x1="40" y1="10" x2="40" y2="82" />
+                    <path d="M 10 20 Q 20 30 30 30 M 10 40 Q 20 50 30 50 M 10 60 Q 20 70 30 70" />
+                    <path d="M 70 20 Q 60 30 50 30 M 70 40 Q 60 50 50 50 M 70 60 Q 60 70 50 70" />
+                    <path d="M 30 30 Q 40 35 50 30 M 30 50 Q 40 55 50 50 M 30 70 Q 40 75 50 70" />
+                  </g>
+                  {/* Boot */}
+                  <g transform="translate(30, 110)">
+                    <path d="M 40 10 L 50 30 L 70 35 L 80 50 L 80 60 L 10 60 L 5 50 L 10 40 L 20 40 L 30 20 Z" />
+                    <path d="M 10 60 L 10 65 Q 45 70 80 65 L 80 60" />
+                    <path d="M 40 10 Q 50 20 60 15 M 45 15 Q 55 25 65 20 M 50 20 Q 60 30 70 25" />
+                    <path d="M 30 20 L 40 40" />
+                  </g>
+                </svg>
               </div>
-            ))}
+            </motion.div>
+          </FadeInWhenVisible>
+
+          {/* Schedule & Registry */}
+          <div className="flex flex-col gap-4">
+            {/* Schedule */}
+            <FadeInWhenVisible delay={0.4}>
+              <motion.div whileHover={{ y: -5 }} id="schedule" className="bg-[#9a3324] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm">
+                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent" style={{ WebkitTextStroke: '1px #e3d3a4' }}>SCHEDULE</h2>
+              </motion.div>
+            </FadeInWhenVisible>
+
+            {/* Registry */}
+            <FadeInWhenVisible delay={0.5}>
+              <motion.div whileHover={{ y: -5 }} id="registry" className="bg-[#73734f] text-[#e3d3a4] p-8 flex flex-col items-center justify-center h-[217px] rounded-lg shadow-sm">
+                <h2 className="font-serif text-4xl font-black uppercase tracking-widest text-transparent" style={{ WebkitTextStroke: '1px #e3d3a4' }}>REGISTRY</h2>
+              </motion.div>
+            </FadeInWhenVisible>
           </div>
-        </motion.div>
-      </FadeInWhenVisible>
+        </div>
+      </div>
+
     </div>
   </section>
 );
@@ -354,7 +400,7 @@ const Footer = () => (
         COAST CAMP
       </motion.div>
       <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-forest/60 mb-12">
-        {["Story", "Travel", "Packing", "Schedule"].map((item) => (
+        {["RSVP", "Story", "Travel", "Packing", "Schedule", "Registry"].map((item) => (
           <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-forest transition-colors">
             {item}
           </a>
