@@ -19,6 +19,27 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Floating, { FloatingElement } from "./components/ui/parallax-floating";
+import {
+  MeetingIllustration,
+  RoadTripIllustration,
+  ProposalIllustration,
+  WeddingIllustration,
+} from "./components/illustrations/StoryIllustrations";
+import {
+  HikingIllustration,
+  CoastViewIllustration,
+  CampfireIllustration,
+  BeachWalkIllustration,
+  OceanCoupleIllustration,
+  FireBeachIllustration,
+  CliffsIllustration,
+  ForestCoupleIllustration,
+} from "./components/illustrations/HeroIllustrations";
+import {
+  LocationLodgingIllustration,
+  ScheduleIllustration,
+  PackingListIllustration,
+} from "./components/illustrations/InfoGridIllustrations";
 
 const FadeInWhenVisible = ({
   children,
@@ -97,12 +118,7 @@ const Hero = () => {
             style={{ y: y1 }}
             className="w-36 h-52 md:w-56 md:h-80 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/hiking-couple/600/800"
-              alt="Hiking"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <HikingIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
 
@@ -115,12 +131,7 @@ const Hero = () => {
             style={{ y: y2 }}
             className="w-48 h-32 md:w-72 md:h-48 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/coast-view/800/600"
-              alt="Coast"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <CoastViewIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
 
@@ -133,12 +144,7 @@ const Hero = () => {
             style={{ y: y1 }}
             className="w-44 h-32 md:w-64 md:h-44 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/campfire-night/800/600"
-              alt="Campfire"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <CampfireIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
 
@@ -151,12 +157,7 @@ const Hero = () => {
             style={{ y: y2 }}
             className="w-32 h-48 md:w-52 md:h-72 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/beach-walk/600/800"
-              alt="Beach"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <BeachWalkIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
 
@@ -169,12 +170,7 @@ const Hero = () => {
             style={{ y: y1 }}
             className="w-32 h-48 md:w-52 md:h-72 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/ocean-couple/600/800"
-              alt="Ocean"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <OceanCoupleIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
 
@@ -187,12 +183,7 @@ const Hero = () => {
             style={{ y: y2 }}
             className="w-48 h-36 md:w-72 md:h-52 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/fire-beach/800/600"
-              alt="Fire"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <FireBeachIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
 
@@ -205,12 +196,7 @@ const Hero = () => {
             style={{ y: y1 }}
             className="w-48 h-32 md:w-72 md:h-44 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/cliffs/800/600"
-              alt="Cliffs"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <CliffsIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
 
@@ -223,12 +209,7 @@ const Hero = () => {
             style={{ y: y2 }}
             className="w-36 h-52 md:w-56 md:h-80 rounded-sm overflow-hidden shadow-xl"
           >
-            <img
-              src="https://picsum.photos/seed/forest-couple/600/800"
-              alt="Forest"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
+            <ForestCoupleIllustration className="w-full h-full object-cover" />
           </motion.div>
         </FloatingElement>
       </Floating>
@@ -293,14 +274,7 @@ const InfoGrid = () => (
 
           {/* Subtle SVG Background Overlay */}
           <div className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
-            <svg
-              viewBox="0 0 400 200"
-              className="w-full h-full stroke-[#5a6045] fill-none stroke-[1]"
-              preserveAspectRatio="xMidYMax slice"
-            >
-              <path d="M 0 180 Q 50 190 100 180 T 200 180 T 300 180 T 400 180" />
-              <path d="M 20 190 Q 70 200 120 190 T 220 190 T 320 190 T 400 190" />
-            </svg>
+            <LocationLodgingIllustration className="w-full h-full object-cover" />
           </div>
         </motion.a>
       </FadeInWhenVisible>
@@ -314,12 +288,7 @@ const InfoGrid = () => (
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="group block relative overflow-hidden h-[450px] rounded-lg shadow-sm"
           >
-            <img
-              src="https://picsum.photos/seed/wolfkop/800/1000"
-              alt="Our Story"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-              referrerPolicy="no-referrer"
-            />
+            <ScheduleIllustration className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-[#e3d3a4] transition-colors duration-500 group-hover:bg-black/20">
               <h2 className="font-display text-3xl font-black uppercase tracking-widest">
                 Schedule
@@ -340,34 +309,7 @@ const InfoGrid = () => (
               PACKING LIST
             </h2>
             <div className="flex-1 w-full relative transition-transform duration-700 group-hover:scale-110 group-hover:-translate-y-4">
-              <svg
-                viewBox="0 0 200 200"
-                className="absolute inset-0 w-full h-full stroke-[#e3d3a4] fill-none stroke-[2]"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <g transform="translate(10, 20)">
-                  <rect x="10" y="20" width="40" height="50" rx="10" />
-                  <path d="M 15 20 Q 30 0 45 20" />
-                  <rect x="15" y="40" width="30" height="25" rx="5" />
-                  <line x1="25" y1="45" x2="35" y2="45" />
-                  <path d="M 10 30 Q 0 40 5 60" />
-                  <path d="M 50 30 Q 60 40 55 60" />
-                </g>
-                <g transform="translate(80, 10)">
-                  <path d="M 30 10 Q 40 0 50 10 L 70 20 Q 80 30 75 50 L 70 70 Q 60 80 50 75 L 50 80 Q 40 85 30 80 L 30 75 Q 20 80 10 70 L 5 50 Q 0 30 10 20 Z" />
-                  <line x1="40" y1="10" x2="40" y2="82" />
-                  <path d="M 10 20 Q 20 30 30 30 M 10 40 Q 20 50 30 50 M 10 60 Q 20 70 30 70" />
-                  <path d="M 70 20 Q 60 30 50 30 M 70 40 Q 60 50 50 50 M 70 60 Q 60 70 50 70" />
-                  <path d="M 30 30 Q 40 35 50 30 M 30 50 Q 40 55 50 50 M 30 70 Q 40 75 50 70" />
-                </g>
-                <g transform="translate(30, 110)">
-                  <path d="M 40 10 L 50 30 L 70 35 L 80 50 L 80 60 L 10 60 L 5 50 L 10 40 L 20 40 L 30 20 Z" />
-                  <path d="M 10 60 L 10 65 Q 45 70 80 65 L 80 60" />
-                  <path d="M 40 10 Q 50 20 60 15 M 45 15 Q 55 25 65 20 M 50 20 Q 60 30 70 25" />
-                  <path d="M 30 20 L 40 40" />
-                </g>
-              </svg>
+              <PackingListIllustration className="absolute inset-0 w-full h-full object-contain" />
             </div>
           </motion.a>
         </FadeInWhenVisible>
@@ -412,28 +354,28 @@ const StoryTimeline = () => (
             {
               year: "2018",
               title: "Meeting in the City",
-              img: "city-coffee",
+              Illustration: MeetingIllustration,
               side: "left",
               text: "We met at a small coffee shop. A shared love for adventure and nature sparked an immediate connection.",
             },
             {
               year: "2020",
               title: "West Coast Road Trip",
-              img: "coast-road",
+              Illustration: RoadTripIllustration,
               side: "right",
               text: "Our first big road trip up the West Coast. From the rugged cliffs to the serene beaches, we knew this was it.",
             },
             {
               year: "2021",
               title: "The Proposal",
-              img: "proposal-elk",
+              Illustration: ProposalIllustration,
               side: "left",
               text: "During a weekend getaway in Elk, Piv proposed at sunset overlooking the Pacific. It was pure magic.",
             },
             {
               year: "2022",
               title: "The Wedding",
-              img: "celebration-wedding",
+              Illustration: WeddingIllustration,
               side: "right",
               text: "We are so excited to begin our married life together, surrounded by our loved ones at WEDDING CAMP.",
             },
@@ -449,12 +391,7 @@ const StoryTimeline = () => (
                     className="relative group"
                   >
                     <div className="absolute inset-0 bg-rust/10 rounded-2xl blur-2xl group-hover:bg-rust/20 transition-all"></div>
-                    <img
-                      src={`https://picsum.photos/seed/${item.img}/600/450`}
-                      alt={item.year}
-                      className="relative rounded-2xl shadow-2xl w-full max-w-md z-10"
-                      referrerPolicy="no-referrer"
-                    />
+                    <item.Illustration className="relative rounded-2xl shadow-2xl w-full max-w-md z-10" />
                   </motion.div>
                 </FadeInWhenVisible>
               </div>
