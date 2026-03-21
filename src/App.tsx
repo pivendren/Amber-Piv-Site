@@ -6,7 +6,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { MapPin, Calendar, Heart, Navigation, Package, ClipboardList, Gift, Car, Plane, Home, ChevronDown } from "lucide-react";
-import MagicStudio from "./components/MagicStudio";
 import Floating, { FloatingElement } from "./components/ui/parallax-floating";
 
 const FadeInWhenVisible = ({ children, delay = 0, y = 20, x = 0 }: { children: React.ReactNode, delay?: number, y?: number, x?: number }) => (
@@ -494,7 +493,6 @@ export default function App() {
       <InfoGrid />
       <StoryTimeline />
       <TravelDetails />
-      <MagicStudio />
       <Footer />
     </div>
   );
