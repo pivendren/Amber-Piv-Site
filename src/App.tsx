@@ -20,9 +20,6 @@ import {
 } from "lucide-react";
 import Floating, { FloatingElement } from "./components/ui/parallax-floating";
 
-import Lottie from "lottie-react";
-import tableMountainScene from "./assets/table-mountain-scene.json";
-
 const FadeInWhenVisible = ({
   children,
   delay = 0,
