@@ -27,20 +27,14 @@ const Navbar = () => (
   >
     <div className="font-serif font-bold text-xl tracking-tight text-forest">COAST CAMP</div>
     <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600">
-      {["RSVP", "Story", "Travel", "Packing", "Schedule", "Registry"].map((item) => (
+      {["Story", "Travel", "Packing", "Schedule"].map((item) => (
         <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-rust transition-colors relative group">
           {item}
           <span className="absolute -bottom-1 left-0 w-0 h-px bg-rust transition-all duration-300 group-hover:w-full"></span>
         </a>
       ))}
     </div>
-    <motion.button 
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className="bg-rust text-white px-6 py-2 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-rust/90 transition-colors shadow-lg shadow-rust/20"
-    >
-      RSVP
-    </motion.button>
+    <div className="w-[100px]"></div> {/* Spacer to balance logo if needed, or just remove button */}
   </motion.nav>
 );
 
@@ -80,36 +74,30 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h1 className="font-serif text-7xl md:text-9xl font-bold text-rust mb-6 leading-[0.9] tracking-tighter">
+            <h1 className="font-serif text-7xl md:text-[120px] font-black text-rust mb-2 leading-[0.8] tracking-tighter uppercase">
               COAST CAMP
-              <motion.span 
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="block text-4xl md:text-6xl text-neutral-800 mt-4 italic font-normal tracking-normal"
-              >
-                with Nick & Allison
-              </motion.span>
             </h1>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="font-serif text-4xl md:text-6xl text-rust font-black uppercase tracking-tight mb-8"
+            >
+              WITH NICK & ALLISON
+            </motion.h2>
           </motion.div>
           
           <FadeInWhenVisible delay={0.8}>
-            <p className="text-xl md:text-2xl text-neutral-600 mb-10 font-light tracking-wide">
+            <p className="text-xl md:text-2xl text-neutral-800 mb-10 font-medium tracking-tight">
               Join us as we celebrate our marriage
             </p>
           </FadeInWhenVisible>
 
           <FadeInWhenVisible delay={1}>
-            <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 text-sm font-bold uppercase tracking-[0.3em] text-neutral-400">
-              <div className="flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-rust" />
-                SEPTEMBER 1-4, 2022
-              </div>
-              <div className="hidden md:block w-px h-6 bg-neutral-200"></div>
-              <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-rust" />
-                ELK, CALIFORNIA
-              </div>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 text-sm font-bold uppercase tracking-[0.2em] text-neutral-900">
+              <div>SEPTEMBER 1-4, 2022</div>
+              <div className="hidden md:block w-1.5 h-1.5 bg-neutral-900 rounded-full"></div>
+              <div>ELK, CALIFORNIA</div>
             </div>
           </FadeInWhenVisible>
         </div>
@@ -127,76 +115,66 @@ const Hero = () => {
 };
 
 const InfoGrid = () => (
-  <section className="bg-white py-32">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-      {/* RSVP */}
+  <section className="bg-white py-12">
+    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Our Story */}
       <FadeInWhenVisible>
         <motion.div 
-          whileHover={{ y: -10 }}
-          id="rsvp" className="bg-rust text-white p-16 flex flex-col items-center text-center justify-center min-h-[450px] rounded-2xl shadow-xl shadow-rust/10"
-        >
-          <h2 className="font-serif text-5xl font-bold mb-8">RSVP</h2>
-          <p className="text-base leading-relaxed opacity-80 max-w-[260px] font-light">
-            Please let us know if you can or cannot come ASAP. The deadline is June 3rd.
-          </p>
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            className="mt-10 border border-white/30 px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-rust transition-all"
-          >
-            Fill out form
-          </motion.button>
-        </motion.div>
-      </FadeInWhenVisible>
-
-      {/* Our Story */}
-      <FadeInWhenVisible delay={0.2}>
-        <motion.div 
-          whileHover={{ y: -10 }}
-          id="story" className="relative group overflow-hidden min-h-[450px] rounded-2xl shadow-2xl"
+          whileHover={{ y: -5 }}
+          id="story" className="relative group overflow-hidden min-h-[600px] rounded-sm shadow-sm"
         >
           <img src="https://picsum.photos/seed/story-cover/800/1000" alt="Our Story" className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end p-16 text-center text-white">
-            <h2 className="font-serif text-5xl font-bold mb-3">OUR STORY</h2>
-            <p className="text-base opacity-80 italic font-light">From the first hike to the biggest adventure.</p>
+          <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-end p-12 text-center text-white">
+            <h2 className="font-serif text-5xl font-black mb-2 uppercase tracking-tight">OUR STORY</h2>
+            <p className="text-base opacity-90 font-medium tracking-tight">From the first hike to the biggest adventure.</p>
           </div>
         </motion.div>
       </FadeInWhenVisible>
 
       {/* Location */}
-      <FadeInWhenVisible delay={0.4}>
+      <FadeInWhenVisible delay={0.2}>
         <motion.div 
-          whileHover={{ y: -10 }}
-          className="bg-sand p-16 flex flex-col items-center text-center justify-center min-h-[450px] rounded-2xl topo-bg border border-black/5"
+          whileHover={{ y: -5 }}
+          className="bg-sand p-12 flex flex-col items-center text-center justify-between min-h-[600px] rounded-sm topo-bg border border-black/5"
         >
-          <motion.div 
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
-            className="mb-10"
-          >
-            <Navigation className="w-20 h-20 text-forest stroke-[0.5]" />
-          </motion.div>
-          <h2 className="font-serif text-4xl font-bold text-forest mb-8">LOCATION & LODGING</h2>
-          <p className="text-base text-neutral-600 leading-relaxed max-w-[300px] font-light">
-            Located along the coastal venue at the Elk, California, and near more somewhere of your under coastal cliff lodge.
-          </p>
+          <div className="w-full flex flex-col items-center pt-12">
+            <div className="flex gap-4 mb-8">
+              <div className="w-20 h-20 border-2 border-forest/20 rounded-sm flex items-center justify-center">
+                <Navigation className="w-10 h-10 text-forest stroke-[1.5]" />
+              </div>
+              <div className="w-20 h-20 border-2 border-forest/20 rounded-sm flex items-center justify-center">
+                <MapPin className="w-10 h-10 text-forest stroke-[1.5]" />
+              </div>
+            </div>
+            <h2 className="font-serif text-4xl font-black text-forest mb-6 uppercase leading-none tracking-tighter">LOCATION & LODGING</h2>
+            <p className="text-base text-neutral-800 leading-relaxed max-w-[280px] font-medium tracking-tight">
+              Locate snore your coastal the venue at the Olis, californ, and nearmore momwhere of your uncer coastal cliff loya.
+            </p>
+          </div>
+          <div className="w-full mt-8 opacity-40">
+            <div className="h-32 w-full border-t-2 border-forest/30 relative overflow-hidden">
+               <div className="absolute bottom-0 left-0 w-full h-16 bg-forest/5 skew-y-3"></div>
+               <div className="absolute bottom-4 right-10 w-12 h-12 border-2 border-forest/20 rotate-45"></div>
+            </div>
+          </div>
         </motion.div>
       </FadeInWhenVisible>
 
       {/* Packing List */}
       <FadeInWhenVisible>
         <motion.div 
-          whileHover={{ y: -10 }}
-          id="packing" className="bg-forest text-white p-16 flex flex-col items-center text-center justify-center min-h-[450px] rounded-2xl shadow-xl shadow-forest/10"
+          whileHover={{ y: -5 }}
+          id="packing" className="bg-forest text-white p-12 flex flex-col items-center text-center justify-center min-h-[500px] rounded-sm"
         >
-          <div className="grid grid-cols-2 gap-8 mb-10">
-            <Package className="w-12 h-12 opacity-40" />
-            <div className="w-12 h-12 border border-white/20 rounded-lg"></div>
-            <div className="w-12 h-12 border border-white/20 rounded-lg"></div>
-            <ClipboardList className="w-12 h-12 opacity-40" />
+          <div className="grid grid-cols-2 gap-8 mb-12">
+            <Package className="w-16 h-16 text-sand/40 stroke-[1]" />
+            <div className="w-16 h-16 border-2 border-sand/20 rounded-sm"></div>
+            <div className="w-16 h-16 border-2 border-sand/20 rounded-sm"></div>
+            <ClipboardList className="w-16 h-16 text-sand/40 stroke-[1]" />
           </div>
-          <h2 className="font-serif text-4xl font-bold mb-8 uppercase tracking-widest">PACKING LIST</h2>
-          <p className="text-base leading-relaxed opacity-80 max-w-[260px] font-light">
-            Keep some essential items for packets, and jackets, boots, and more.
+          <h2 className="font-serif text-5xl font-black mb-6 uppercase tracking-tight">PACKING LIST</h2>
+          <p className="text-base leading-relaxed opacity-90 max-w-[280px] font-medium tracking-tight">
+            Keep some rorotorioovse:tlire essentials to packets, and jackts, boots, and more.
           </p>
         </motion.div>
       </FadeInWhenVisible>
@@ -204,37 +182,23 @@ const InfoGrid = () => (
       {/* Schedule */}
       <FadeInWhenVisible delay={0.2}>
         <motion.div 
-          whileHover={{ y: -10 }}
-          id="schedule" className="bg-rust text-white p-16 flex flex-col items-center text-center justify-center min-h-[450px] rounded-2xl shadow-xl shadow-rust/10"
+          whileHover={{ y: -5 }}
+          id="schedule" className="bg-rust text-white p-12 flex flex-col items-center text-center justify-center min-h-[500px] rounded-sm"
         >
-          <h2 className="font-serif text-5xl font-bold mb-10 uppercase tracking-widest">SCHEDULE</h2>
-          <div className="space-y-6 text-sm font-bold uppercase tracking-[0.2em]">
-            {["Monday", "Tuesday", "Wednesday", "Thursday"].map((day, i) => (
-              <motion.div 
-                key={day}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 + (i * 0.1) }}
-              >
-                <p className="text-white/40 mb-1 text-[10px]">{day}</p>
-                <p className="text-lg">6:00 am — 8:30 pm</p>
-              </motion.div>
+          <h2 className="font-serif text-6xl font-black mb-10 uppercase tracking-tight">SCHEDULE</h2>
+          <div className="space-y-8 text-sm font-bold uppercase tracking-[0.1em]">
+            {[
+              { day: "Monday", time: "6:00 am — 8:30 pm" },
+              { day: "Tuesday", time: "2:30 am — 2:30 pm" },
+              { day: "Wednesday", time: "3:30 am — 2:30 pm" },
+              { day: "Thursday", time: "3:00 am — 3:30 pm" }
+            ].map((item, i) => (
+              <div key={i}>
+                <p className="text-white/60 mb-1 text-[10px] tracking-[0.2em]">{item.day}</p>
+                <p className="text-xl font-black">{item.time}</p>
+              </div>
             ))}
           </div>
-        </motion.div>
-      </FadeInWhenVisible>
-
-      {/* Registry */}
-      <FadeInWhenVisible delay={0.4}>
-        <motion.div 
-          whileHover={{ y: -10 }}
-          id="registry" className="bg-forest text-white p-16 flex flex-col items-center text-center justify-center min-h-[450px] rounded-2xl shadow-xl shadow-forest/10"
-        >
-          <Gift className="w-16 h-16 mb-10 opacity-40 stroke-[1]" />
-          <h2 className="font-serif text-5xl font-bold mb-8">REGISTRY</h2>
-          <p className="text-base leading-relaxed opacity-80 max-w-[260px] font-light">
-            We care our gifts to share the best company to your communal care gifts.
-          </p>
         </motion.div>
       </FadeInWhenVisible>
     </div>
@@ -372,23 +336,32 @@ const TravelDetails = () => (
 );
 
 const Footer = () => (
-  <footer className="bg-forest text-white py-20">
-    <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
+  <footer className="bg-sand py-20 relative overflow-hidden">
+    {/* Forest line art background */}
+    <div className="absolute bottom-0 left-0 w-full h-48 opacity-10 pointer-events-none">
+       <div className="flex justify-around items-end h-full">
+          {[...Array(10)].map((_, i) => (
+            <div key={i} className="w-12 h-32 border-l-2 border-forest/40 rounded-t-full transform rotate-12"></div>
+          ))}
+       </div>
+    </div>
+    
+    <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
       <motion.div 
         whileHover={{ scale: 1.05 }}
-        className="font-serif text-4xl font-bold mb-10 tracking-tighter cursor-default"
+        className="font-serif text-4xl font-black mb-10 tracking-tighter cursor-default text-forest uppercase"
       >
         COAST CAMP
       </motion.div>
-      <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-white/50 mb-12">
-        {["RSVP", "Story", "Travel", "Packing", "Schedule", "Registry"].map((item) => (
-          <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-white transition-colors">
+      <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-forest/60 mb-12">
+        {["Story", "Travel", "Packing", "Schedule"].map((item) => (
+          <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-forest transition-colors">
             {item}
           </a>
         ))}
       </div>
-      <div className="w-full h-px bg-white/10 mb-10"></div>
-      <div className="text-[10px] text-white/20 uppercase tracking-[0.4em] font-medium">
+      <div className="w-full h-px bg-forest/10 mb-10"></div>
+      <div className="text-[10px] text-forest/40 uppercase tracking-[0.4em] font-medium">
         © 2022 Nick & Allison — Made with Love
       </div>
     </div>
