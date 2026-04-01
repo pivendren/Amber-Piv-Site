@@ -46,10 +46,10 @@ import {
   WesternCapeMapIllustration,
 } from "./components/illustrations/InfoGridIllustrations";
 import { cn } from "./lib/utils";
-import locationLodgingImg from "./assets/Location and lodging.png";
-import scheduleImg from "./assets/Schedule.png";
-import packingImg from "./assets/Packing.png";
-import mapImg from "./assets/Map.png";
+import locationLodgingImg from "./assets/Location and lodging.webp";
+import scheduleImg from "./assets/Schedule.webp";
+import packingImg from "./assets/Packing.webp";
+import mapImg from "./assets/Map.webp";
 
 const MEDIA_BASE = import.meta.env.BASE_URL + "media/";
 
@@ -139,6 +139,19 @@ const POLAROIDS: Polaroid[] = [
 
 const NAV_ITEMS = ["Schedule", "Travel", "Packing"];
 
+// Respect reduced-motion preference
+const usePrefersReducedMotion = () => {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return reduced;
+};
+
 const FadeInWhenVisible = ({
   children,
   delay = 0,
@@ -149,16 +162,20 @@ const FadeInWhenVisible = ({
   delay?: number;
   y?: number;
   x?: number;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y, x }}
-    whileInView={{ opacity: 1, y: 0, x: 0 }}
-    viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 0.8, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
-  >
-    {children}
-  </motion.div>
-);
+}) => {
+  const reduced = usePrefersReducedMotion();
+  if (reduced) return <>{children}</>;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y, x }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const SectionDivider = ({
   fromColor,
@@ -192,90 +209,85 @@ const SectionDivider = ({
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const threshold = window.innerHeight * 0.7;
+    const onScroll = () => setVisible(window.scrollY > threshold);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: "circOut" }}
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled
-          ? "bg-cream/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-          : "bg-transparent"
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          className={cn(
-            "font-display font-bold text-xl tracking-tight transition-colors duration-500",
-            scrolled ? "text-wedding-brown" : "text-wedding-brown/80"
-          )}
+    <AnimatePresence>
+      {visible && (
+        <motion.nav
+          initial={{ y: -80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -80, opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.04)]"
         >
-          WEDDING CAMP
-        </a>
-        <div className="hidden md:flex gap-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
-          {NAV_ITEMS.map((item) => (
+          <div className="max-w-7xl mx-auto px-6 py-3.5 flex justify-between items-center">
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="hover:text-wedding-brown transition-colors duration-300 relative group py-1"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="font-display font-bold text-lg tracking-tight text-wedding-brown"
             >
-              {item}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-wedding-brown/60 transition-all duration-300 group-hover:w-full" />
+              WEDDING CAMP
             </a>
-          ))}
-        </div>
-
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-wedding-brown p-1"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden bg-cream/95 backdrop-blur-xl"
-          >
-            <div className="flex flex-col px-6 py-5 gap-5">
-              {NAV_ITEMS.map((item, i) => (
-                <motion.a
+            <div className="hidden md:flex gap-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              {NAV_ITEMS.map((item) => (
+                <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  onClick={() => setMobileOpen(false)}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-600 hover:text-wedding-brown transition-colors"
+                  className="hover:text-wedding-brown transition-colors duration-300 relative group py-1"
                 >
                   {item}
-                </motion.a>
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-wedding-brown/60 transition-all duration-300 group-hover:w-full" />
+                </a>
               ))}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden text-wedding-brown p-2 -mr-2"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="md:hidden overflow-hidden bg-cream/95 backdrop-blur-xl border-t border-black/[0.03]"
+              >
+                <div className="flex flex-col px-6 py-4 gap-4">
+                  {NAV_ITEMS.map((item) => (
+                    <a
+                      key={item}
+                      href={`#${item.toLowerCase()}`}
+                      onClick={() => setMobileOpen(false)}
+                      className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-600 hover:text-wedding-brown transition-colors"
+                    >
+                      {item}
+                    </a>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.nav>
+      )}
+    </AnimatePresence>
   );
 };
 
@@ -349,6 +361,7 @@ const Hero = () => {
                   loop
                   muted
                   playsInline
+                  preload={i < 6 ? "auto" : "none"}
                   className="w-full h-full object-cover rounded-[1px]"
                 />
               )}
@@ -425,7 +438,8 @@ const InfoGrid = () => (
               <div className="absolute inset-0 pointer-events-none">
                 <img
                   src={locationLodgingImg}
-                  alt=""
+                  alt="Wolfkop Nature Reserve landscape"
+                  loading="lazy"
                   className="w-full h-full object-cover object-bottom rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent rounded-2xl" />
@@ -468,7 +482,8 @@ const InfoGrid = () => (
               <div className="absolute inset-0 pointer-events-none">
                 <img
                   src={scheduleImg}
-                  alt=""
+                  alt="Wedding weekend schedule illustration"
+                  loading="lazy"
                   className="w-full h-full object-cover rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent rounded-2xl" />
@@ -507,7 +522,8 @@ const InfoGrid = () => (
               <div className="absolute inset-0 pointer-events-none">
                 <img
                   src={packingImg}
-                  alt=""
+                  alt="Packing list illustration"
+                  loading="lazy"
                   className="w-full h-full object-cover rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent rounded-2xl" />
@@ -646,7 +662,7 @@ const ScheduleTimeline = () => (
           initial={{ height: 0 }}
           whileInView={{ height: "100%" }}
           viewport={{ once: true }}
-          transition={{ duration: 2.5, ease: "easeInOut" }}
+          transition={{ duration: 1.8, ease: "easeInOut" }}
           className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-forest/0 via-forest/15 to-forest/0 -translate-x-1/2 hidden md:block"
         />
 
@@ -808,6 +824,7 @@ const TravelDetails = () => (
               <img
                 src={mapImg}
                 alt="Map from Cape Town to Citrusdal"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -998,6 +1015,7 @@ const PackingList = () => (
               <img
                 src={packingImg}
                 alt="Packing essentials"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
