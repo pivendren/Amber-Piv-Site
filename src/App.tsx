@@ -388,8 +388,13 @@ const Hero = () => {
           <p className="text-lg md:text-2xl text-neutral-800 mb-3 font-normal tracking-tight">
             Join us as we celebrate our marriage
           </p>
-          <div className="text-xs md:text-base font-bold uppercase tracking-widest text-neutral-900">
+          <div className="text-xs md:text-base font-bold uppercase tracking-widest text-neutral-900 mb-5">
             22 June 2026 | Wolfkop Nature Reserve, Citrusdal
+          </div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-forest/8 border border-forest/10">
+            <span className="text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] text-forest/80">
+              Dress Code: Warm Jerseys
+            </span>
           </div>
         </motion.div>
       </div>
@@ -397,7 +402,7 @@ const Hero = () => {
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 z-30 drop-shadow-md"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/85 z-30 drop-shadow-md"
       >
         <ChevronDown className="w-8 h-8" />
       </motion.div>
@@ -414,7 +419,7 @@ const InfoGrid = () => (
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <FadeInWhenVisible>
           <div className="text-center mb-12">
-            <p className="text-olive/60 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+            <p className="text-olive/80 text-xs font-bold uppercase tracking-[0.3em] mb-3">
               Everything you need to know
             </p>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-olive tracking-tight">
@@ -450,7 +455,7 @@ const InfoGrid = () => (
                     <div className="w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
                       <MapPin className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/75">
                       Venue & Stay
                     </span>
                   </div>
@@ -493,14 +498,14 @@ const InfoGrid = () => (
                   <div className="w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
                     <Calendar className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/75">
                     4 Days
                   </span>
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-white mb-2 tracking-tight drop-shadow-sm">
                   Schedule
                 </h3>
-                <p className="text-sm text-white/70 leading-relaxed mb-4">
+                <p className="text-sm text-white/85 leading-relaxed mb-4">
                   From Cape Town arrival to the sunset ceremony and beyond.
                 </p>
                 <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-golden-light group-hover:gap-3 transition-all duration-300">
@@ -533,14 +538,14 @@ const InfoGrid = () => (
                   <div className="w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
                     <Shirt className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/75">
                     Winter Essentials
                   </span>
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-white mb-2 tracking-tight drop-shadow-sm">
                   Packing List
                 </h3>
-                <p className="text-sm text-white/70 leading-relaxed mb-4">
+                <p className="text-sm text-white/85 leading-relaxed mb-4">
                   Mountain mornings are cold. Here's what to bring.
                 </p>
                 <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-golden-light group-hover:gap-3 transition-all duration-300">
@@ -650,7 +655,7 @@ const ScheduleTimeline = () => (
           <h2 className="font-serif text-5xl md:text-7xl font-bold text-neutral-800 tracking-tight mb-4">
             Schedule
           </h2>
-          <p className="text-neutral-400 text-sm tracking-wide max-w-md mx-auto">
+          <p className="text-neutral-500 text-sm tracking-wide max-w-md mx-auto">
             Four days of adventure, connection, and celebration
           </p>
         </div>
@@ -749,7 +754,7 @@ const TravelDetails = () => (
       {/* Getting There */}
       <FadeInWhenVisible>
         <div className="text-center mb-16">
-          <p className="text-rust/50 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+          <p className="text-rust/70 text-xs font-bold uppercase tracking-[0.3em] mb-3">
             Fly in. Drive out.
           </p>
           <h2 className="font-serif text-4xl md:text-6xl font-bold text-forest tracking-tight">
@@ -771,7 +776,7 @@ const TravelDetails = () => (
                   <h3 className="font-serif text-2xl font-bold text-forest tracking-tight">
                     Cape Town to Citrusdal
                   </h3>
-                  <p className="text-xs text-neutral-400 font-medium">
+                  <p className="text-xs text-neutral-500 font-medium">
                     170 km &middot; 2 hour drive via the N7
                   </p>
                 </div>
@@ -812,8 +817,8 @@ const TravelDetails = () => (
               </div>
 
               <div className="flex gap-3 p-4 bg-forest/[0.04] rounded-xl items-center">
-                <Plane className="w-5 h-5 text-rust/60 shrink-0" />
-                <p className="text-xs text-neutral-400">
+                <Plane className="w-5 h-5 text-rust/80 shrink-0" />
+                <p className="text-xs text-neutral-500">
                   We recommend hiring a car at the airport for the weekend's flexibility.
                 </p>
               </div>
@@ -835,7 +840,7 @@ const TravelDetails = () => (
       {/* Staying */}
       <FadeInWhenVisible>
         <div className="text-center mb-16">
-          <p className="text-rust/50 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+          <p className="text-rust/70 text-xs font-bold uppercase tracking-[0.3em] mb-3">
             Our Venue & Basecamp
           </p>
           <h2 className="font-serif text-4xl md:text-6xl font-bold text-forest tracking-tight">
@@ -844,62 +849,102 @@ const TravelDetails = () => (
         </div>
       </FadeInWhenVisible>
 
-      <FadeInWhenVisible>
-        <div className="bg-cream/60 rounded-3xl border border-forest/[0.06] overflow-hidden relative">
-          <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
-            <CitrusdalIllustration className="w-full h-full object-cover" />
-          </div>
-
-          <div className="relative z-10 p-8 md:p-12">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-11 h-11 rounded-xl bg-forest/8 flex items-center justify-center">
-                <Home className="w-5 h-5 text-forest" />
+      {/* Top row — intro + key details side by side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        {/* Left — venue intro */}
+        <FadeInWhenVisible>
+          <div className="bg-cream/60 rounded-3xl border border-forest/[0.06] p-8 md:p-10 relative overflow-hidden h-full flex flex-col justify-center">
+            <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
+              <CitrusdalIllustration className="w-full h-full object-cover" />
+            </div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-11 h-11 rounded-xl bg-forest/8 flex items-center justify-center">
+                  <Home className="w-5 h-5 text-forest" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-2xl font-bold text-forest tracking-tight">
+                    Wolfkop Nature Reserve
+                  </h3>
+                  <p className="text-xs text-neutral-500 font-medium">
+                    Citrusdal Valley, Western Cape
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-serif text-2xl font-bold text-forest tracking-tight">
-                  Wolfkop Nature Reserve
-                </h3>
-                <p className="text-xs text-neutral-400 font-medium">
-                  Citrusdal Valley, Western Cape
+              <p className="text-base text-neutral-600 leading-relaxed mb-6">
+                Nestled in the golden rock formations of the Citrusdal valley,
+                Wolfkop offers an extraordinary mountain retreat — rugged
+                beauty and serene atmosphere.
+              </p>
+              <p className="text-sm text-neutral-500 leading-relaxed mb-6">
+                We have booked for all guests and allocated cottages to groups.
+              </p>
+              <div className="flex gap-3">
+                <div className="flex-1 bg-forest/8 rounded-xl p-4 text-center">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-forest/60 mb-1">Check-in</p>
+                  <p className="font-serif text-xl font-bold text-forest">Sat 14:00</p>
+                </div>
+                <div className="flex-1 bg-forest/8 rounded-xl p-4 text-center">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-forest/60 mb-1">Check-out</p>
+                  <p className="font-serif text-xl font-bold text-forest">Tue 10:00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeInWhenVisible>
+
+        {/* Right — need to know */}
+        <FadeInWhenVisible delay={0.1}>
+          <div className="bg-forest/90 rounded-3xl p-8 md:p-10 h-full flex flex-col justify-between">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-golden-light/50 mb-4">
+                Need to Know
+              </p>
+              <div className="space-y-5">
+                {[
+                  { label: "Self-Catering", detail: "Bring your own food, drinks, and snacks for the weekend." },
+                  { label: "Linen & Towels", detail: "Provided — no need to pack your own." },
+                  { label: "Weather", detail: "18°C days, 5°C nights. Pack warm layers." },
+                  { label: "Cottages", detail: "Allocated to groups. We'll share your house assignment before the trip." },
+                ].map((item, i) => (
+                  <div key={i}>
+                    <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-golden-light mb-1">
+                      {item.label}
+                    </h4>
+                    <p className="text-sm text-golden-light/70 leading-relaxed">
+                      {item.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </FadeInWhenVisible>
+      </div>
+
+      {/* Bottom row — feature cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { icon: Sun, title: "Hot Tubs & Saunas", desc: "Wood-fired hot tubs on the veranda and eco saunas." },
+          { icon: Flame, title: "Fireplaces", desc: "Indoor and outdoor fireplaces in every cottage." },
+          { icon: Mountain, title: "Trails & Canoeing", desc: "Hiking, MTB tracks, canoeing, and San rock art." },
+          { icon: Home, title: "Braai & Kitchen", desc: "Full kitchens, built-in braai, and fridge-freezers." },
+        ].map((f, i) => (
+          <div key={i}>
+            <FadeInWhenVisible delay={i * 0.06}>
+              <div className="bg-cream/60 rounded-2xl border border-forest/[0.06] p-5 md:p-6 h-full">
+                <f.icon className="w-5 h-5 text-rust/80 mb-3" />
+                <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-forest mb-1.5">
+                  {f.title}
+                </h4>
+                <p className="text-[13px] text-neutral-500 leading-relaxed">
+                  {f.desc}
                 </p>
               </div>
-            </div>
-
-            <p className="text-base text-neutral-600 leading-relaxed mb-3 max-w-2xl">
-              Nestled in the golden rock formations of the Citrusdal valley,
-              Wolfkop offers an extraordinary mountain retreat. We've chosen
-              this sanctuary for its rugged beauty and serene atmosphere.
-            </p>
-            <p className="text-sm text-neutral-400 leading-relaxed mb-10 max-w-2xl">
-              We have booked for all guests and allocated cottages to groups.
-              Check in for your specific house upon arrival.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { icon: Sun, title: "Relaxation", desc: "Wood-fired hot tubs and private plunge pools." },
-                { icon: Home, title: "Comfort", desc: "King beds, en-suite baths, and indoor fireplaces." },
-                { icon: Mountain, title: "Adventure", desc: "Private hiking trails, MTB tracks, and valley views." },
-                { icon: Zap, title: "Off-grid Power", desc: "Solar-equipped houses for an uninterrupted stay." },
-              ].map((f, i) => (
-                <div key={i}>
-                  <FadeInWhenVisible delay={i * 0.08}>
-                    <div className="bg-white/60 backdrop-blur-sm rounded-xl p-5 border border-white/80">
-                      <f.icon className="w-5 h-5 text-rust/60 mb-3" />
-                      <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-forest mb-1.5">
-                        {f.title}
-                      </h4>
-                      <p className="text-[13px] text-neutral-400 leading-relaxed">
-                        {f.desc}
-                      </p>
-                    </div>
-                  </FadeInWhenVisible>
-                </div>
-              ))}
-            </div>
+            </FadeInWhenVisible>
           </div>
-        </div>
-      </FadeInWhenVisible>
+        ))}
+      </div>
     </div>
   </section>
 );
@@ -907,6 +952,16 @@ const TravelDetails = () => (
 /* ─── Packing List ───────────────────────────────────────────────────── */
 
 const PACKING_CATEGORIES = [
+  {
+    title: "The Ceremony — Dress Code",
+    icon: Heart,
+    accent: "rust",
+    items: [
+      "Your warmest, cosiest jersey",
+      "Comfortable layers underneath",
+      "Whatever makes you feel good",
+    ],
+  },
   {
     title: "Active Gear",
     icon: Mountain,
@@ -944,7 +999,7 @@ const PackingList = () => (
     <div className="max-w-5xl mx-auto px-6">
       <FadeInWhenVisible>
         <div className="text-center mb-16">
-          <p className="text-rust/50 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+          <p className="text-rust/70 text-xs font-bold uppercase tracking-[0.3em] mb-3">
             Early Winter & Active Days
           </p>
           <h2 className="font-serif text-4xl md:text-6xl font-bold text-forest tracking-tight">
@@ -976,9 +1031,9 @@ const PackingList = () => (
                         <cat.icon className={cn(
                           "w-4 h-4",
                           cat.accent === "forest" ? "text-forest/50" :
-                          cat.accent === "rust" ? "text-rust/50" : "text-olive/50"
+                          cat.accent === "rust" ? "text-rust/70" : "text-olive/70"
                         )} />
-                        <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400">
+                        <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500">
                           {cat.title}
                         </h4>
                       </div>
