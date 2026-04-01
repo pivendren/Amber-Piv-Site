@@ -70,43 +70,112 @@ export const LocationLodgingIllustration = ({ className = "" }: { className?: st
   </svg>
 );
 
+// Palette matched to the hand-drawn illustration assets
+const c = {
+  paper: "#e6dece",
+  olive: "#6b7a4a",
+  sage: "#8a9a6a",
+  forestNew: "#3a5a40",
+  darkGreen: "#2a3a22",
+  khaki: "#b5a882",
+  tan: "#c8b890",
+  brownNew: "#7a6a4a",
+  darkBrown: "#4a3a2a",
+  rust: "#a06050",
+  brick: "#8a4030",
+  dustyRose: "#b07060",
+  cream: "#f5f0e0",
+  outline: "#5a4a3a",
+};
+
 export const ScheduleIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 600 800" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="600" height="800" fill={colors.dark} />
-    
-    {/* Large Peaceful Mountain Sunset */}
-    <circle cx="300" cy="350" r="220" fill={colors.rust} opacity="0.1" />
-    <circle cx="300" cy="350" r="160" fill={colors.rust} opacity="0.2" />
-    <circle cx="300" cy="350" r="100" fill={colors.rust} opacity="0.5" />
+  <svg viewBox="0 0 800 600" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="600" fill={c.paper} />
 
-    {/* Distant Mountains */}
-    <path d="M 0 600 L 150 450 L 300 550 L 500 400 L 600 500 L 600 600 Z" fill={colors.forest} opacity="0.4" />
-    
-    {/* Cozy Rustic Cabin Silhouette */}
-    <g transform="translate(150, 480)">
-      <path d="M 0 100 L 0 20 L 100 0 L 200 20 L 200 100 Z" fill={colors.brown} />
-      <path d="M -20 30 L 100 -10 L 220 30 Z" fill={colors.dark} />
-      <rect x="160" y="-30" width="20" height="50" fill={colors.dark} />
-      {/* Smoke */}
-      <path d="M 170 -40 Q 180 -60 160 -80 T 170 -120" stroke={colors.sand} strokeWidth="4" opacity="0.4" strokeLinecap="round" />
-      {/* Window Glow */}
-      <rect x="40" y="40" width="30" height="30" fill={colors.cream} opacity="0.6" />
-      <rect x="130" y="40" width="30" height="30" fill={colors.cream} opacity="0.6" />
+    {/* Mountains */}
+    <path d="M0 600 L0 320 L80 280 L180 240 L280 300 L400 220 L520 280 L640 240 L740 300 L800 320 L800 600 Z"
+      fill={c.sage} opacity="0.3" stroke={c.outline} strokeWidth="1" />
+    <path d="M0 600 L0 380 L120 340 L260 370 L400 310 L540 360 L680 380 L800 400 L800 600 Z"
+      fill={c.olive} opacity="0.5" stroke={c.outline} strokeWidth="1.2" />
+    <path d="M0 600 L0 440 L200 400 L400 420 L600 410 L800 440 L800 600 Z"
+      fill={c.forestNew} opacity="0.6" stroke={c.outline} strokeWidth="1.2" />
+
+    {/* Ground */}
+    <path d="M0 460 Q200 445 400 455 T800 445 L800 600 L0 600 Z" fill={c.khaki} stroke={c.outline} strokeWidth="1" opacity="0.8" />
+
+    {/* Long table */}
+    <g transform="translate(400, 470)">
+      <rect x="-150" y="-5" width="300" height="8" rx="2" fill={c.brownNew} stroke={c.outline} strokeWidth="1" />
+      {/* Table legs */}
+      <rect x="-140" y="3" width="4" height="20" fill={c.darkBrown} stroke={c.outline} strokeWidth="0.5" />
+      <rect x="136" y="3" width="4" height="20" fill={c.darkBrown} stroke={c.outline} strokeWidth="0.5" />
+      {/* Table items */}
+      <rect x="-60" y="-10" width="12" height="6" rx="1" fill={c.cream} stroke={c.outline} strokeWidth="0.5" />
+      <rect x="20" y="-10" width="10" height="6" rx="1" fill={c.cream} stroke={c.outline} strokeWidth="0.5" />
+      <circle cx="-20" cy="-9" r="4" fill={c.dustyRose} stroke={c.outline} strokeWidth="0.5" />
+      <circle cx="60" cy="-9" r="4" fill={c.tan} stroke={c.outline} strokeWidth="0.5" />
+      <rect x="-5" y="-12" width="8" height="8" rx="1" fill={c.rust} stroke={c.outline} strokeWidth="0.5" />
     </g>
 
-    {/* Steaming Mug (Relaxation) */}
-    <g transform="translate(400, 680)">
-      <path d="M 0 0 Q 0 80 50 80 L 100 80 Q 150 80 150 0 L 150 -60 L 0 -60 Z" fill={colors.sand} />
-      <path d="M 150 -30 Q 180 -30 180 0 Q 180 30 150 30" stroke={colors.sand} strokeWidth="8" fill="none" />
-      {/* Steam */}
-      <path d="M 40 -80 Q 30 -110 50 -140" stroke={colors.rust} strokeWidth="4" strokeLinecap="round" />
-      <path d="M 80 -80 Q 70 -110 90 -140" stroke={colors.rust} strokeWidth="4" strokeLinecap="round" />
+    {/* Seated people around table */}
+    {[
+      { x: 280, y: 458, col: c.olive }, { x: 310, y: 456, col: c.rust },
+      { x: 340, y: 458, col: c.tan }, { x: 370, y: 455, col: c.sage },
+      { x: 430, y: 455, col: c.dustyRose }, { x: 460, y: 458, col: c.olive },
+      { x: 490, y: 456, col: c.brownNew }, { x: 520, y: 458, col: c.khaki },
+    ].map((p, i) => (
+      <g key={i} transform={`translate(${p.x}, ${p.y})`}>
+        <circle cx="0" cy="-14" r="4.5" fill={p.col} stroke={c.outline} strokeWidth="0.7" />
+        <path d="M-4 -9 L-5 5 L5 5 L4 -9 Z" fill={p.col} stroke={c.outline} strokeWidth="0.6" opacity="0.8" />
+      </g>
+    ))}
+
+    {/* Campfire / braai to the side */}
+    <g transform="translate(620, 490)">
+      {/* Fire ring */}
+      <ellipse cx="0" cy="0" rx="20" ry="8" fill="none" stroke={c.outline} strokeWidth="1" />
+      {/* Logs */}
+      <path d="M-12 -2 L12 2" stroke={c.brownNew} strokeWidth="4" strokeLinecap="round" />
+      <path d="M-10 3 L14 -1" stroke={c.darkBrown} strokeWidth="3" strokeLinecap="round" />
+      {/* Flames */}
+      <path d="M-4 -4 Q0 -24 4 -4" fill={c.rust} stroke={c.outline} strokeWidth="0.6" />
+      <path d="M-2 -4 Q0 -18 2 -4" fill={c.tan} stroke={c.outline} strokeWidth="0.4" />
+      {/* Smoke wisps */}
+      <path d="M0 -26 Q-4 -36 2 -46" stroke={c.outline} strokeWidth="0.8" fill="none" opacity="0.3" strokeLinecap="round" />
+      <path d="M4 -28 Q8 -38 4 -50" stroke={c.outline} strokeWidth="0.6" fill="none" opacity="0.2" strokeLinecap="round" />
     </g>
 
-    {/* Stars */}
-    <circle cx="100" cy="100" r="2" fill={colors.cream} />
-    <circle cx="450" cy="150" r="3" fill={colors.sand} />
-    <circle cx="550" cy="80" r="2" fill={colors.cream} />
+    {/* Proteas */}
+    <g transform="translate(80, 560)">
+      <path d="M0 0 L0 -40" stroke={c.olive} strokeWidth="3" strokeLinecap="round" />
+      <path d="M0 -15 Q15 -25 20 -18" stroke={c.sage} strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <ellipse cx="0" cy="-48" rx="12" ry="14" fill={c.dustyRose} stroke={c.outline} strokeWidth="1.2" />
+      <path d="M-8 -52 Q-16 -68 -4 -62" fill={c.rust} stroke={c.outline} strokeWidth="0.8" />
+      <path d="M0 -54 Q0 -72 6 -64" fill={c.brick} stroke={c.outline} strokeWidth="0.8" />
+      <path d="M8 -52 Q16 -68 4 -62" fill={c.rust} stroke={c.outline} strokeWidth="0.8" />
+      <ellipse cx="0" cy="-48" rx="5" ry="6" fill={c.tan} stroke={c.outline} strokeWidth="0.6" />
+    </g>
+    <g transform="translate(720, 555)">
+      <path d="M0 0 L0 -35" stroke={c.olive} strokeWidth="2.5" strokeLinecap="round" />
+      <ellipse cx="0" cy="-42" rx="10" ry="12" fill={c.dustyRose} stroke={c.outline} strokeWidth="1" />
+      <path d="M-6 -46 Q-12 -58 -2 -54" fill={c.rust} stroke={c.outline} strokeWidth="0.7" />
+      <path d="M6 -46 Q12 -58 2 -54" fill={c.rust} stroke={c.outline} strokeWidth="0.7" />
+      <ellipse cx="0" cy="-42" rx="4" ry="5" fill={c.tan} stroke={c.outline} strokeWidth="0.5" />
+    </g>
+
+    {/* Fynbos bushes */}
+    <g transform="translate(150, 570)">
+      <ellipse cx="0" cy="-10" rx="22" ry="16" fill={c.sage} stroke={c.outline} strokeWidth="1" />
+      <ellipse cx="-12" cy="-8" rx="14" ry="12" fill={c.olive} stroke={c.outline} strokeWidth="0.8" />
+    </g>
+    <g transform="translate(660, 565)">
+      <ellipse cx="0" cy="-10" rx="18" ry="13" fill={c.sage} stroke={c.outline} strokeWidth="1" />
+      <ellipse cx="10" cy="-8" rx="12" ry="10" fill={c.forestNew} stroke={c.outline} strokeWidth="0.8" opacity="0.8" />
+    </g>
+
+    {/* Birds */}
+    <path d="M200 180 Q205 175 210 180" stroke={c.outline} strokeWidth="1" fill="none" />
+    <path d="M220 168 Q226 162 232 168" stroke={c.outline} strokeWidth="1" fill="none" />
   </svg>
 );
 

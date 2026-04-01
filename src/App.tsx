@@ -49,6 +49,7 @@ import { cn } from "./lib/utils";
 import locationLodgingImg from "./assets/Location and lodging.png";
 import scheduleImg from "./assets/Schedule.png";
 import packingImg from "./assets/Packing.png";
+import mapImg from "./assets/Map.png";
 
 const MEDIA_BASE = import.meta.env.BASE_URL + "media/";
 
@@ -802,9 +803,13 @@ const TravelDetails = () => (
               </div>
             </div>
 
-            {/* Right — map */}
-            <div className="md:col-span-2 bg-sand/20 border-t md:border-t-0 md:border-l border-forest/[0.06] flex items-center justify-center p-8">
-              <WesternCapeMapIllustration className="w-full h-full max-h-[380px]" />
+            {/* Right — map image */}
+            <div className="md:col-span-2 border-t md:border-t-0 md:border-l border-forest/[0.06] overflow-hidden">
+              <img
+                src={mapImg}
+                alt="Map from Cape Town to Citrusdal"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -988,9 +993,13 @@ const PackingList = () => (
               </div>
             </div>
 
-            {/* Right — illustration */}
-            <div className="md:col-span-2 bg-sand/15 border-t md:border-t-0 md:border-l border-forest/[0.06] flex items-center justify-center p-8">
-              <PackingListIllustration className="w-full h-full max-h-[420px]" />
+            {/* Right — packing image */}
+            <div className="md:col-span-2 border-t md:border-t-0 md:border-l border-forest/[0.06] overflow-hidden">
+              <img
+                src={packingImg}
+                alt="Packing essentials"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>

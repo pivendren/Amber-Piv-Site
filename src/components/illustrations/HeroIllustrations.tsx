@@ -1,195 +1,144 @@
 import React from "react";
 
-const colors = {
-  rust: "#a64d32",
+const c = {
+  paper: "#e6dece",
+  paperLight: "#f0ead8",
+  olive: "#6b7a4a",
+  sage: "#8a9a6a",
   forest: "#3a5a40",
-  sand: "#e5e0d8",
-  cream: "#f5f2ed",
-  brown: "#9a3324",
-  dark: "#1c2b1e",
+  darkGreen: "#2a3a22",
+  khaki: "#b5a882",
+  tan: "#c8b890",
+  brown: "#7a6a4a",
+  darkBrown: "#4a3a2a",
+  rust: "#a06050",
+  brick: "#8a4030",
+  dustyRose: "#b07060",
+  cream: "#f5f0e0",
+  water: "#7a9aaa",
+  waterLight: "#a0bac4",
+  outline: "#5a4a3a",
 };
 
-// 1. Hiking (Vertical)
+// Running / walking figure
+const Runner = ({ x, y, color, scale = 1, lean = false }: { x: number; y: number; color: string; scale?: number; lean?: boolean }) => (
+  <g transform={`translate(${x}, ${y}) scale(${scale})`}>
+    <circle cx="0" cy="-30" r="5.5" fill={color} stroke={c.outline} strokeWidth="0.8" />
+    <path d={lean ? "M-5 -24 L-8 -2 L6 -2 L3 -24 Z" : "M-5 -24 L-7 0 L7 0 L5 -24 Z"} fill={color} stroke={c.outline} strokeWidth="0.8" opacity="0.8" />
+    {/* Legs in stride */}
+    <path d={lean ? "M-6 -2 L-14 16 M4 -2 L12 14" : "M-7 0 L-12 18 M7 0 L12 18"} stroke={c.outline} strokeWidth="1.5" strokeLinecap="round" />
+    {/* Arms */}
+    <path d={lean ? "M-4 -18 L-14 -8 M3 -18 L10 -10" : "M-4 -18 L-12 -6 M4 -18 L12 -6"} stroke={c.outline} strokeWidth="1" strokeLinecap="round" />
+  </g>
+);
+
+// Fynbos bush
+const Fynbos = ({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) => (
+  <g transform={`translate(${x}, ${y}) scale(${scale})`}>
+    <ellipse cx="0" cy="-10" rx="22" ry="16" fill={c.sage} stroke={c.outline} strokeWidth="1" />
+    <ellipse cx="-12" cy="-8" rx="14" ry="12" fill={c.olive} stroke={c.outline} strokeWidth="0.8" />
+    <ellipse cx="14" cy="-6" rx="12" ry="10" fill={c.forest} stroke={c.outline} strokeWidth="0.8" opacity="0.8" />
+    <path d="M-6 -18 Q-2 -26 2 -20" stroke={c.darkGreen} strokeWidth="1.2" fill="none" strokeLinecap="round" />
+    <path d="M8 -16 Q12 -24 14 -18" stroke={c.darkGreen} strokeWidth="1.2" fill="none" strokeLinecap="round" />
+  </g>
+);
+
+// Protea flower
+const Protea = ({ x, y, scale = 1, flip = false }: { x: number; y: number; scale?: number; flip?: boolean }) => (
+  <g transform={`translate(${x}, ${y}) scale(${flip ? -scale : scale}, ${scale})`}>
+    <path d="M0 0 L0 -40" stroke={c.olive} strokeWidth="3" strokeLinecap="round" />
+    <path d="M0 -15 Q15 -25 20 -18" stroke={c.sage} strokeWidth="2.5" strokeLinecap="round" fill="none" />
+    <path d="M0 -25 Q-12 -32 -18 -26" stroke={c.sage} strokeWidth="2.5" strokeLinecap="round" fill="none" />
+    <ellipse cx="0" cy="-48" rx="12" ry="14" fill={c.dustyRose} stroke={c.outline} strokeWidth="1.2" />
+    <path d="M-8 -52 Q-16 -68 -4 -62" fill={c.rust} stroke={c.outline} strokeWidth="0.8" />
+    <path d="M0 -54 Q0 -72 6 -64" fill={c.brick} stroke={c.outline} strokeWidth="0.8" />
+    <path d="M8 -52 Q16 -68 4 -62" fill={c.rust} stroke={c.outline} strokeWidth="0.8" />
+    <ellipse cx="0" cy="-48" rx="5" ry="6" fill={c.tan} stroke={c.outline} strokeWidth="0.6" />
+  </g>
+);
+
+/* ─── Hiking / Green Point Parkrun ───────────────────────────────────── */
+
 export const HikingIllustration = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 600 800" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="600" height="800" fill={colors.cream} />
-    {/* Sun/Sky */}
-    <circle cx="300" cy="400" r="180" fill={colors.sand} opacity="0.5" />
-    <circle cx="300" cy="400" r="120" fill={colors.rust} opacity="0.2" />
-    
-    {/* Mountains (Cederberg style) */}
-    <path d="M 0 800 L 0 500 L 150 400 L 300 550 L 450 350 L 600 480 L 600 800 Z" fill={colors.forest} opacity="0.3" />
-    <path d="M 0 800 L 0 600 L 250 450 L 400 550 L 550 400 L 600 450 L 600 800 Z" fill={colors.forest} opacity="0.6" />
-    <path d="M 0 800 L 0 700 L 300 550 L 600 650 L 600 800 Z" fill={colors.dark} />
+    <rect width="600" height="800" fill={c.paper} />
 
-    {/* Hikers Silhouettes */}
-    <g transform="translate(350, 520)">
-      <path d="M 0 30 L -15 0 L 0 -20 L 10 0 Z" fill={colors.rust} /> {/* Body 1 */}
-      <circle cx="0" cy="-28" r="8" fill={colors.rust} />
-      <path d="M 30 40 L 15 10 L 25 -10 L 40 10 Z" fill={colors.sand} /> {/* Body 2 */}
-      <circle cx="28" cy="-18" r="7" fill={colors.sand} />
-      <path d="M -5 0 L -25 30" stroke={colors.sand} strokeWidth="2" strokeLinecap="round" /> {/* Hiking stick */}
+    {/* Morning sky */}
+    <circle cx="450" cy="180" r="50" fill={c.tan} opacity="0.4" />
+    <circle cx="450" cy="180" r="30" fill={c.cream} opacity="0.5" />
+
+    {/* Signal Hill / Lion's Head background */}
+    <path d="M0 800 L0 400 L80 360 L180 320 L260 280 L340 300 L420 260 L500 290 L600 340 L600 800 Z"
+      fill={c.sage} opacity="0.25" stroke={c.outline} strokeWidth="1" />
+    <path d="M0 800 L0 460 L120 400 L240 430 L380 380 L500 410 L600 440 L600 800 Z"
+      fill={c.olive} opacity="0.4" stroke={c.outline} strokeWidth="1" />
+
+    {/* Park grounds */}
+    <path d="M0 520 Q150 500 300 510 T600 500 L600 800 L0 800 Z" fill={c.sage} opacity="0.3" />
+    <path d="M0 560 Q150 540 300 550 T600 540 L600 800 L0 800 Z" fill={c.khaki} stroke={c.outline} strokeWidth="1" />
+
+    {/* Park path - winding */}
+    <path d="M-20 800 Q80 700 200 660 Q320 620 380 580 Q440 540 520 520 Q580 500 620 480"
+      stroke={c.tan} strokeWidth="16" strokeLinecap="round" fill="none" />
+    <path d="M-20 800 Q80 700 200 660 Q320 620 380 580 Q440 540 520 520 Q580 500 620 480"
+      stroke={c.outline} strokeWidth="0.8" strokeDasharray="8 6" fill="none" opacity="0.3" />
+
+    {/* Trees in the park */}
+    {/* Tree 1 */}
+    <g transform="translate(100, 530)">
+      <rect x="-4" y="-30" width="8" height="30" fill={c.brown} stroke={c.outline} strokeWidth="0.8" />
+      <circle cx="0" cy="-46" r="22" fill={c.olive} stroke={c.outline} strokeWidth="1" />
+      <circle cx="-14" cy="-40" r="14" fill={c.sage} stroke={c.outline} strokeWidth="0.8" />
+      <circle cx="12" cy="-38" r="12" fill={c.forest} stroke={c.outline} strokeWidth="0.8" opacity="0.8" />
+    </g>
+    {/* Tree 2 */}
+    <g transform="translate(480, 500) scale(0.85)">
+      <rect x="-4" y="-30" width="8" height="30" fill={c.brown} stroke={c.outline} strokeWidth="0.8" />
+      <circle cx="0" cy="-46" r="22" fill={c.sage} stroke={c.outline} strokeWidth="1" />
+      <circle cx="-10" cy="-40" r="14" fill={c.olive} stroke={c.outline} strokeWidth="0.8" />
+    </g>
+    {/* Tree 3 - background */}
+    <g transform="translate(340, 510) scale(0.7)">
+      <rect x="-3" y="-25" width="6" height="25" fill={c.brown} stroke={c.outline} strokeWidth="0.8" />
+      <circle cx="0" cy="-40" r="18" fill={c.forest} stroke={c.outline} strokeWidth="0.8" opacity="0.6" />
     </g>
 
-    {/* Foreground Fynbos */}
-    <path d="M -50 800 Q 100 600 250 800 Z" fill={colors.brown} opacity="0.8" />
-    <circle cx="100" cy="700" r="15" fill={colors.rust} />
-    <circle cx="180" cy="750" r="12" fill={colors.rust} />
-  </svg>
-);
+    {/* Runners on the path */}
+    <Runner x={250} y={640} color={c.rust} scale={1.2} lean />
+    <Runner x={290} y={636} color={c.olive} scale={1.1} lean />
+    <Runner x={320} y={642} color={c.tan} scale={1} lean />
 
-// 2. Coast View (Horizontal)
-export const CoastViewIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 800 600" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="800" height="600" fill={colors.sand} opacity="0.3" />
-    {/* Ocean */}
-    <rect y="350" width="800" height="250" fill={colors.forest} opacity="0.2" />
-    <path d="M 0 380 Q 200 400 400 380 T 800 380" stroke={colors.cream} strokeWidth="4" fill="none" opacity="0.5" />
-    <path d="M 0 420 Q 200 440 400 420 T 800 420" stroke={colors.cream} strokeWidth="4" fill="none" opacity="0.3" />
+    {/* Walkers further ahead */}
+    <Runner x={420} y={568} color={c.khaki} scale={0.9} />
+    <Runner x={445} y={564} color={c.dustyRose} scale={0.85} />
 
-    {/* Rocky cliffs / mountains meeting sea */}
-    <path d="M 0 600 L 0 150 L 150 250 L 250 180 L 400 350 L 250 600 Z" fill={colors.dark} />
-    <path d="M -50 600 L -50 300 L 150 400 L 200 600 Z" fill={colors.brown} />
-    
-    {/* Sun setting over ocean */}
-    <circle cx="600" cy="300" r="60" fill={colors.rust} opacity="0.8" />
-  </svg>
-);
-
-// 3. Campfire (Horizontal)
-export const CampfireIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 800 600" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="800" height="600" fill={colors.dark} />
-    {/* Stars */}
-    <circle cx="150" cy="150" r="2" fill={colors.cream} />
-    <circle cx="350" cy="80" r="3" fill={colors.sand} />
-    <circle cx="650" cy="200" r="2" fill={colors.cream} />
-    <circle cx="750" cy="100" r="1.5" fill={colors.cream} />
-    
-    {/* Mountains at night */}
-    <path d="M 0 600 L 0 300 L 200 400 L 450 250 L 650 350 L 800 280 L 800 600 Z" fill={colors.forest} opacity="0.4" />
-    <path d="M 0 600 L 0 450 L 300 350 L 500 450 L 800 380 L 800 600 Z" fill={colors.brown} opacity="0.3" />
-
-    {/* Fire glow */}
-    <circle cx="400" cy="500" r="100" fill={colors.rust} opacity="0.15" />
-    <circle cx="400" cy="500" r="60" fill={colors.rust} opacity="0.3" />
-    
-    {/* Campfire */}
-    <path d="M 370 550 L 430 550 L 400 520 Z" fill={colors.sand} /> {/* Logs */}
-    <path d="M 380 540 Q 400 450 420 540 Z" fill={colors.rust} /> {/* Flame 1 */}
-    <path d="M 390 540 Q 400 480 410 540 Z" fill={colors.cream} /> {/* Flame 2 */}
-
-    {/* Spark */}
-    <circle cx="410" cy="460" r="3" fill={colors.rust} />
-    <circle cx="390" cy="440" r="2" fill={colors.sand} />
-  </svg>
-);
-
-// 4. Beach Walk (Vertical)
-export const BeachWalkIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 600 800" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="600" height="800" fill={colors.sand} opacity="0.5" />
-    {/* Waves washing in from top */}
-    <path d="M 0 0 L 600 0 L 600 400 Q 450 450 300 400 T 0 350 Z" fill={colors.cream} />
-    <path d="M 0 0 L 600 0 L 600 380 Q 450 430 300 380 T 0 330 Z" fill={colors.forest} opacity="0.1" />
-
-    {/* Footprints */}
-    <g transform="translate(300, 500) rotate(-20)">
-      <ellipse cx="-20" cy="0" rx="8" ry="15" fill={colors.rust} opacity="0.4" />
-      <ellipse cx="20" cy="40" rx="8" ry="15" fill={colors.rust} opacity="0.4" />
-      <ellipse cx="-20" cy="80" rx="8" ry="15" fill={colors.rust} opacity="0.4" />
-      <ellipse cx="20" cy="120" rx="8" ry="15" fill={colors.rust} opacity="0.4" />
-      <ellipse cx="-20" cy="160" rx="8" ry="15" fill={colors.rust} opacity="0.4" />
+    {/* Parkrun banner/sign */}
+    <g transform="translate(180, 680)">
+      <rect x="-3" y="-40" width="4" height="40" fill={c.brown} stroke={c.outline} strokeWidth="0.6" />
+      <rect x="43" y="-40" width="4" height="40" fill={c.brown} stroke={c.outline} strokeWidth="0.6" />
+      <rect x="-3" y="-42" width="50" height="14" rx="2" fill={c.cream} stroke={c.outline} strokeWidth="0.8" />
+      <text x="22" y="-32" textAnchor="middle" fontSize="7" fill={c.olive} fontWeight="bold" fontFamily="sans-serif">5K</text>
     </g>
+
+    {/* Proteas & fynbos borders */}
+    <Protea x={50} y={770} scale={1.3} />
+    <Protea x={120} y={780} scale={0.9} flip />
+    <Fynbos x={500} y={770} scale={1.2} />
+    <Protea x={540} y={775} scale={1} flip />
+    <Fynbos x={30} y={790} />
+
+    {/* Grass details */}
+    <path d="M0 790 Q8 770 5 755" stroke={c.sage} strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    <path d="M580 785 Q588 765 585 750" stroke={c.olive} strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    <path d="M595 790 Q600 775 598 760" stroke={c.sage} strokeWidth="1.2" fill="none" strokeLinecap="round" />
   </svg>
 );
 
-// 5. Ocean Couple (Vertical)
-export const OceanCoupleIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 600 800" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="600" height="800" fill={colors.cream} />
-    {/* Ocean horizon */}
-    <rect y="400" width="600" height="400" fill={colors.forest} opacity="0.3" />
-    <path d="M 0 450 Q 150 470 300 450 T 600 450" stroke={colors.sand} strokeWidth="4" fill="none" opacity="0.5" />
-
-    {/* Cliff side */}
-    <path d="M 600 800 L 600 500 L 400 550 L 300 650 L 150 800 Z" fill={colors.brown} />
-
-    {/* Couple silhouette standing on cliff */}
-    <g transform="translate(420, 510)">
-      <rect x="-10" y="0" width="10" height="40" fill={colors.dark} />
-      <circle cx="-5" cy="-8" r="8" fill={colors.dark} />
-      <rect x="5" y="10" width="8" height="30" fill={colors.forest} />
-      <circle cx="9" cy="0" r="7" fill={colors.forest} />
-    </g>
-  </svg>
-);
-
-// 6. Fire Beach (Horizontal)
-export const FireBeachIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 800 600" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="800" height="600" fill={colors.brown} />
-    {/* Ocean in background */}
-    <rect y="300" width="800" height="300" fill={colors.dark} opacity="0.6" />
-    <path d="M 0 350 Q 200 370 400 350 T 800 350" stroke={colors.forest} strokeWidth="3" fill="none" />
-
-    {/* Beach slope */}
-    <path d="M 0 600 L 0 500 Q 400 450 800 550 L 800 600 Z" fill={colors.sand} opacity="0.4" />
-
-    {/* Large Beach Bonfire */}
-    <circle cx="300" cy="500" r="120" fill={colors.rust} opacity="0.2" />
-    <path d="M 270 530 L 330 530 L 300 480 Z" fill={colors.dark} />
-    <path d="M 280 520 Q 300 400 320 520 Z" fill={colors.rust} />
-    <path d="M 290 520 Q 300 430 310 520 Z" fill={colors.cream} />
-
-    <circle cx="320" cy="420" r="4" fill={colors.rust} />
-    <circle cx="280" cy="400" r="3" fill={colors.sand} />
-  </svg>
-);
-
-// 7. Cliffs (Horizontal)
-export const CliffsIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 800 600" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="800" height="600" fill={colors.sand} />
-    
-    {/* Sky gradients / sun */}
-    <circle cx="650" cy="200" r="250" fill={colors.cream} opacity="0.5" />
-    <circle cx="650" cy="200" r="100" fill={colors.cream} />
-    
-    {/* Massive jagged cliffs overlapping */}
-    <path d="M 0 600 L 0 100 L 150 300 L 250 200 L 450 450 L 550 400 L 800 600 Z" fill={colors.brown} opacity="0.7" />
-    <path d="M -50 600 L -50 300 L 100 450 L 300 350 L 450 500 L 600 600 Z" fill={colors.forest} opacity="0.8" />
-    <path d="M 0 600 L 0 500 L 250 600 Z" fill={colors.dark} />
-
-    {/* Fynbos accent */}
-    <path d="M 600 600 Q 650 450 700 600 Z" fill={colors.rust} opacity="0.9" />
-  </svg>
-);
-
-// 8. Forest Couple (Vertical)
-export const ForestCoupleIllustration = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 600 800" className={`w-full h-full ${className}`} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="600" height="800" fill={colors.dark} />
-    
-    {/* Light shining through trees */}
-    <path d="M 300 -100 L 600 800 L 0 800 Z" fill={colors.cream} opacity="0.1" />
-
-    {/* Tall Trees */}
-    <rect x="100" y="200" width="40" height="600" fill={colors.brown} />
-    <rect x="450" y="100" width="60" height="700" fill={colors.brown} opacity="0.8" />
-    <rect x="250" y="300" width="30" height="500" fill={colors.forest} opacity="0.6" />
-
-    {/* Leaves/Canopy */}
-    <circle cx="120" cy="200" r="150" fill={colors.forest} opacity="0.4" />
-    <circle cx="480" cy="150" r="200" fill={colors.forest} opacity="0.3" />
-    <circle cx="300" cy="100" r="250" fill={colors.forest} opacity="0.2" />
-
-    {/* Couple walking */}
-    <g transform="translate(300, 650)">
-      <path d="M -15 0 L -25 -40 L -5 -40 L 5 0 Z" fill={colors.rust} />
-      <circle cx="-15" cy="-50" r="10" fill={colors.rust} />
-      <path d="M 15 0 L 5 -35 L 25 -35 L 35 0 Z" fill={colors.sand} />
-      <circle cx="15" cy="-45" r="9" fill={colors.sand} />
-    </g>
-  </svg>
-);
+// Keep other exports for backwards compatibility
+export const CoastViewIllustration = HikingIllustration;
+export const CampfireIllustration = HikingIllustration;
+export const BeachWalkIllustration = HikingIllustration;
+export const OceanCoupleIllustration = HikingIllustration;
+export const FireBeachIllustration = HikingIllustration;
+export const CliffsIllustration = HikingIllustration;
+export const ForestCoupleIllustration = HikingIllustration;
