@@ -9,6 +9,7 @@ import {
   useScroll,
   useTransform,
   AnimatePresence,
+  type MotionValue,
 } from "motion/react";
 import {
   Heart,
@@ -30,13 +31,6 @@ import {
 } from "./components/illustrations/StoryIllustrations";
 import {
   HikingIllustration,
-  CoastViewIllustration,
-  CampfireIllustration,
-  BeachWalkIllustration,
-  OceanCoupleIllustration,
-  FireBeachIllustration,
-  CliffsIllustration,
-  ForestCoupleIllustration,
 } from "./components/illustrations/HeroIllustrations";
 import {
   LocationLodgingIllustration,
@@ -45,6 +39,61 @@ import {
   CitrusdalIllustration,
   WesternCapeMapIllustration,
 } from "./components/illustrations/InfoGridIllustrations";
+
+const MEDIA_BASE = import.meta.env.BASE_URL + "media/";
+
+type HeroMediaItem = {
+  src: string;
+  type: "photo" | "video";
+  position: string;
+  size: string;
+  depth: number;
+  rotate?: number;
+};
+
+const HERO_MEDIA: HeroMediaItem[] = [
+  // === TOP ROW ===
+  { src: "photo-wildflowers.webp", type: "photo", position: "top-[2%] left-[1%] md:left-[3%]", size: "w-32 h-24 md:w-52 md:h-36", depth: 0.5, rotate: -2 },
+  { src: "video-IMG_0172.mp4", type: "video", position: "top-[6%] left-[18%] md:left-[16%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.3 },
+  { src: "photo-museum.webp", type: "photo", position: "top-[1%] left-[38%] md:left-[32%]", size: "w-36 h-28 md:w-56 md:h-40", depth: 0.7, rotate: 1 },
+  { src: "photo-ferris-wheel.webp", type: "photo", position: "top-[3%] right-[20%] md:right-[28%]", size: "w-32 h-22 md:w-48 md:h-32", depth: 0.4, rotate: -1 },
+  { src: "video-IMG_2373.mp4", type: "video", position: "top-[5%] right-[2%] md:right-[12%]", size: "w-28 h-36 md:w-40 md:h-56", depth: 0.6 },
+  { src: "photo-table-mountain.webp", type: "photo", position: "top-[2%] right-[-2%] md:right-[1%]", size: "w-36 h-24 md:w-56 md:h-36", depth: 0.8, rotate: 2 },
+
+  // === LEFT SIDE ===
+  { src: "video-IMG_0767.mp4", type: "video", position: "top-[22%] left-[-3%] md:left-[1%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.5, rotate: -1 },
+  { src: "photo-night1.webp", type: "photo", position: "top-[35%] left-[1%] md:left-[4%]", size: "w-28 h-20 md:w-44 md:h-32", depth: 0.3 },
+  { src: "photo-building.webp", type: "photo", position: "top-[48%] left-[-2%] md:left-[2%]", size: "w-32 h-24 md:w-48 md:h-36", depth: 0.7, rotate: 1 },
+  { src: "video-IMG_1880.mp4", type: "video", position: "top-[60%] left-[0%] md:left-[3%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.4 },
+  { src: "photo-dinosaurs.webp", type: "photo", position: "top-[72%] left-[-1%] md:left-[1%]", size: "w-24 h-24 md:w-36 md:h-36", depth: 0.6, rotate: -2 },
+
+  // === RIGHT SIDE ===
+  { src: "photo-beach.webp", type: "photo", position: "top-[20%] right-[-1%] md:right-[2%]", size: "w-32 h-24 md:w-48 md:h-36", depth: 0.6, rotate: 2 },
+  { src: "video-IMG_0906.mp4", type: "video", position: "top-[33%] right-[0%] md:right-[1%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.4, rotate: -1 },
+  { src: "photo-promenade.webp", type: "photo", position: "top-[48%] right-[-2%] md:right-[3%]", size: "w-24 h-36 md:w-40 md:h-56", depth: 0.8 },
+  { src: "video-IMG_3214.mp4", type: "video", position: "top-[62%] right-[1%] md:right-[2%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.3, rotate: 1 },
+  { src: "photo-rocks.webp", type: "photo", position: "top-[75%] right-[-1%] md:right-[1%]", size: "w-20 h-28 md:w-32 md:h-44", depth: 0.5 },
+
+  // === BOTTOM ROW ===
+  { src: "photo-skyline.webp", type: "photo", position: "bottom-[8%] left-[1%] md:left-[3%]", size: "w-36 h-28 md:w-52 md:h-36", depth: 0.4, rotate: -1 },
+  { src: "video-IMG_0797.mp4", type: "video", position: "bottom-[12%] left-[22%] md:left-[18%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.6 },
+  { src: "photo-garden.webp", type: "photo", position: "bottom-[5%] left-[36%] md:left-[30%]", size: "w-32 h-24 md:w-52 md:h-36", depth: 0.8, rotate: 2 },
+  { src: "photo-cafe.webp", type: "photo", position: "bottom-[2%] right-[30%] md:right-[32%]", size: "w-28 h-20 md:w-44 md:h-32", depth: 0.3, rotate: -1 },
+  { src: "video-IMG_1275.mp4", type: "video", position: "bottom-[8%] right-[16%] md:right-[18%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.5 },
+  { src: "photo-tree.webp", type: "photo", position: "bottom-[3%] right-[2%] md:right-[5%]", size: "w-36 h-28 md:w-56 md:h-40", depth: 0.7, rotate: 1 },
+
+  // === EXTRA SCATTERED (smaller, tucked in gaps) ===
+  { src: "photo-fitness.webp", type: "photo", position: "top-[15%] left-[10%] md:left-[12%]", size: "w-20 h-28 md:w-28 md:h-40", depth: 0.9, rotate: 3 },
+  { src: "photo-night2.webp", type: "photo", position: "top-[28%] left-[14%] md:left-[10%]", size: "w-24 h-16 md:w-32 md:h-24", depth: 0.2 },
+  { src: "photo-skydive.webp", type: "photo", position: "top-[16%] right-[12%] md:right-[10%]", size: "w-24 h-18 md:w-36 md:h-28", depth: 0.8, rotate: -3 },
+  { src: "video-IMG_2382.mp4", type: "video", position: "top-[40%] right-[10%] md:right-[8%]", size: "w-20 h-28 md:w-28 md:h-40", depth: 0.6 },
+  { src: "photo-bougainvillea.webp", type: "photo", position: "bottom-[18%] left-[12%] md:left-[14%]", size: "w-24 h-18 md:w-36 md:h-28", depth: 0.4, rotate: 2 },
+  { src: "photo-cape-town.webp", type: "photo", position: "bottom-[22%] right-[10%] md:right-[8%]", size: "w-24 h-18 md:w-36 md:h-28", depth: 0.7, rotate: -2 },
+  { src: "photo-city.webp", type: "photo", position: "top-[55%] left-[10%] md:left-[8%]", size: "w-24 h-18 md:w-32 md:h-24", depth: 0.5, rotate: 1 },
+  { src: "photo-concert.webp", type: "photo", position: "bottom-[15%] right-[5%] md:right-[12%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.3, rotate: -1 },
+  { src: "video-IMG_3432.mp4", type: "video", position: "bottom-[25%] left-[3%] md:left-[7%]", size: "w-24 h-18 md:w-32 md:h-24", depth: 0.8 },
+  { src: "video-IMG_3070.mp4", type: "video", position: "top-[68%] right-[8%] md:right-[6%]", size: "w-24 h-18 md:w-32 md:h-24", depth: 0.2 },
+];
 
 const NAV_ITEMS = ["Schedule", "Travel", "Packing"];
 
@@ -172,6 +221,42 @@ const Navbar = () => {
   );
 };
 
+const HeroMediaElement = ({
+  item,
+  scrollY,
+}: {
+  key?: React.Key;
+  item: HeroMediaItem;
+  scrollY: MotionValue<number>;
+}) => (
+  <FloatingElement depth={item.depth} className={item.position}>
+    <motion.div
+      style={{ y: scrollY, rotate: item.rotate ?? 0 }}
+      className={`${item.size} rounded-lg overflow-hidden shadow-xl ring-1 ring-white/20`}
+    >
+      {item.type === "photo" ? (
+        <img
+          src={MEDIA_BASE + item.src}
+          alt=""
+          loading="lazy"
+          className="w-full h-full object-cover"
+          width={200}
+          height={200}
+        />
+      ) : (
+        <video
+          src={MEDIA_BASE + item.src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        />
+      )}
+    </motion.div>
+  </FloatingElement>
+);
+
 const Hero = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -192,101 +277,13 @@ const Hero = () => {
       </div>
 
       <Floating sensitivity={-0.5} className="overflow-hidden z-0">
-        <FloatingElement
-          depth={0.4}
-          className="top-[5%] left-[2%] md:left-[4%]"
-        >
-          <motion.div
-            style={{ y: y1 }}
-            className="w-36 h-52 md:w-56 md:h-80 rounded-sm overflow-hidden shadow-xl"
-          >
-            <HikingIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
-
-        <FloatingElement
-          depth={0.6}
-          className="top-[2%] left-[35%] md:left-[38%]"
-        >
-          <motion.div
-            style={{ y: y2 }}
-            className="w-48 h-32 md:w-72 md:h-48 rounded-sm overflow-hidden shadow-xl"
-          >
-            <CoastViewIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
-
-        <FloatingElement
-          depth={0.3}
-          className="top-[8%] right-[2%] md:right-[6%]"
-        >
-          <motion.div
-            style={{ y: y1 }}
-            className="w-44 h-32 md:w-64 md:h-44 rounded-sm overflow-hidden shadow-xl"
-          >
-            <CampfireIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
-
-        <FloatingElement
-          depth={0.7}
-          className="top-[45%] left-[-2%] md:left-[1%]"
-        >
-          <motion.div
-            style={{ y: y2 }}
-            className="w-32 h-48 md:w-52 md:h-72 rounded-sm overflow-hidden shadow-xl"
-          >
-            <BeachWalkIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
-
-        <FloatingElement
-          depth={0.5}
-          className="top-[48%] right-[-2%] md:right-[1%]"
-        >
-          <motion.div
-            style={{ y: y1 }}
-            className="w-32 h-48 md:w-52 md:h-72 rounded-sm overflow-hidden shadow-xl"
-          >
-            <OceanCoupleIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
-
-        <FloatingElement
-          depth={0.8}
-          className="bottom-[5%] left-[5%] md:left-[8%]"
-        >
-          <motion.div
-            style={{ y: y2 }}
-            className="w-48 h-36 md:w-72 md:h-52 rounded-sm overflow-hidden shadow-xl"
-          >
-            <FireBeachIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
-
-        <FloatingElement
-          depth={0.4}
-          className="bottom-[2%] left-[38%] md:left-[40%]"
-        >
-          <motion.div
-            style={{ y: y1 }}
-            className="w-48 h-32 md:w-72 md:h-44 rounded-sm overflow-hidden shadow-xl"
-          >
-            <CliffsIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
-
-        <FloatingElement
-          depth={0.9}
-          className="bottom-[8%] right-[5%] md:right-[8%]"
-        >
-          <motion.div
-            style={{ y: y2 }}
-            className="w-36 h-52 md:w-56 md:h-80 rounded-sm overflow-hidden shadow-xl"
-          >
-            <ForestCoupleIllustration className="w-full h-full object-cover" />
-          </motion.div>
-        </FloatingElement>
+        {HERO_MEDIA.map((item, i) => (
+          <HeroMediaElement
+            key={item.src}
+            item={item}
+            scrollY={i % 2 === 0 ? y1 : y2}
+          />
+        ))}
       </Floating>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 pointer-events-none">
@@ -295,7 +292,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="flex flex-col items-center bg-white/50 backdrop-blur-sm rounded-3xl px-8 py-10 mx-4 md:mx-auto"
+            className="flex flex-col items-center bg-white/60 backdrop-blur-md rounded-3xl px-8 py-10 mx-4 md:mx-auto shadow-lg shadow-black/5"
           >
             <h1 className="font-display text-6xl md:text-8xl font-bold text-wedding-brown mb-0 leading-tight uppercase tracking-tight">
               WEDDING CAMP
