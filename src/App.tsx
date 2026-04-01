@@ -46,6 +46,9 @@ import {
   WesternCapeMapIllustration,
 } from "./components/illustrations/InfoGridIllustrations";
 import { cn } from "./lib/utils";
+import locationLodgingImg from "./assets/Location and lodging.png";
+import scheduleImg from "./assets/Schedule.png";
+import packingImg from "./assets/Packing.png";
 
 const MEDIA_BASE = import.meta.env.BASE_URL + "media/";
 
@@ -408,110 +411,128 @@ const InfoGrid = () => (
 
         {/* Bento grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Location — full width */}
+          {/* Location — spans full width */}
+          {/* Location & Lodging — full width, image bottom-aligned */}
+          <div className="md:col-span-2">
           <FadeInWhenVisible>
             <motion.a
               href="#travel"
               whileHover={{ y: -3 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="group block md:col-span-1 bg-white/50 backdrop-blur-sm rounded-2xl p-8 md:p-10 border border-white/60 shadow-sm hover:shadow-xl hover:bg-white/70 transition-all duration-500 relative overflow-hidden h-full"
+              className="group block rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-48 h-48 opacity-[0.06] pointer-events-none">
-                <LocationLodgingIllustration className="w-full h-full" />
+              <div className="absolute inset-0 pointer-events-none">
+                <img
+                  src={locationLodgingImg}
+                  alt=""
+                  className="w-full h-full object-cover object-bottom rounded-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent rounded-2xl" />
               </div>
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-forest" />
+              <div className="relative z-10 flex flex-col justify-end h-full min-h-[320px] md:min-h-[380px] p-8 md:p-10">
+                <div className="max-w-lg">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                      <MapPin className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60">
+                      Venue & Stay
+                    </span>
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-forest/50">
-                    Venue & Stay
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight drop-shadow-sm">
+                    Location & Lodging
+                  </h3>
+                  <p className="text-sm text-white/75 leading-relaxed mb-5 max-w-md">
+                    Wolfkop Nature Reserve in the Western Cape. Rugged mountains,
+                    golden rock formations, and cottages nestled in the valley.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-golden-light group-hover:gap-3 transition-all duration-300">
+                    Explore
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
-                <h3 className="font-serif text-2xl md:text-3xl font-bold text-forest mb-3 tracking-tight">
-                  Location & Lodging
+              </div>
+            </motion.a>
+          </FadeInWhenVisible>
+          </div>
+
+          {/* Schedule — vertical image */}
+          <FadeInWhenVisible delay={0.1}>
+            <motion.a
+              href="#schedule"
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="group block rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden h-full"
+            >
+              <div className="absolute inset-0 pointer-events-none">
+                <img
+                  src={scheduleImg}
+                  alt=""
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent rounded-2xl" />
+              </div>
+              <div className="relative z-10 flex flex-col justify-end h-full min-h-[480px] md:min-h-[520px] p-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                    <Calendar className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60">
+                    4 Days
+                  </span>
+                </div>
+                <h3 className="font-serif text-2xl font-bold text-white mb-2 tracking-tight drop-shadow-sm">
+                  Schedule
                 </h3>
-                <p className="text-sm text-olive/70 leading-relaxed mb-6 max-w-md">
-                  Wolfkop Nature Reserve in the Western Cape. Rugged mountains,
-                  golden rock formations, and cottages nestled in the valley.
+                <p className="text-sm text-white/70 leading-relaxed mb-4">
+                  From Cape Town arrival to the sunset ceremony and beyond.
                 </p>
-                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-rust group-hover:gap-3 transition-all duration-300">
-                  Explore
+                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-golden-light group-hover:gap-3 transition-all duration-300">
+                  View timeline
                   <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>
             </motion.a>
           </FadeInWhenVisible>
 
-          {/* Schedule */}
-          <div className="grid grid-rows-2 gap-4">
-            <FadeInWhenVisible delay={0.1}>
-              <motion.a
-                href="#schedule"
-                whileHover={{ y: -3 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="group block bg-forest/90 rounded-2xl p-8 border border-forest/20 shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden h-full"
-              >
-                <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
-                  <ScheduleIllustration className="w-full h-full object-cover" />
-                </div>
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-golden-light" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-golden-light/50">
-                      4 Days
-                    </span>
+          {/* Packing — vertical image */}
+          <FadeInWhenVisible delay={0.15}>
+            <motion.a
+              href="#packing"
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="group block rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden h-full"
+            >
+              <div className="absolute inset-0 pointer-events-none">
+                <img
+                  src={packingImg}
+                  alt=""
+                  className="w-full h-full object-cover rounded-2xl"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent rounded-2xl" />
+              </div>
+              <div className="relative z-10 flex flex-col justify-end h-full min-h-[480px] md:min-h-[520px] p-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                    <Shirt className="w-4 h-4 text-white" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-golden-light mb-2 tracking-tight">
-                    Schedule
-                  </h3>
-                  <p className="text-sm text-golden-light/60 leading-relaxed mb-4">
-                    From Cape Town arrival to the sunset ceremony and beyond.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-golden-light/80 group-hover:gap-3 transition-all duration-300">
-                    View timeline
-                    <ArrowRight className="w-3.5 h-3.5" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60">
+                    Winter Essentials
                   </span>
                 </div>
-              </motion.a>
-            </FadeInWhenVisible>
-
-            {/* Packing */}
-            <FadeInWhenVisible delay={0.15}>
-              <motion.a
-                href="#packing"
-                whileHover={{ y: -3 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="group block bg-white/50 backdrop-blur-sm rounded-2xl p-8 border border-white/60 shadow-sm hover:shadow-xl hover:bg-white/70 transition-all duration-500 relative overflow-hidden h-full"
-              >
-                <div className="absolute bottom-0 right-0 w-32 h-32 opacity-[0.08] pointer-events-none translate-x-4 translate-y-4">
-                  <PackingListIllustration className="w-full h-full" />
-                </div>
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-rust/10 flex items-center justify-center">
-                      <Shirt className="w-5 h-5 text-rust" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-rust/40">
-                      Winter Essentials
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-2xl font-bold text-forest mb-2 tracking-tight">
-                    Packing List
-                  </h3>
-                  <p className="text-sm text-olive/70 leading-relaxed mb-4">
-                    Mountain mornings are cold. Here's what to bring.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-rust group-hover:gap-3 transition-all duration-300">
-                    See the list
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </motion.a>
-            </FadeInWhenVisible>
-          </div>
+                <h3 className="font-serif text-2xl font-bold text-white mb-2 tracking-tight drop-shadow-sm">
+                  Packing List
+                </h3>
+                <p className="text-sm text-white/70 leading-relaxed mb-4">
+                  Mountain mornings are cold. Here's what to bring.
+                </p>
+                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-golden-light group-hover:gap-3 transition-all duration-300">
+                  See the list
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </motion.a>
+          </FadeInWhenVisible>
         </div>
       </div>
     </div>
