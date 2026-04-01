@@ -9,7 +9,6 @@ import {
   useScroll,
   useTransform,
   AnimatePresence,
-  type MotionValue,
 } from "motion/react";
 import {
   Heart,
@@ -42,57 +41,62 @@ import {
 
 const MEDIA_BASE = import.meta.env.BASE_URL + "media/";
 
-type HeroMediaItem = {
+// All 32 polaroids — tightly packed, scattered, overlapping
+// top/left in %, w/h in vw units, rotate in deg, z for stacking
+type Polaroid = {
   src: string;
   type: "photo" | "video";
-  position: string;
-  size: string;
+  top: number; left: number;
+  w: number; h: number;
+  rotate: number;
+  z: number;
   depth: number;
-  rotate?: number;
 };
 
-const HERO_MEDIA: HeroMediaItem[] = [
-  // === TOP ROW ===
-  { src: "photo-wildflowers.webp", type: "photo", position: "top-[2%] left-[1%] md:left-[3%]", size: "w-32 h-24 md:w-52 md:h-36", depth: 0.5, rotate: -2 },
-  { src: "video-IMG_0172.mp4", type: "video", position: "top-[6%] left-[18%] md:left-[16%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.3 },
-  { src: "photo-museum.webp", type: "photo", position: "top-[1%] left-[38%] md:left-[32%]", size: "w-36 h-28 md:w-56 md:h-40", depth: 0.7, rotate: 1 },
-  { src: "photo-ferris-wheel.webp", type: "photo", position: "top-[3%] right-[20%] md:right-[28%]", size: "w-32 h-22 md:w-48 md:h-32", depth: 0.4, rotate: -1 },
-  { src: "video-IMG_2373.mp4", type: "video", position: "top-[5%] right-[2%] md:right-[12%]", size: "w-28 h-36 md:w-40 md:h-56", depth: 0.6 },
-  { src: "photo-table-mountain.webp", type: "photo", position: "top-[2%] right-[-2%] md:right-[1%]", size: "w-36 h-24 md:w-56 md:h-36", depth: 0.8, rotate: 2 },
+const POLAROIDS: Polaroid[] = [
+  // Row 1 (top edge, ~0-18%)
+  { src: "photo-wildflowers.webp",   type: "photo", top: -2, left: -3, w: 22, h: 16, rotate: -5,  z: 2, depth: 0.4 },
+  { src: "video-IMG_0172.mp4",       type: "video", top: 1,  left: 16, w: 18, h: 14, rotate: 3,   z: 4, depth: 0.6 },
+  { src: "photo-museum.webp",        type: "photo", top: -1, left: 31, w: 20, h: 15, rotate: -2,  z: 1, depth: 0.3 },
+  { src: "photo-ferris-wheel.webp",  type: "photo", top: 2,  left: 48, w: 19, h: 14, rotate: 4,   z: 3, depth: 0.7 },
+  { src: "video-IMG_2373.mp4",       type: "video", top: -2, left: 64, w: 17, h: 20, rotate: -3,  z: 5, depth: 0.5 },
+  { src: "photo-table-mountain.webp",type: "photo", top: 1,  left: 80, w: 23, h: 16, rotate: 2,   z: 2, depth: 0.4 },
 
-  // === LEFT SIDE ===
-  { src: "video-IMG_0767.mp4", type: "video", position: "top-[22%] left-[-3%] md:left-[1%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.5, rotate: -1 },
-  { src: "photo-night1.webp", type: "photo", position: "top-[35%] left-[1%] md:left-[4%]", size: "w-28 h-20 md:w-44 md:h-32", depth: 0.3 },
-  { src: "photo-building.webp", type: "photo", position: "top-[48%] left-[-2%] md:left-[2%]", size: "w-32 h-24 md:w-48 md:h-36", depth: 0.7, rotate: 1 },
-  { src: "video-IMG_1880.mp4", type: "video", position: "top-[60%] left-[0%] md:left-[3%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.4 },
-  { src: "photo-dinosaurs.webp", type: "photo", position: "top-[72%] left-[-1%] md:left-[1%]", size: "w-24 h-24 md:w-36 md:h-36", depth: 0.6, rotate: -2 },
+  // Row 2 (~15-32%)
+  { src: "video-IMG_0767.mp4",       type: "video", top: 15, left: -2, w: 17, h: 22, rotate: 4,   z: 6, depth: 0.8 },
+  { src: "photo-fitness.webp",       type: "photo", top: 17, left: 13, w: 16, h: 20, rotate: -4,  z: 3, depth: 0.3 },
+  { src: "photo-night1.webp",        type: "photo", top: 16, left: 27, w: 20, h: 15, rotate: 2,   z: 1, depth: 0.5 },
+  { src: "photo-skydive.webp",       type: "photo", top: 18, left: 55, w: 19, h: 14, rotate: -3,  z: 2, depth: 0.6 },
+  { src: "video-IMG_0906.mp4",       type: "video", top: 15, left: 70, w: 16, h: 21, rotate: 5,   z: 7, depth: 0.4 },
+  { src: "photo-beach.webp",         type: "photo", top: 17, left: 84, w: 20, h: 15, rotate: -2,  z: 1, depth: 0.7 },
 
-  // === RIGHT SIDE ===
-  { src: "photo-beach.webp", type: "photo", position: "top-[20%] right-[-1%] md:right-[2%]", size: "w-32 h-24 md:w-48 md:h-36", depth: 0.6, rotate: 2 },
-  { src: "video-IMG_0906.mp4", type: "video", position: "top-[33%] right-[0%] md:right-[1%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.4, rotate: -1 },
-  { src: "photo-promenade.webp", type: "photo", position: "top-[48%] right-[-2%] md:right-[3%]", size: "w-24 h-36 md:w-40 md:h-56", depth: 0.8 },
-  { src: "video-IMG_3214.mp4", type: "video", position: "top-[62%] right-[1%] md:right-[2%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.3, rotate: 1 },
-  { src: "photo-rocks.webp", type: "photo", position: "top-[75%] right-[-1%] md:right-[1%]", size: "w-20 h-28 md:w-32 md:h-44", depth: 0.5 },
+  // Row 3 (~32-48%) — flanks center card
+  { src: "photo-night2.webp",        type: "photo", top: 33, left: -3, w: 21, h: 15, rotate: -3,  z: 2, depth: 0.5 },
+  { src: "video-IMG_2382.mp4",       type: "video", top: 35, left: 14, w: 14, h: 18, rotate: 5,   z: 8, depth: 0.9 },
+  { src: "photo-cape-town.webp",     type: "photo", top: 36, left: 68, w: 18, h: 13, rotate: -4,  z: 3, depth: 0.3 },
+  { src: "photo-promenade.webp",     type: "photo", top: 33, left: 82, w: 15, h: 20, rotate: 3,   z: 4, depth: 0.6 },
 
-  // === BOTTOM ROW ===
-  { src: "photo-skyline.webp", type: "photo", position: "bottom-[8%] left-[1%] md:left-[3%]", size: "w-36 h-28 md:w-52 md:h-36", depth: 0.4, rotate: -1 },
-  { src: "video-IMG_0797.mp4", type: "video", position: "bottom-[12%] left-[22%] md:left-[18%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.6 },
-  { src: "photo-garden.webp", type: "photo", position: "bottom-[5%] left-[36%] md:left-[30%]", size: "w-32 h-24 md:w-52 md:h-36", depth: 0.8, rotate: 2 },
-  { src: "photo-cafe.webp", type: "photo", position: "bottom-[2%] right-[30%] md:right-[32%]", size: "w-28 h-20 md:w-44 md:h-32", depth: 0.3, rotate: -1 },
-  { src: "video-IMG_1275.mp4", type: "video", position: "bottom-[8%] right-[16%] md:right-[18%]", size: "w-24 h-32 md:w-36 md:h-48", depth: 0.5 },
-  { src: "photo-tree.webp", type: "photo", position: "bottom-[3%] right-[2%] md:right-[5%]", size: "w-36 h-28 md:w-56 md:h-40", depth: 0.7, rotate: 1 },
+  // Row 4 (~48-65%) — flanks center card
+  { src: "video-IMG_1880.mp4",       type: "video", top: 50, left: -2, w: 18, h: 14, rotate: 3,   z: 5, depth: 0.4 },
+  { src: "photo-building.webp",      type: "photo", top: 52, left: 13, w: 17, h: 13, rotate: -5,  z: 2, depth: 0.7 },
+  { src: "video-IMG_3214.mp4",       type: "video", top: 50, left: 70, w: 15, h: 19, rotate: 4,   z: 6, depth: 0.5 },
+  { src: "photo-city.webp",          type: "photo", top: 52, left: 83, w: 20, h: 14, rotate: -2,  z: 1, depth: 0.3 },
 
-  // === EXTRA SCATTERED (smaller, tucked in gaps) ===
-  { src: "photo-fitness.webp", type: "photo", position: "top-[15%] left-[10%] md:left-[12%]", size: "w-20 h-28 md:w-28 md:h-40", depth: 0.9, rotate: 3 },
-  { src: "photo-night2.webp", type: "photo", position: "top-[28%] left-[14%] md:left-[10%]", size: "w-24 h-16 md:w-32 md:h-24", depth: 0.2 },
-  { src: "photo-skydive.webp", type: "photo", position: "top-[16%] right-[12%] md:right-[10%]", size: "w-24 h-18 md:w-36 md:h-28", depth: 0.8, rotate: -3 },
-  { src: "video-IMG_2382.mp4", type: "video", position: "top-[40%] right-[10%] md:right-[8%]", size: "w-20 h-28 md:w-28 md:h-40", depth: 0.6 },
-  { src: "photo-bougainvillea.webp", type: "photo", position: "bottom-[18%] left-[12%] md:left-[14%]", size: "w-24 h-18 md:w-36 md:h-28", depth: 0.4, rotate: 2 },
-  { src: "photo-cape-town.webp", type: "photo", position: "bottom-[22%] right-[10%] md:right-[8%]", size: "w-24 h-18 md:w-36 md:h-28", depth: 0.7, rotate: -2 },
-  { src: "photo-city.webp", type: "photo", position: "top-[55%] left-[10%] md:left-[8%]", size: "w-24 h-18 md:w-32 md:h-24", depth: 0.5, rotate: 1 },
-  { src: "photo-concert.webp", type: "photo", position: "bottom-[15%] right-[5%] md:right-[12%]", size: "w-28 h-20 md:w-40 md:h-28", depth: 0.3, rotate: -1 },
-  { src: "video-IMG_3432.mp4", type: "video", position: "bottom-[25%] left-[3%] md:left-[7%]", size: "w-24 h-18 md:w-32 md:h-24", depth: 0.8 },
-  { src: "video-IMG_3070.mp4", type: "video", position: "top-[68%] right-[8%] md:right-[6%]", size: "w-24 h-18 md:w-32 md:h-24", depth: 0.2 },
+  // Row 5 (~62-78%)
+  { src: "photo-dinosaurs.webp",     type: "photo", top: 64, left: -2, w: 19, h: 19, rotate: -4,  z: 3, depth: 0.6 },
+  { src: "video-IMG_1275.mp4",       type: "video", top: 66, left: 15, w: 15, h: 19, rotate: 3,   z: 7, depth: 0.8 },
+  { src: "photo-skyline.webp",       type: "photo", top: 65, left: 28, w: 20, h: 14, rotate: -2,  z: 1, depth: 0.4 },
+  { src: "photo-concert.webp",       type: "photo", top: 63, left: 52, w: 19, h: 15, rotate: 5,   z: 2, depth: 0.5 },
+  { src: "video-IMG_3070.mp4",       type: "video", top: 66, left: 68, w: 17, h: 13, rotate: -3,  z: 4, depth: 0.3 },
+  { src: "photo-garden.webp",        type: "photo", top: 64, left: 83, w: 20, h: 16, rotate: 2,   z: 1, depth: 0.7 },
+
+  // Row 6 (bottom edge, ~78-100%)
+  { src: "photo-bougainvillea.webp", type: "photo", top: 80, left: -3, w: 22, h: 16, rotate: 3,   z: 2, depth: 0.5 },
+  { src: "video-IMG_0797.mp4",       type: "video", top: 82, left: 17, w: 18, h: 14, rotate: -4,  z: 5, depth: 0.6 },
+  { src: "photo-rocks.webp",         type: "photo", top: 81, left: 32, w: 15, h: 20, rotate: 2,   z: 3, depth: 0.4 },
+  { src: "photo-cafe.webp",          type: "photo", top: 83, left: 48, w: 19, h: 14, rotate: -3,  z: 1, depth: 0.8 },
+  { src: "photo-tree.webp",          type: "photo", top: 80, left: 65, w: 21, h: 16, rotate: 5,   z: 2, depth: 0.3 },
+  { src: "video-IMG_3432.mp4",       type: "video", top: 82, left: 83, w: 20, h: 16, rotate: -2,  z: 4, depth: 0.7 },
 ];
 
 const NAV_ITEMS = ["Schedule", "Travel", "Packing"];
@@ -221,101 +225,110 @@ const Navbar = () => {
   );
 };
 
-const HeroMediaElement = ({
-  item,
-  scrollY,
-}: {
-  key?: React.Key;
-  item: HeroMediaItem;
-  scrollY: MotionValue<number>;
-}) => (
-  <FloatingElement depth={item.depth} className={item.position}>
-    <motion.div
-      style={{ y: scrollY, rotate: item.rotate ?? 0 }}
-      className={`${item.size} rounded-lg overflow-hidden shadow-xl ring-1 ring-white/20`}
-    >
-      {item.type === "photo" ? (
-        <img
-          src={MEDIA_BASE + item.src}
-          alt=""
-          loading="lazy"
-          className="w-full h-full object-cover"
-          width={200}
-          height={200}
-        />
-      ) : (
-        <video
-          src={MEDIA_BASE + item.src}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        />
-      )}
-    </motion.div>
-  </FloatingElement>
-);
-
 const Hero = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   return (
     <section
       ref={containerRef}
-      className="relative pt-32 pb-24 overflow-hidden min-h-screen flex flex-col justify-center bg-[#f8f8f8]"
+      className="relative overflow-hidden min-h-screen bg-cream"
     >
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-white/50"></div>
-      </div>
-
-      <Floating sensitivity={-0.5} className="overflow-hidden z-0">
-        {HERO_MEDIA.map((item, i) => (
-          <HeroMediaElement
-            key={item.src}
-            item={item}
-            scrollY={i % 2 === 0 ? y1 : y2}
-          />
+      {/* Scattered polaroid stack — single layer, all 32 items */}
+      <Floating sensitivity={-0.3} className="overflow-hidden z-0">
+        {POLAROIDS.map((p, i) => (
+          <FloatingElement
+            key={p.src}
+            depth={p.depth}
+            className="absolute"
+          >
+            <motion.div
+              style={{
+                top: `${p.top}vh`,
+                left: `${p.left}vw`,
+                width: `${p.w}vw`,
+                height: `${p.h}vh`,
+                zIndex: p.z,
+                position: "absolute",
+              }}
+              initial={{ opacity: 0, scale: 0.92, rotate: p.rotate }}
+              animate={
+                p.type === "video"
+                  ? {
+                      opacity: 1,
+                      scale: [1.2, 1.22, 1.2],
+                      rotate: p.rotate,
+                    }
+                  : { opacity: 1, scale: 1, rotate: p.rotate }
+              }
+              transition={
+                p.type === "video"
+                  ? {
+                      opacity: { duration: 0.6, delay: i * 0.04 },
+                      scale: {
+                        duration: 8 + p.depth * 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      },
+                    }
+                  : { opacity: { duration: 0.6, delay: i * 0.04 } }
+              }
+              className="bg-white p-[3px] md:p-[5px] rounded-sm shadow-[0_2px_15px_rgba(0,0,0,0.2)] hover:z-50 transition-[z-index]"
+            >
+              {p.type === "photo" ? (
+                <img
+                  src={MEDIA_BASE + p.src}
+                  alt=""
+                  loading={i < 12 ? undefined : "lazy"}
+                  className="w-full h-full object-cover rounded-[1px]"
+                />
+              ) : (
+                <video
+                  src={MEDIA_BASE + p.src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover rounded-[1px]"
+                />
+              )}
+            </motion.div>
+          </FloatingElement>
         ))}
       </Floating>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 pointer-events-none">
-        <div className="text-center max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="flex flex-col items-center bg-white/60 backdrop-blur-md rounded-3xl px-8 py-10 mx-4 md:mx-auto shadow-lg shadow-black/5"
-          >
-            <h1 className="font-display text-6xl md:text-8xl font-bold text-wedding-brown mb-0 leading-tight uppercase tracking-tight">
-              WEDDING CAMP
-            </h1>
-            <h2 className="font-display text-4xl md:text-6xl text-wedding-brown font-bold uppercase tracking-tight mb-8">
-              Amber & Piv
-            </h2>
-
-            <p className="text-xl md:text-2xl text-neutral-800 mb-4 font-normal tracking-tight">
-              Join us as we celebrate our marriage
-            </p>
-
-            <div className="text-sm md:text-base font-bold uppercase tracking-widest text-neutral-900">
-              22 June 2026 | Wolfkop Nature Reserve, Citrusdal
-            </div>
-          </motion.div>
-        </div>
+      {/* Center card — sits above the polaroid scatter */}
+      <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+        <motion.div
+          style={{ y: parallaxY }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+          className="bg-white/80 backdrop-blur-xl rounded-2xl px-8 py-10 md:px-14 md:py-14 shadow-2xl shadow-black/15 ring-1 ring-white/60 mx-4 max-w-2xl text-center"
+        >
+          <h1 className="font-display text-5xl md:text-8xl font-bold text-wedding-brown mb-0 leading-tight uppercase tracking-tight">
+            WEDDING CAMP
+          </h1>
+          <h2 className="font-display text-3xl md:text-6xl text-wedding-brown font-bold uppercase tracking-tight mb-6">
+            Amber & Piv
+          </h2>
+          <p className="text-lg md:text-2xl text-neutral-800 mb-3 font-normal tracking-tight">
+            Join us as we celebrate our marriage
+          </p>
+          <div className="text-xs md:text-base font-bold uppercase tracking-widest text-neutral-900">
+            22 June 2026 | Wolfkop Nature Reserve, Citrusdal
+          </div>
+        </motion.div>
       </div>
 
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-neutral-400"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 z-30 drop-shadow-md"
       >
         <ChevronDown className="w-8 h-8" />
       </motion.div>

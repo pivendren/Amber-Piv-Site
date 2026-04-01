@@ -1,5 +1,6 @@
 "use client"
 
+import type { Key } from "react"
 import {
   createContext,
   ReactNode,
@@ -100,6 +101,7 @@ const Floating = ({
 export default Floating
 
 interface FloatingElementProps {
+  key?: Key
   children: ReactNode
   className?: string
   depth?: number
