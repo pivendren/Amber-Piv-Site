@@ -11,9 +11,17 @@
   --color-cream: #f5f2ed;
   --color-sand: #e5e0d8;
   --color-wedding-brown: #9a3324;
+  --color-golden: #d4c3a3;
+  --color-golden-light: #e3d3a4;
+  --color-slate: #455860;
+  --color-olive: #5a6045;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
   body {
     @apply bg-cream text-neutral-900 font-sans;
   }

@@ -3,21 +3,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import React, { useRef, useState } from "react";
 import {
-  MapPin,
-  Calendar,
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "motion/react";
+import {
   Heart,
-  Navigation,
-  Package,
-  ClipboardList,
-  Gift,
   Car,
   Plane,
   Home,
   ChevronDown,
+  ChevronUp,
   Shirt,
+  Menu,
+  X,
 } from "lucide-react";
 import Floating, { FloatingElement } from "./components/ui/parallax-floating";
 import {
@@ -44,6 +46,8 @@ import {
   WesternCapeMapIllustration,
 } from "./components/illustrations/InfoGridIllustrations";
 
+const NAV_ITEMS = ["Schedule", "Travel", "Packing"];
+
 const FadeInWhenVisible = ({
   children,
   delay = 0,
@@ -65,32 +69,108 @@ const FadeInWhenVisible = ({
   </motion.div>
 );
 
-const Navbar = () => (
-  <motion.nav
-    initial={{ y: -100 }}
-    animate={{ y: 0 }}
-    transition={{ duration: 0.8, ease: "circOut" }}
-    className="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b border-black/5 px-6 py-4 flex justify-between items-center"
+const SectionDivider = ({
+  fromColor,
+  toColor,
+  flip = false,
+}: {
+  fromColor: string;
+  toColor: string;
+  flip?: boolean;
+}) => (
+  <div
+    className="relative w-full overflow-hidden -mb-px -mt-px"
+    style={{ height: "80px" }}
   >
-    <div className="font-display font-bold text-xl tracking-tight text-wedding-brown">
-      WEDDING CAMP
-    </div>
-    <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600">
-      {["Schedule", "Travel", "Packing"].map((item) => (
-        <a
-          key={item}
-          href={`#${item.toLowerCase()}`}
-          className="hover:text-wedding-brown transition-colors relative group"
-        >
-          {item}
-          <span className="absolute -bottom-1 left-0 w-0 h-px bg-wedding-brown transition-all duration-300 group-hover:w-full"></span>
-        </a>
-      ))}
-    </div>
-
-    <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600"></div>
-  </motion.nav>
+    <svg
+      viewBox="0 0 1440 80"
+      preserveAspectRatio="none"
+      className="absolute inset-0 w-full h-full"
+      style={{ transform: flip ? "scaleY(-1)" : undefined }}
+    >
+      <path d="M0,0 L1440,0 L1440,80 L0,80 Z" fill={fromColor} />
+      <path
+        d="M0,40 C360,80 720,0 1080,50 C1260,70 1380,60 1440,40 L1440,80 L0,80 Z"
+        fill={toColor}
+      />
+    </svg>
+  </div>
 );
+
+const Navbar = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.8, ease: "circOut" }}
+      className="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b border-black/5"
+    >
+      <div className="px-6 py-4 flex justify-between items-center">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="font-display font-bold text-xl tracking-tight text-wedding-brown"
+        >
+          WEDDING CAMP
+        </a>
+        <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600">
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="hover:text-wedding-brown transition-colors relative group"
+            >
+              {item}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-wedding-brown transition-all duration-300 group-hover:w-full"></span>
+            </a>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden text-wedding-brown p-1"
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden border-t border-black/5 bg-cream/95 backdrop-blur-md"
+          >
+            <div className="flex flex-col px-6 py-4 gap-4">
+              {NAV_ITEMS.map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  onClick={() => setMobileOpen(false)}
+                  className="text-sm font-semibold uppercase tracking-widest text-neutral-600 hover:text-wedding-brown transition-colors"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
+  );
+};
 
 const Hero = () => {
   const containerRef = useRef(null);
@@ -112,7 +192,6 @@ const Hero = () => {
       </div>
 
       <Floating sensitivity={-0.5} className="overflow-hidden z-0">
-        {/* 1. Top Left - Vertical */}
         <FloatingElement
           depth={0.4}
           className="top-[5%] left-[2%] md:left-[4%]"
@@ -125,7 +204,6 @@ const Hero = () => {
           </motion.div>
         </FloatingElement>
 
-        {/* 2. Top Center - Horizontal */}
         <FloatingElement
           depth={0.6}
           className="top-[2%] left-[35%] md:left-[38%]"
@@ -138,7 +216,6 @@ const Hero = () => {
           </motion.div>
         </FloatingElement>
 
-        {/* 3. Top Right - Horizontal */}
         <FloatingElement
           depth={0.3}
           className="top-[8%] right-[2%] md:right-[6%]"
@@ -151,7 +228,6 @@ const Hero = () => {
           </motion.div>
         </FloatingElement>
 
-        {/* 4. Middle Left - Vertical */}
         <FloatingElement
           depth={0.7}
           className="top-[45%] left-[-2%] md:left-[1%]"
@@ -164,7 +240,6 @@ const Hero = () => {
           </motion.div>
         </FloatingElement>
 
-        {/* 5. Middle Right - Vertical */}
         <FloatingElement
           depth={0.5}
           className="top-[48%] right-[-2%] md:right-[1%]"
@@ -177,7 +252,6 @@ const Hero = () => {
           </motion.div>
         </FloatingElement>
 
-        {/* 6. Bottom Left - Horizontal */}
         <FloatingElement
           depth={0.8}
           className="bottom-[5%] left-[5%] md:left-[8%]"
@@ -190,7 +264,6 @@ const Hero = () => {
           </motion.div>
         </FloatingElement>
 
-        {/* 7. Bottom Center - Horizontal */}
         <FloatingElement
           depth={0.4}
           className="bottom-[2%] left-[38%] md:left-[40%]"
@@ -203,7 +276,6 @@ const Hero = () => {
           </motion.div>
         </FloatingElement>
 
-        {/* 8. Bottom Right - Vertical */}
         <FloatingElement
           depth={0.9}
           className="bottom-[8%] right-[5%] md:right-[8%]"
@@ -223,7 +295,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="flex flex-col items-center"
+            className="flex flex-col items-center bg-white/50 backdrop-blur-sm rounded-3xl px-8 py-10 mx-4 md:mx-auto"
           >
             <h1 className="font-display text-6xl md:text-8xl font-bold text-wedding-brown mb-0 leading-tight uppercase tracking-tight">
               WEDDING CAMP
@@ -255,27 +327,26 @@ const Hero = () => {
 };
 
 const InfoGrid = () => (
-  <section id="packing" className="bg-[#d4c3a3] py-12">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-4">
-      {/* Location & Lodging - Full Width */}
+  <section id="info" className="bg-golden py-12 relative">
+    <SectionDivider fromColor="#f8f8f8" toColor="#d4c3a3" flip />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-4 relative z-10">
       <FadeInWhenVisible>
         <motion.a
           href="#travel"
-          whileHover={{ scale: 0.99 }}
+          whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="group block bg-[#e3d3a4] p-12 flex flex-col md:flex-row items-center justify-between min-h-[350px] rounded-lg shadow-sm relative overflow-hidden"
+          className="group block bg-golden-light p-12 flex flex-col md:flex-row items-center justify-between min-h-[350px] rounded-lg shadow-sm hover:shadow-lg transition-shadow relative overflow-hidden"
         >
           <div className="relative z-10 max-w-md">
-            <h2 className="font-display text-4xl md:text-6xl font-bold text-[#5a6045] uppercase tracking-tight mb-4">
+            <h2 className="font-display text-4xl md:text-6xl font-bold text-olive uppercase tracking-tight mb-4">
               LOCATION & LODGING
             </h2>
-            <p className="text-[#5a6045]/80 text-lg font-medium">
+            <p className="text-olive/80 text-lg font-medium">
               Join us in the beautiful Western Cape. Explore the rugged
               coastline and find your perfect stay.
             </p>
           </div>
 
-          {/* Subtle SVG Background Overlay */}
           <div className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
             <LocationLodgingIllustration className="w-full h-full object-cover" />
           </div>
@@ -283,16 +354,15 @@ const InfoGrid = () => (
       </FadeInWhenVisible>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Our Schedule */}
         <FadeInWhenVisible>
           <motion.a
-            href="#Schedule"
-            whileHover={{ scale: 0.97 }}
+            href="#schedule"
+            whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group block relative overflow-hidden h-[450px] rounded-lg shadow-sm"
+            className="group block relative overflow-hidden h-[450px] rounded-lg shadow-sm hover:shadow-lg transition-shadow"
           >
             <ScheduleIllustration className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-[#e3d3a4] transition-colors duration-500 group-hover:bg-black/20">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-golden-light transition-colors duration-500 group-hover:bg-black/20">
               <h2 className="font-display text-3xl font-black uppercase tracking-widest">
                 Schedule
               </h2>
@@ -300,13 +370,12 @@ const InfoGrid = () => (
           </motion.a>
         </FadeInWhenVisible>
 
-        {/* Packing List */}
         <FadeInWhenVisible delay={0.1}>
           <motion.a
             href="#packing"
-            whileHover={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group block bg-[#455860] text-[#e3d3a4] p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm relative overflow-hidden"
+            className="group block bg-slate text-golden-light p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm hover:shadow-lg transition-shadow relative overflow-hidden"
           >
             <h2 className="font-display text-3xl font-black uppercase tracking-widest mb-8 relative z-10">
               PACKING LIST
@@ -318,12 +387,32 @@ const InfoGrid = () => (
         </FadeInWhenVisible>
       </div>
     </div>
+    <SectionDivider fromColor="#d4c3a3" toColor="#f5f2ed" />
   </section>
+);
+
+const TimelineDot = () => (
+  <motion.div
+    initial={{ scale: 0 }}
+    whileInView={{ scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, ease: "backOut" }}
+    className="absolute left-1/2 -translate-x-1/2 z-20"
+  >
+    <div className="relative">
+      <div className="w-6 h-6 rounded-full bg-forest border-4 border-cream shadow-lg"></div>
+      <motion.div
+        animate={{ scale: [1, 1.8, 1], opacity: [0.4, 0, 0.4] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 w-6 h-6 rounded-full bg-forest/30"
+      ></motion.div>
+    </div>
+  </motion.div>
 );
 
 const ScheduleTimeline = () => (
   <section
-    id="Schedule"
+    id="schedule"
     className="bg-cream py-32 topo-bg relative overflow-hidden"
   >
     <div className="max-w-5xl mx-auto px-6">
@@ -343,13 +432,12 @@ const ScheduleTimeline = () => (
       </FadeInWhenVisible>
 
       <div className="relative">
-        {/* Center Line */}
         <motion.div
           initial={{ height: 0 }}
           whileInView={{ height: "100%" }}
           viewport={{ once: true }}
           transition={{ duration: 2, ease: "easeInOut" }}
-          className="absolute left-1/2 top-0 w-px bg-forest/20 -translate-x-1/2"
+          className="absolute left-1/2 top-0 w-px bg-forest/20 -translate-x-1/2 hidden md:block"
         ></motion.div>
 
         <div className="space-y-32">
@@ -413,10 +501,12 @@ const ScheduleTimeline = () => (
                 </FadeInWhenVisible>
               </div>
 
-              <div className="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-forest border-4 border-cream z-20 shadow-lg"></div>
+              <div className="hidden md:block">
+                <TimelineDot />
+              </div>
 
               <div
-                className={`md:w-1/2 ${item.side === "left" ? "text-left" : "text-right"}`}
+                className={`md:w-1/2 text-left ${item.side === "left" ? "md:text-left" : "md:text-right"}`}
               >
                 <FadeInWhenVisible x={item.side === "left" ? 50 : -50}>
                   <span className="text-rust font-bold tracking-[0.3em] text-xs mb-2 block">
@@ -472,9 +562,10 @@ const TravelDetails = () => (
                     Flights
                   </h4>
                   <p className="text-sm text-neutral-700 leading-relaxed font-light mb-6">
-                    Most guests are flying into **Cape Town International
-                    Airport (CPT)** between Friday and Saturday before the main
-                    event on 22 June.
+                    Most guests are flying into{" "}
+                    <strong>Cape Town International Airport (CPT)</strong>{" "}
+                    between Friday and Saturday before the main event on 22
+                    June.
                   </p>
 
                   <h4 className="font-serif text-2xl font-bold text-forest mb-4">
@@ -486,16 +577,16 @@ const TravelDetails = () => (
                   </p>
                   <ul className="text-sm text-neutral-600 font-light space-y-2 mb-8 list-none italic">
                     <li className="flex gap-2">
-                      <span className="text-rust">•</span> Take the **N7 North**
-                      towards Malmesbury.
+                      <span className="text-rust">•</span> Take the{" "}
+                      <strong>N7 North</strong> towards Malmesbury.
                     </li>
                     <li className="flex gap-2">
                       <span className="text-rust">•</span> Continue through
                       Moorreesburg and Piketberg.
                     </li>
                     <li className="flex gap-2">
-                      <span className="text-rust">•</span> Ascend the beautiful
-                      **Piekenierskloof Pass**.
+                      <span className="text-rust">•</span> Ascend the beautiful{" "}
+                      <strong>Piekenierskloof Pass</strong>.
                     </li>
                     <li className="flex gap-2">
                       <span className="text-rust">•</span> Descending into the
@@ -592,7 +683,6 @@ const TravelDetails = () => (
               </div>
             </div>
 
-            {/* Subtle Citrusdal Background Illustration */}
             <div className="absolute inset-0 opacity-[0.2] pointer-events-none -z-0">
               <CitrusdalIllustration className="w-full h-full object-cover" />
             </div>
@@ -636,15 +726,27 @@ const PackingList = () => (
                   {[
                     {
                       title: "The Active Gear",
-                      items: ["Walking/Hiking Shoes (expect mud!)", "Workout / Gym Gear", "Spare Socks"],
+                      items: [
+                        "Walking/Hiking Shoes (expect mud!)",
+                        "Workout / Gym Gear",
+                        "Spare Socks",
+                      ],
                     },
                     {
                       title: "Stay Warm",
-                      items: ["Thick Puffer / Winter Jacket", "Beanie & Scarf", "Thermal Layers"],
+                      items: [
+                        "Thick Puffer / Winter Jacket",
+                        "Beanie & Scarf",
+                        "Thermal Layers",
+                      ],
                     },
                     {
                       title: "Mountain Comfort",
-                      items: ["Comfy Loungewear", "Warm Pajamas", "Indoor Slippers"],
+                      items: [
+                        "Comfy Loungewear",
+                        "Warm Pajamas",
+                        "Indoor Slippers",
+                      ],
                     },
                   ].map((category, i) => (
                     <div key={i}>
@@ -677,27 +779,57 @@ const PackingList = () => (
 
 const Footer = () => (
   <footer className="bg-sand py-20 relative overflow-hidden">
-    {/* Forest line art background */}
-    <div className="absolute bottom-0 left-0 w-full h-48 opacity-10 pointer-events-none">
-      <div className="flex justify-around items-end h-full">
-        {[...Array(10)].map((_, i) => (
-          <div
-            key={i}
-            className="w-12 h-32 border-l-2 border-forest/40 rounded-t-full transform rotate-12"
-          ></div>
-        ))}
-      </div>
+    <div className="absolute bottom-0 left-0 w-full h-64 opacity-[0.07] pointer-events-none">
+      <svg
+        viewBox="0 0 1200 300"
+        preserveAspectRatio="none"
+        className="w-full h-full"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 300 L0 180 L60 150 L120 200 L200 120 L280 180 L360 100 L440 160 L520 80 L600 140 L680 60 L760 130 L840 90 L920 160 L1000 110 L1080 170 L1200 120 L1200 300 Z"
+          fill="#3a5a40"
+          opacity="0.6"
+        />
+        <path
+          d="M0 300 L0 220 L80 190 L160 230 L240 170 L320 220 L400 150 L480 200 L560 130 L640 180 L720 120 L800 170 L880 140 L960 190 L1040 160 L1120 200 L1200 170 L1200 300 Z"
+          fill="#3a5a40"
+        />
+        <circle cx="200" cy="80" r="30" fill="#a64d32" opacity="0.3" />
+        <circle cx="800" cy="60" r="20" fill="#9a3324" opacity="0.2" />
+        <path
+          d="M100 300 L100 240 L110 220 L120 240 L120 300 Z"
+          fill="#1c2b1e"
+          opacity="0.4"
+        />
+        <circle cx="110" cy="210" r="25" fill="#3a5a40" opacity="0.5" />
+        <path
+          d="M1050 300 L1050 230 L1060 210 L1070 230 L1070 300 Z"
+          fill="#1c2b1e"
+          opacity="0.4"
+        />
+        <circle cx="1060" cy="200" r="20" fill="#3a5a40" opacity="0.5" />
+      </svg>
     </div>
 
     <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        className="font-display text-4xl font-black mb-10 tracking-tighter cursor-default text-wedding-brown uppercase"
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="group cursor-pointer mb-2"
+        aria-label="Back to top"
       >
-        A&P
-      </motion.div>
-      <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-wedding-brown/60 mb-12">
-        {["Schedule", "Travel", "Packing"].map((item) => (
+        <ChevronUp className="w-5 h-5 text-wedding-brown/40 group-hover:text-wedding-brown transition-colors mx-auto mb-1" />
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          className="font-display text-4xl font-black tracking-tighter text-wedding-brown uppercase"
+        >
+          A&P
+        </motion.div>
+      </button>
+
+      <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-wedding-brown/60 mb-12 mt-8">
+        {NAV_ITEMS.map((item) => (
           <a
             key={item}
             href={`#${item.toLowerCase()}`}
@@ -709,7 +841,7 @@ const Footer = () => (
       </div>
       <div className="w-full h-px bg-wedding-brown/10 mb-10"></div>
       <div className="text-[10px] text-wedding-brown/40 uppercase tracking-[0.4em] font-medium">
-        © 2026 Piv & Amber — Made with Love
+        &copy; 2026 Piv & Amber — Made with Love
       </div>
     </div>
   </footer>
@@ -717,7 +849,12 @@ const Footer = () => (
 
 export default function App() {
   return (
-    <div className="min-h-screen selection:bg-rust selection:text-white">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="min-h-screen selection:bg-rust selection:text-white"
+    >
       <Navbar />
       <Hero />
       <InfoGrid />
@@ -725,6 +862,6 @@ export default function App() {
       <TravelDetails />
       <PackingList />
       <Footer />
-    </div>
+    </motion.div>
   );
 }
