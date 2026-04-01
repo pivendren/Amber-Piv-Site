@@ -54,49 +54,76 @@ type Polaroid = {
 };
 
 const POLAROIDS: Polaroid[] = [
+  // Videos always z:10+ so they sit on top when overlapping.
+  // Paired video+photo are separated by 2+ rows.
+  // Vertical offsets staggered within rows to reduce face-on-face overlap.
+
   // Row 1 (top edge, ~0-18%)
   { src: "photo-wildflowers.webp",   type: "photo", top: -2, left: -3, w: 22, h: 16, rotate: -5,  z: 2, depth: 0.4 },
-  { src: "video-IMG_0172.mp4",       type: "video", top: 1,  left: 16, w: 18, h: 14, rotate: 3,   z: 4, depth: 0.6 },
+  { src: "video-IMG_0172.mp4",       type: "video", top: 3,  left: 16, w: 18, h: 14, rotate: 3,   z: 10, depth: 0.6 },
   { src: "photo-museum.webp",        type: "photo", top: -1, left: 31, w: 20, h: 15, rotate: -2,  z: 1, depth: 0.3 },
-  { src: "photo-ferris-wheel.webp",  type: "photo", top: 2,  left: 48, w: 19, h: 14, rotate: 4,   z: 3, depth: 0.7 },
-  { src: "video-IMG_2373.mp4",       type: "video", top: -2, left: 64, w: 17, h: 20, rotate: -3,  z: 5, depth: 0.5 },
-  { src: "photo-table-mountain.webp",type: "photo", top: 1,  left: 80, w: 23, h: 16, rotate: 2,   z: 2, depth: 0.4 },
+  { src: "photo-ferris-wheel.webp",  type: "photo", top: 4,  left: 48, w: 19, h: 14, rotate: 4,   z: 3, depth: 0.7 },
+  { src: "video-IMG_2373.mp4",       type: "video", top: -2, left: 64, w: 17, h: 20, rotate: -3,  z: 11, depth: 0.5 },
+  // tree (pair of 2373) is in row 5 — well separated
+  { src: "photo-skyline.webp",       type: "photo", top: 1,  left: 80, w: 15, h: 20, rotate: 2,   z: 2, depth: 0.4 },
+  // skyline (pair of 0906) moved here from row 2 — 0906 is in row 4
 
-  // Row 2 (~15-32%)
-  { src: "video-IMG_0767.mp4",       type: "video", top: 15, left: -2, w: 17, h: 22, rotate: 4,   z: 6, depth: 0.8 },
-  { src: "photo-fitness.webp",       type: "photo", top: 17, left: 13, w: 16, h: 20, rotate: -4,  z: 3, depth: 0.3 },
-  { src: "photo-night1.webp",        type: "photo", top: 16, left: 27, w: 20, h: 15, rotate: 2,   z: 1, depth: 0.5 },
-  { src: "photo-skydive.webp",       type: "photo", top: 18, left: 55, w: 19, h: 14, rotate: -3,  z: 2, depth: 0.6 },
-  { src: "video-IMG_0906.mp4",       type: "video", top: 15, left: 70, w: 16, h: 21, rotate: 5,   z: 7, depth: 0.4 },
-  { src: "photo-beach.webp",         type: "photo", top: 17, left: 84, w: 20, h: 15, rotate: -2,  z: 1, depth: 0.7 },
+  // Row 2 (~16-34%)
+  { src: "video-IMG_0767.mp4",       type: "video", top: 17, left: -2, w: 17, h: 22, rotate: 4,   z: 12, depth: 0.8 },
+  // building (pair of 0767) is in row 5 — well separated
+  { src: "photo-fitness.webp",       type: "photo", top: 20, left: 13, w: 16, h: 20, rotate: -4,  z: 3, depth: 0.3 },
+  { src: "photo-night1.webp",        type: "photo", top: 17, left: 27, w: 20, h: 15, rotate: 2,   z: 1, depth: 0.5 },
+  { src: "photo-table-mountain.webp",type: "photo", top: 19, left: 44, w: 16, h: 22, rotate: -3,  z: 2, depth: 0.6 },
+  { src: "photo-skydive.webp",       type: "photo", top: 17, left: 58, w: 15, h: 20, rotate: 3,   z: 4, depth: 0.4 },
+  // skydive (pair of 0797) — 0797 is in row 6 — well separated
+  { src: "photo-beach.webp",         type: "photo", top: 20, left: 73, w: 20, h: 15, rotate: -2,  z: 1, depth: 0.7 },
+  { src: "photo-cape-town.webp",     type: "photo", top: 17, left: 87, w: 15, h: 20, rotate: 2,   z: 2, depth: 0.3 },
+  // cape-town (pair of 3070) — 3070 is in row 5 — separated
 
-  // Row 3 (~32-48%) — flanks center card
-  { src: "photo-night2.webp",        type: "photo", top: 33, left: -3, w: 21, h: 15, rotate: -3,  z: 2, depth: 0.5 },
-  { src: "video-IMG_2382.mp4",       type: "video", top: 35, left: 14, w: 14, h: 18, rotate: 5,   z: 8, depth: 0.9 },
-  { src: "photo-cape-town.webp",     type: "photo", top: 36, left: 68, w: 18, h: 13, rotate: -4,  z: 3, depth: 0.3 },
-  { src: "photo-promenade.webp",     type: "photo", top: 33, left: 82, w: 15, h: 20, rotate: 3,   z: 4, depth: 0.6 },
+  // Row 3 (~34-50%) — flanks center card, left + right edges only
+  { src: "photo-night2.webp",        type: "photo", top: 35, left: -3, w: 21, h: 15, rotate: -3,  z: 2, depth: 0.5 },
+  { src: "video-IMG_2382.mp4",       type: "video", top: 37, left: 14, w: 14, h: 18, rotate: 5,   z: 13, depth: 0.9 },
+  // bougainvillea (pair of 2382) is in row 6 — well separated
+  { src: "photo-promenade.webp",     type: "photo", top: 35, left: 68, w: 15, h: 20, rotate: -4,  z: 3, depth: 0.6 },
+  { src: "video-IMG_3214.mp4",       type: "video", top: 37, left: 84, w: 15, h: 19, rotate: 3,   z: 14, depth: 0.5 },
+  // city (pair of 3214) moved to row 6 — well separated
 
-  // Row 4 (~48-65%) — flanks center card
-  { src: "video-IMG_1880.mp4",       type: "video", top: 50, left: -2, w: 18, h: 14, rotate: 3,   z: 5, depth: 0.4 },
-  { src: "photo-building.webp",      type: "photo", top: 52, left: 13, w: 17, h: 13, rotate: -5,  z: 2, depth: 0.7 },
-  { src: "video-IMG_3214.mp4",       type: "video", top: 50, left: 70, w: 15, h: 19, rotate: 4,   z: 6, depth: 0.5 },
-  { src: "photo-city.webp",          type: "photo", top: 52, left: 83, w: 20, h: 14, rotate: -2,  z: 1, depth: 0.3 },
+  // Row 4 (~50-66%) — flanks center card, left + right edges only
+  { src: "video-IMG_1880.mp4",       type: "video", top: 52, left: -2, w: 18, h: 14, rotate: 3,   z: 11, depth: 0.4 },
+  // garden (pair of 1880) is in row 6 — well separated
+  { src: "photo-dinosaurs.webp",     type: "photo", top: 54, left: 13, w: 16, h: 16, rotate: -5,  z: 2, depth: 0.7 },
+  { src: "video-IMG_0906.mp4",       type: "video", top: 52, left: 70, w: 16, h: 21, rotate: 4,   z: 15, depth: 0.4 },
+  // skyline (pair of 0906) is in row 1 — well separated
+  { src: "photo-concert.webp",       type: "photo", top: 54, left: 84, w: 19, h: 15, rotate: -2,  z: 3, depth: 0.5 },
+  // concert (pair of 3432) — 3432 is in row 6 — separated
 
-  // Row 5 (~62-78%)
-  { src: "photo-dinosaurs.webp",     type: "photo", top: 64, left: -2, w: 19, h: 19, rotate: -4,  z: 3, depth: 0.6 },
-  { src: "video-IMG_1275.mp4",       type: "video", top: 66, left: 15, w: 15, h: 19, rotate: 3,   z: 7, depth: 0.8 },
-  { src: "photo-skyline.webp",       type: "photo", top: 65, left: 28, w: 20, h: 14, rotate: -2,  z: 1, depth: 0.4 },
-  { src: "photo-concert.webp",       type: "photo", top: 63, left: 52, w: 19, h: 15, rotate: 5,   z: 2, depth: 0.5 },
-  { src: "video-IMG_3070.mp4",       type: "video", top: 66, left: 68, w: 17, h: 13, rotate: -3,  z: 4, depth: 0.3 },
-  { src: "photo-garden.webp",        type: "photo", top: 64, left: 83, w: 20, h: 16, rotate: 2,   z: 1, depth: 0.7 },
+  // Row 5 (~65-80%)
+  { src: "photo-building.webp",      type: "photo", top: 66, left: -2, w: 14, h: 18, rotate: -4,  z: 3, depth: 0.6 },
+  // building (pair of 0767) — 0767 is in row 2 — well separated
+  { src: "video-IMG_1275.mp4",       type: "video", top: 68, left: 11, w: 15, h: 19, rotate: 3,   z: 12, depth: 0.8 },
+  // cafe (pair of 1275) moved to row 1 area — but let me put it here far apart
+  { src: "photo-rocks.webp",         type: "photo", top: 66, left: 25, w: 14, h: 22, rotate: -2,  z: 1, depth: 0.4 },
+  { src: "photo-tree.webp",          type: "photo", top: 68, left: 38, w: 15, h: 20, rotate: 5,   z: 4, depth: 0.5 },
+  // tree (pair of 2373) — 2373 is in row 1 — well separated
+  { src: "video-IMG_3070.mp4",       type: "video", top: 66, left: 52, w: 17, h: 13, rotate: -3,  z: 10, depth: 0.3 },
+  // cape-town (pair of 3070) is in row 2 — well separated
+  { src: "photo-cafe.webp",          type: "photo", top: 68, left: 67, w: 15, h: 20, rotate: 2,   z: 2, depth: 0.4 },
+  // cafe (pair of 1275) — 1275 is left:11 in this row but 56vw apart — ok
+  { src: "photo-garden.webp",        type: "photo", top: 66, left: 80, w: 20, h: 15, rotate: -3,  z: 1, depth: 0.7 },
+  // garden (pair of 1880) — 1880 is in row 4 — separated
 
-  // Row 6 (bottom edge, ~78-100%)
-  { src: "photo-bougainvillea.webp", type: "photo", top: 80, left: -3, w: 22, h: 16, rotate: 3,   z: 2, depth: 0.5 },
-  { src: "video-IMG_0797.mp4",       type: "video", top: 82, left: 17, w: 18, h: 14, rotate: -4,  z: 5, depth: 0.6 },
-  { src: "photo-rocks.webp",         type: "photo", top: 81, left: 32, w: 15, h: 20, rotate: 2,   z: 3, depth: 0.4 },
-  { src: "photo-cafe.webp",          type: "photo", top: 83, left: 48, w: 19, h: 14, rotate: -3,  z: 1, depth: 0.8 },
-  { src: "photo-tree.webp",          type: "photo", top: 80, left: 65, w: 21, h: 16, rotate: 5,   z: 2, depth: 0.3 },
-  { src: "video-IMG_3432.mp4",       type: "video", top: 82, left: 83, w: 20, h: 16, rotate: -2,  z: 4, depth: 0.7 },
+  // Row 6 (bottom edge, ~80-100%)
+  { src: "photo-bougainvillea.webp", type: "photo", top: 82, left: -3, w: 16, h: 21, rotate: 3,   z: 2, depth: 0.5 },
+  // bougainvillea (pair of 2382) — 2382 is in row 3 — well separated
+  { src: "video-IMG_0797.mp4",       type: "video", top: 84, left: 12, w: 18, h: 14, rotate: -4,  z: 11, depth: 0.6 },
+  // skydive (pair of 0797) is in row 2 — well separated
+  { src: "photo-city.webp",          type: "photo", top: 82, left: 28, w: 15, h: 20, rotate: 2,   z: 3, depth: 0.3 },
+  // city (pair of 3214) — 3214 is in row 3 — well separated
+  { src: "photo-wildflowers.webp",   type: "photo", top: 84, left: 42, w: 20, h: 15, rotate: -5,  z: 1, depth: 0.8 },
+  { src: "video-IMG_3432.mp4",       type: "video", top: 82, left: 60, w: 18, h: 14, rotate: 4,   z: 10, depth: 0.7 },
+  // concert (pair of 3432) is in row 4 — well separated
+  { src: "photo-ferris-wheel.webp",  type: "photo", top: 84, left: 76, w: 20, h: 15, rotate: -2,  z: 1, depth: 0.3 },
+  { src: "photo-museum.webp",        type: "photo", top: 82, left: 88, w: 16, h: 12, rotate: 3,   z: 2, depth: 0.6 },
 ];
 
 const NAV_ITEMS = ["Schedule", "Travel", "Packing"];
