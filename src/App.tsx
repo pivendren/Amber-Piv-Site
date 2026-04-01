@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -20,6 +20,13 @@ import {
   Shirt,
   Menu,
   X,
+  MapPin,
+  Calendar,
+  ArrowRight,
+  Sun,
+  Mountain,
+  Flame,
+  Zap,
 } from "lucide-react";
 import Floating, { FloatingElement } from "./components/ui/parallax-floating";
 import {
@@ -38,6 +45,7 @@ import {
   CitrusdalIllustration,
   WesternCapeMapIllustration,
 } from "./components/illustrations/InfoGridIllustrations";
+import { cn } from "./lib/utils";
 
 const MEDIA_BASE = import.meta.env.BASE_URL + "media/";
 
@@ -176,36 +184,53 @@ const SectionDivider = ({
   </div>
 );
 
+/* ─── Navbar ─────────────────────────────────────────────────────────── */
+
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "circOut" }}
-      className="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b border-black/5"
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        scrolled
+          ? "bg-cream/90 backdrop-blur-xl shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+          : "bg-transparent"
+      )}
     >
-      <div className="px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <a
           href="#"
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="font-display font-bold text-xl tracking-tight text-wedding-brown"
+          className={cn(
+            "font-display font-bold text-xl tracking-tight transition-colors duration-500",
+            scrolled ? "text-wedding-brown" : "text-wedding-brown/80"
+          )}
         >
           WEDDING CAMP
         </a>
-        <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-neutral-600">
+        <div className="hidden md:flex gap-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
           {NAV_ITEMS.map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="hover:text-wedding-brown transition-colors relative group"
+              className="hover:text-wedding-brown transition-colors duration-300 relative group py-1"
             >
               {item}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-wedding-brown transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-wedding-brown/60 transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </div>
@@ -215,11 +240,7 @@ const Navbar = () => {
           className="md:hidden text-wedding-brown p-1"
           aria-label="Toggle menu"
         >
-          {mobileOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
+          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
@@ -230,18 +251,21 @@ const Navbar = () => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden border-t border-black/5 bg-cream/95 backdrop-blur-md"
+            className="md:hidden overflow-hidden bg-cream/95 backdrop-blur-xl"
           >
-            <div className="flex flex-col px-6 py-4 gap-4">
-              {NAV_ITEMS.map((item) => (
-                <a
+            <div className="flex flex-col px-6 py-5 gap-5">
+              {NAV_ITEMS.map((item, i) => (
+                <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
                   onClick={() => setMobileOpen(false)}
-                  className="text-sm font-semibold uppercase tracking-widest text-neutral-600 hover:text-wedding-brown transition-colors"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-600 hover:text-wedding-brown transition-colors"
                 >
                   {item}
-                </a>
+                </motion.a>
               ))}
             </div>
           </motion.div>
@@ -250,6 +274,8 @@ const Navbar = () => {
     </motion.nav>
   );
 };
+
+/* ─── Hero (untouched) ───────────────────────────────────────────────── */
 
 const Hero = () => {
   const containerRef = useRef(null);
@@ -362,72 +388,186 @@ const Hero = () => {
   );
 };
 
+/* ─── Info Grid ──────────────────────────────────────────────────────── */
+
 const InfoGrid = () => (
-  <section id="info" className="bg-golden py-12 relative">
+  <section id="info" className="relative">
     <SectionDivider fromColor="#f8f8f8" toColor="#d4c3a3" flip />
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-4 relative z-10">
-      <FadeInWhenVisible>
-        <motion.a
-          href="#travel"
-          whileHover={{ scale: 1.01 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="group block bg-golden-light p-12 flex flex-col md:flex-row items-center justify-between min-h-[350px] rounded-lg shadow-sm hover:shadow-lg transition-shadow relative overflow-hidden"
-        >
-          <div className="relative z-10 max-w-md">
-            <h2 className="font-display text-4xl md:text-6xl font-bold text-olive uppercase tracking-tight mb-4">
-              LOCATION & LODGING
-            </h2>
-            <p className="text-olive/80 text-lg font-medium">
-              Join us in the beautiful Western Cape. Explore the rugged
-              coastline and find your perfect stay.
-            </p>
-          </div>
-
-          <div className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
-            <LocationLodgingIllustration className="w-full h-full object-cover" />
-          </div>
-        </motion.a>
-      </FadeInWhenVisible>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="bg-golden py-16 md:py-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <FadeInWhenVisible>
-          <motion.a
-            href="#schedule"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group block relative overflow-hidden h-[450px] rounded-lg shadow-sm hover:shadow-lg transition-shadow"
-          >
-            <ScheduleIllustration className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40 flex flex-col items-center justify-start p-8 text-center text-golden-light transition-colors duration-500 group-hover:bg-black/20">
-              <h2 className="font-display text-3xl font-black uppercase tracking-widest">
-                Schedule
-              </h2>
-            </div>
-          </motion.a>
+          <div className="text-center mb-12">
+            <p className="text-olive/60 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+              Everything you need to know
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-olive tracking-tight">
+              At a Glance
+            </h2>
+          </div>
         </FadeInWhenVisible>
 
-        <FadeInWhenVisible delay={0.1}>
-          <motion.a
-            href="#packing"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="group block bg-slate text-golden-light p-8 flex flex-col items-start h-[450px] rounded-lg shadow-sm hover:shadow-lg transition-shadow relative overflow-hidden"
-          >
-            <h2 className="font-display text-3xl font-black uppercase tracking-widest mb-8 relative z-10">
-              PACKING LIST
-            </h2>
-            <div className="flex-1 w-full relative transition-transform duration-700 group-hover:scale-110 group-hover:-translate-y-4">
-              <PackingListIllustration className="absolute inset-0 w-full h-full object-contain" />
-            </div>
-          </motion.a>
-        </FadeInWhenVisible>
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Location — full width */}
+          <FadeInWhenVisible>
+            <motion.a
+              href="#travel"
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="group block md:col-span-1 bg-white/50 backdrop-blur-sm rounded-2xl p-8 md:p-10 border border-white/60 shadow-sm hover:shadow-xl hover:bg-white/70 transition-all duration-500 relative overflow-hidden h-full"
+            >
+              <div className="absolute top-0 right-0 w-48 h-48 opacity-[0.06] pointer-events-none">
+                <LocationLodgingIllustration className="w-full h-full" />
+              </div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-forest" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-forest/50">
+                    Venue & Stay
+                  </span>
+                </div>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold text-forest mb-3 tracking-tight">
+                  Location & Lodging
+                </h3>
+                <p className="text-sm text-olive/70 leading-relaxed mb-6 max-w-md">
+                  Wolfkop Nature Reserve in the Western Cape. Rugged mountains,
+                  golden rock formations, and cottages nestled in the valley.
+                </p>
+                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-rust group-hover:gap-3 transition-all duration-300">
+                  Explore
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </motion.a>
+          </FadeInWhenVisible>
+
+          {/* Schedule */}
+          <div className="grid grid-rows-2 gap-4">
+            <FadeInWhenVisible delay={0.1}>
+              <motion.a
+                href="#schedule"
+                whileHover={{ y: -3 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="group block bg-forest/90 rounded-2xl p-8 border border-forest/20 shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden h-full"
+              >
+                <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
+                  <ScheduleIllustration className="w-full h-full object-cover" />
+                </div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-golden-light" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-golden-light/50">
+                      4 Days
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-2xl font-bold text-golden-light mb-2 tracking-tight">
+                    Schedule
+                  </h3>
+                  <p className="text-sm text-golden-light/60 leading-relaxed mb-4">
+                    From Cape Town arrival to the sunset ceremony and beyond.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-golden-light/80 group-hover:gap-3 transition-all duration-300">
+                    View timeline
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </motion.a>
+            </FadeInWhenVisible>
+
+            {/* Packing */}
+            <FadeInWhenVisible delay={0.15}>
+              <motion.a
+                href="#packing"
+                whileHover={{ y: -3 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="group block bg-white/50 backdrop-blur-sm rounded-2xl p-8 border border-white/60 shadow-sm hover:shadow-xl hover:bg-white/70 transition-all duration-500 relative overflow-hidden h-full"
+              >
+                <div className="absolute bottom-0 right-0 w-32 h-32 opacity-[0.08] pointer-events-none translate-x-4 translate-y-4">
+                  <PackingListIllustration className="w-full h-full" />
+                </div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-rust/10 flex items-center justify-center">
+                      <Shirt className="w-5 h-5 text-rust" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-rust/40">
+                      Winter Essentials
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-2xl font-bold text-forest mb-2 tracking-tight">
+                    Packing List
+                  </h3>
+                  <p className="text-sm text-olive/70 leading-relaxed mb-4">
+                    Mountain mornings are cold. Here's what to bring.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-rust group-hover:gap-3 transition-all duration-300">
+                    See the list
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </motion.a>
+            </FadeInWhenVisible>
+          </div>
+        </div>
       </div>
     </div>
     <SectionDivider fromColor="#d4c3a3" toColor="#f5f2ed" />
   </section>
 );
 
-const TimelineDot = () => (
+/* ─── Schedule Timeline ──────────────────────────────────────────────── */
+
+const TIMELINE_EVENTS = [
+  {
+    date: "Fri 19 – Sat 20 June",
+    title: "Arrival in Cape Town",
+    Illustration: MeetingIllustration,
+    side: "left" as const,
+    text: "Folks begin arriving in the Mother City. Take some time to settle in and enjoy the sea air.",
+  },
+  {
+    date: "Saturday 08:00",
+    title: "Green Point Parkrun",
+    Illustration: HikingIllustration,
+    side: "right" as const,
+    text: "A 5km dash (or stroll) through Green Point Park. A great chance to stretch the legs before the drive.",
+  },
+  {
+    date: "Saturday 14:00",
+    title: "Check-in at Wolfkop",
+    Illustration: RoadTripIllustration,
+    side: "left" as const,
+    text: "Supply run in CPT, then hitting the N7 north. Check-in opens at 14:00 at Wolfkop Nature Reserve.",
+  },
+  {
+    date: "Sunday 13:00",
+    title: "The Community Lunch",
+    Illustration: ScheduleIllustration,
+    side: "right" as const,
+    text: "A large, lazy Sunday lunch at 'basecamp'. Relaxation and mountain views are the order of the day.",
+  },
+  {
+    date: "Monday 16:00",
+    title: "The Sunset Wedding",
+    Illustration: WeddingIllustration,
+    side: "left" as const,
+    text: "The main event. A sunset ceremony followed by photos, then a celebratory braai for the rest of the eve.",
+    highlight: true,
+  },
+  {
+    date: "Tuesday 10:00",
+    title: "Walk & Farewell",
+    Illustration: ProposalIllustration,
+    side: "right" as const,
+    text: "One last mountain walk in the morning before checking out and heading home.",
+  },
+];
+
+const TimelineDot = ({ highlight = false }: { highlight?: boolean }) => (
   <motion.div
     initial={{ scale: 0 }}
     whileInView={{ scale: 1 }}
@@ -436,12 +576,20 @@ const TimelineDot = () => (
     className="absolute left-1/2 -translate-x-1/2 z-20"
   >
     <div className="relative">
-      <div className="w-6 h-6 rounded-full bg-forest border-4 border-cream shadow-lg"></div>
+      <div
+        className={cn(
+          "w-5 h-5 rounded-full border-[3px] border-cream shadow-md",
+          highlight ? "bg-rust" : "bg-forest"
+        )}
+      />
       <motion.div
-        animate={{ scale: [1, 1.8, 1], opacity: [0.4, 0, 0.4] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 w-6 h-6 rounded-full bg-forest/30"
-      ></motion.div>
+        animate={{ scale: [1, 2, 1], opacity: [0.3, 0, 0.3] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        className={cn(
+          "absolute inset-0 w-5 h-5 rounded-full",
+          highlight ? "bg-rust/30" : "bg-forest/20"
+        )}
+      />
     </div>
   </motion.div>
 );
@@ -449,111 +597,102 @@ const TimelineDot = () => (
 const ScheduleTimeline = () => (
   <section
     id="schedule"
-    className="bg-cream py-32 topo-bg relative overflow-hidden"
+    className="bg-cream py-28 md:py-36 topo-bg relative overflow-hidden"
   >
     <div className="max-w-5xl mx-auto px-6">
       <FadeInWhenVisible>
-        <div className="text-center mb-24">
+        <div className="text-center mb-20 md:mb-28">
           <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-forest/30 mb-6"
+            animate={{ scale: [1, 1.08, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-forest/5 mb-6"
           >
-            <Heart className="w-8 h-8 text-forest fill-forest/10" />
+            <Heart className="w-6 h-6 text-forest" />
           </motion.div>
-          <h2 className="font-serif text-6xl md:text-7xl font-bold text-neutral-800 tracking-tight">
+          <h2 className="font-serif text-5xl md:text-7xl font-bold text-neutral-800 tracking-tight mb-4">
             Schedule
           </h2>
+          <p className="text-neutral-400 text-sm tracking-wide max-w-md mx-auto">
+            Four days of adventure, connection, and celebration
+          </p>
         </div>
       </FadeInWhenVisible>
 
       <div className="relative">
+        {/* Timeline line */}
         <motion.div
           initial={{ height: 0 }}
           whileInView={{ height: "100%" }}
           viewport={{ once: true }}
-          transition={{ duration: 2, ease: "easeInOut" }}
-          className="absolute left-1/2 top-0 w-px bg-forest/20 -translate-x-1/2 hidden md:block"
-        ></motion.div>
+          transition={{ duration: 2.5, ease: "easeInOut" }}
+          className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-forest/0 via-forest/15 to-forest/0 -translate-x-1/2 hidden md:block"
+        />
 
-        <div className="space-y-32">
-          {[
-            {
-              year: "Fri 19 - Sat 20 June",
-              title: "Arrival in Cape Town",
-              Illustration: MeetingIllustration,
-              side: "left",
-              text: "Folks begin arriving in the Mother City. Take some time to settle in and enjoy the sea air.",
-            },
-            {
-              year: "Saturday 08:00",
-              title: "Green Point Parkrun",
-              Illustration: HikingIllustration,
-              side: "right",
-              text: "A 5km dash (or stroll) through Green Point Park. A great chance to stretch the legs before the drive.",
-            },
-            {
-              year: "Saturday 14:00",
-              title: "Check-in at Wolfkop",
-              Illustration: RoadTripIllustration,
-              side: "left",
-              text: "Supply run in CPT, then hitting the N7 north. Check-in opens at 14:00 at Wolfkop Nature Reserve.",
-            },
-            {
-              year: "Sunday 13:00",
-              title: "The Community Lunch",
-              Illustration: ScheduleIllustration,
-              side: "right",
-              text: "A large, lazy Sunday lunch at 'basecamp'. Relaxation and mountain views are the order of the day.",
-            },
-            {
-              year: "Monday 16:00",
-              title: "The Sunset Wedding",
-              Illustration: WeddingIllustration,
-              side: "left",
-              text: "The main event. A sunset ceremony followed by photos, then a celebratory braai for the rest of the eve.",
-            },
-            {
-              year: "Tuesday 10:00",
-              title: "Walk & Farewell",
-              Illustration: ProposalIllustration,
-              side: "right",
-              text: "One last mountain walk in the morning before checking out and heading home.",
-            },
-          ].map((item, i) => (
+        <div className="space-y-24 md:space-y-32">
+          {TIMELINE_EVENTS.map((item, i) => (
             <div
               key={i}
-              className={`relative flex flex-col md:flex-row items-center gap-12 ${item.side === "right" ? "md:flex-row-reverse" : ""}`}
+              className={cn(
+                "relative flex flex-col md:flex-row items-center gap-8 md:gap-14",
+                item.side === "right" ? "md:flex-row-reverse" : ""
+              )}
             >
+              {/* Illustration side */}
               <div className="md:w-1/2 flex justify-center">
-                <FadeInWhenVisible x={item.side === "left" ? -50 : 50}>
+                <FadeInWhenVisible x={item.side === "left" ? -40 : 40}>
                   <motion.div
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.015 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                     className="relative group"
                   >
-                    <div className="absolute inset-0 bg-rust/10 rounded-2xl blur-2xl group-hover:bg-rust/20 transition-all"></div>
-                    <item.Illustration className="relative rounded-2xl shadow-2xl w-full max-w-md z-10" />
+                    <div className="absolute -inset-3 bg-forest/5 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <item.Illustration className="relative rounded-2xl shadow-xl shadow-black/8 w-full max-w-sm z-10" />
                   </motion.div>
                 </FadeInWhenVisible>
               </div>
 
+              {/* Timeline dot */}
               <div className="hidden md:block">
-                <TimelineDot />
+                <TimelineDot highlight={item.highlight} />
               </div>
 
+              {/* Text side */}
               <div
-                className={`md:w-1/2 text-left ${item.side === "left" ? "md:text-left" : "md:text-right"}`}
+                className={cn(
+                  "md:w-1/2",
+                  item.side === "left" ? "md:text-left" : "md:text-right"
+                )}
               >
-                <FadeInWhenVisible x={item.side === "left" ? 50 : -50}>
-                  <span className="text-rust font-bold tracking-[0.3em] text-xs mb-2 block">
-                    {item.year}
-                  </span>
-                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-forest mb-4">
-                    {item.title}
-                  </h3>
-                  <p className="text-base text-neutral-600 leading-relaxed font-light">
-                    {item.text}
-                  </p>
+                <FadeInWhenVisible x={item.side === "left" ? 40 : -40} delay={0.1}>
+                  <div
+                    className={cn(
+                      "inline-block",
+                      item.side === "right" && "md:float-right md:clear-right"
+                    )}
+                  >
+                    {/* Date badge */}
+                    <span
+                      className={cn(
+                        "inline-block text-[10px] font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full mb-4",
+                        item.highlight
+                          ? "bg-rust/10 text-rust"
+                          : "bg-forest/5 text-forest/60"
+                      )}
+                    >
+                      {item.date}
+                    </span>
+                    <h3
+                      className={cn(
+                        "font-serif text-2xl md:text-3xl font-bold mb-3 tracking-tight",
+                        item.highlight ? "text-rust" : "text-forest"
+                      )}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="text-[15px] text-neutral-500 leading-relaxed max-w-sm">
+                      {item.text}
+                    </p>
+                  </div>
                 </FadeInWhenVisible>
               </div>
             </div>
@@ -564,258 +703,287 @@ const ScheduleTimeline = () => (
   </section>
 );
 
+/* ─── Travel Details ─────────────────────────────────────────────────── */
+
 const TravelDetails = () => (
-  <section id="travel" className="bg-white py-32">
-    <div className="max-w-7xl mx-auto px-6">
+  <section id="travel" className="bg-white py-28 md:py-36">
+    <div className="max-w-5xl mx-auto px-6">
+      {/* Getting There */}
       <FadeInWhenVisible>
-        <div className="text-center mb-20">
-          <h2 className="font-serif text-3xl md:text-6xl font-bold text-forest mb-6 tracking-tight uppercase">
-            GETTING THERE
+        <div className="text-center mb-16">
+          <p className="text-rust/50 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+            Fly in. Drive out.
+          </p>
+          <h2 className="font-serif text-4xl md:text-6xl font-bold text-forest tracking-tight">
+            Getting There
           </h2>
-          <div className="w-24 h-1 bg-rust/20 mx-auto rounded-full"></div>
         </div>
       </FadeInWhenVisible>
 
-      <div className="max-w-4xl mx-auto mb-32">
-        <FadeInWhenVisible>
-          <div className="bg-sand/20 p-10 md:p-16 rounded-3xl border border-forest/5 shadow-sm overflow-hidden relative group">
-            <div className="relative z-10">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+      <FadeInWhenVisible>
+        <div className="bg-cream/60 rounded-3xl border border-forest/[0.06] overflow-hidden mb-28 md:mb-36">
+          <div className="grid grid-cols-1 md:grid-cols-5 min-h-[480px]">
+            {/* Left — info */}
+            <div className="md:col-span-3 p-8 md:p-12 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-11 h-11 rounded-xl bg-rust/8 flex items-center justify-center">
+                  <Car className="w-5 h-5 text-rust" />
+                </div>
                 <div>
-                  <h3 className="font-serif text-4xl font-bold text-forest mb-2">
+                  <h3 className="font-serif text-2xl font-bold text-forest tracking-tight">
                     Cape Town to Citrusdal
                   </h3>
-                  <p className="text-rust font-bold tracking-widest text-xs uppercase">
-                    Fly in. Drive out.
+                  <p className="text-xs text-neutral-400 font-medium">
+                    170 km &middot; 2 hour drive via the N7
                   </p>
                 </div>
-                <Car className="w-16 h-16 text-rust stroke-[0.5]" />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="prose prose-neutral max-w-none">
-                  <h4 className="font-serif text-2xl font-bold text-forest mb-4">
+              <div className="space-y-8 mb-10">
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-forest/50 mb-3">
                     Flights
                   </h4>
-                  <p className="text-sm text-neutral-700 leading-relaxed font-light mb-6">
+                  <p className="text-sm text-neutral-600 leading-relaxed">
                     Most guests are flying into{" "}
-                    <strong>Cape Town International Airport (CPT)</strong>{" "}
-                    between Friday and Saturday before the main event on 22
-                    June.
+                    <strong className="text-neutral-800">Cape Town International (CPT)</strong>{" "}
+                    between Friday and Saturday before the main event on 22 June.
                   </p>
+                </div>
 
-                  <h4 className="font-serif text-2xl font-bold text-forest mb-4">
-                    The Scenic Drive
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-forest/50 mb-3">
+                    The Route
                   </h4>
-                  <p className="text-sm text-neutral-700 leading-relaxed font-light mb-4">
-                    Citrusdal is a comfortable 2-hour drive (170km) north from
-                    Cape Town on the N7 highway.
-                  </p>
-                  <ul className="text-sm text-neutral-600 font-light space-y-2 mb-8 list-none italic">
-                    <li className="flex gap-2">
-                      <span className="text-rust">•</span> Take the{" "}
-                      <strong>N7 North</strong> towards Malmesbury.
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-rust">•</span> Continue through
-                      Moorreesburg and Piketberg.
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-rust">•</span> Ascend the beautiful{" "}
-                      <strong>Piekenierskloof Pass</strong>.
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-rust">•</span> Descending into the
-                      valley, take the Citrusdal turnoff.
-                    </li>
-                  </ul>
-
-                  <div className="flex gap-4 p-4 bg-forest/5 rounded-2xl border border-forest/10 items-center">
-                    <Plane className="w-8 h-8 text-rust" />
-                    <p className="text-xs text-neutral-500 font-light">
-                      We recommend hiring a car at the airport for the weekend's
-                      flexibility.
-                    </p>
+                  <div className="space-y-2.5">
+                    {[
+                      "Take the N7 North towards Malmesbury",
+                      "Continue through Moorreesburg and Piketberg",
+                      "Ascend the beautiful Piekenierskloof Pass",
+                      "Descending into the valley, take the Citrusdal turnoff",
+                    ].map((step, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <span className="w-5 h-5 rounded-full bg-forest/8 flex items-center justify-center shrink-0 mt-0.5">
+                          <span className="text-[10px] font-bold text-forest/60">{i + 1}</span>
+                        </span>
+                        <p className="text-sm text-neutral-500 leading-relaxed">{step}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
+              </div>
 
-                <div className="relative h-[400px] md:h-auto min-h-[400px] bg-sand/10 rounded-2xl border border-forest/5 overflow-hidden">
-                  <WesternCapeMapIllustration className="absolute inset-0 w-full h-full p-4" />
-                </div>
+              <div className="flex gap-3 p-4 bg-forest/[0.04] rounded-xl items-center">
+                <Plane className="w-5 h-5 text-rust/60 shrink-0" />
+                <p className="text-xs text-neutral-400">
+                  We recommend hiring a car at the airport for the weekend's flexibility.
+                </p>
               </div>
             </div>
-          </div>
-        </FadeInWhenVisible>
-      </div>
 
-      <FadeInWhenVisible>
-        <div className="text-center mb-20">
-          <h2 className="font-serif text-3xl md:text-6xl font-bold text-forest mb-6 tracking-tight uppercase">
-            STAYING IN THE MOUNTAINS
-          </h2>
-          <div className="w-24 h-1 bg-rust/20 mx-auto rounded-full"></div>
+            {/* Right — map */}
+            <div className="md:col-span-2 bg-sand/20 border-t md:border-t-0 md:border-l border-forest/[0.06] flex items-center justify-center p-8">
+              <WesternCapeMapIllustration className="w-full h-full max-h-[380px]" />
+            </div>
+          </div>
         </div>
       </FadeInWhenVisible>
 
-      <div className="max-w-4xl mx-auto">
-        <FadeInWhenVisible>
-          <div className="bg-sand/20 p-10 md:p-16 rounded-3xl border border-forest/5 shadow-sm overflow-hidden relative group">
-            <div className="relative z-10">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
-                <div>
-                  <h3 className="font-serif text-4xl font-bold text-forest mb-2">
-                    Wolfkop Nature Reserve
-                  </h3>
-                  <p className="text-rust font-bold tracking-widest text-xs uppercase">
-                    Our Wedding Venue & Basecamp
-                  </p>
-                </div>
-                <Home className="w-16 h-16 text-rust stroke-[0.5]" />
-              </div>
+      {/* Staying */}
+      <FadeInWhenVisible>
+        <div className="text-center mb-16">
+          <p className="text-rust/50 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+            Our Venue & Basecamp
+          </p>
+          <h2 className="font-serif text-4xl md:text-6xl font-bold text-forest tracking-tight">
+            Staying in the Mountains
+          </h2>
+        </div>
+      </FadeInWhenVisible>
 
-              <div className="prose prose-neutral max-w-none mb-12">
-                <p className="text-lg text-neutral-700 leading-relaxed font-light mb-6">
-                  Nestled in the golden rock formations of the Citrusdal valley,
-                  Wolfkop offers an extraordinary mountain retreat. We've chosen
-                  this sanctuary for its rugged beauty and serene atmosphere.
-                </p>
-                <p className="text-base text-neutral-600 leading-relaxed font-light mb-8">
-                  We have booked for all guests and allocated cottages to
-                  groups. Check in for your specific house upon arrival.
+      <FadeInWhenVisible>
+        <div className="bg-cream/60 rounded-3xl border border-forest/[0.06] overflow-hidden relative">
+          <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
+            <CitrusdalIllustration className="w-full h-full object-cover" />
+          </div>
+
+          <div className="relative z-10 p-8 md:p-12">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-11 h-11 rounded-xl bg-forest/8 flex items-center justify-center">
+                <Home className="w-5 h-5 text-forest" />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl font-bold text-forest tracking-tight">
+                  Wolfkop Nature Reserve
+                </h3>
+                <p className="text-xs text-neutral-400 font-medium">
+                  Citrusdal Valley, Western Cape
                 </p>
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
-                {[
-                  {
-                    title: "Relaxation",
-                    desc: "Wood-fired hot tubs and private plunge pools at most houses.",
-                  },
-                  {
-                    title: "Comfort",
-                    desc: "Luxury king-size beds, en-suite bathrooms, and indoor fireplaces.",
-                  },
-                  {
-                    title: "Adventure",
-                    desc: "Private hiking trails, MTB tracks, and spectacular valley views.",
-                  },
-                  {
-                    title: "Loadshedding Free",
-                    desc: "Many houses are equipped with solar power for an uninterrupted stay.",
-                  },
-                ].map((feature, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="w-1 h-full bg-rust/30 rounded-full" />
-                    <div>
-                      <h4 className="font-bold text-xs uppercase tracking-widest text-forest mb-1">
-                        {feature.title}
+            <p className="text-base text-neutral-600 leading-relaxed mb-3 max-w-2xl">
+              Nestled in the golden rock formations of the Citrusdal valley,
+              Wolfkop offers an extraordinary mountain retreat. We've chosen
+              this sanctuary for its rugged beauty and serene atmosphere.
+            </p>
+            <p className="text-sm text-neutral-400 leading-relaxed mb-10 max-w-2xl">
+              We have booked for all guests and allocated cottages to groups.
+              Check in for your specific house upon arrival.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { icon: Sun, title: "Relaxation", desc: "Wood-fired hot tubs and private plunge pools." },
+                { icon: Home, title: "Comfort", desc: "King beds, en-suite baths, and indoor fireplaces." },
+                { icon: Mountain, title: "Adventure", desc: "Private hiking trails, MTB tracks, and valley views." },
+                { icon: Zap, title: "Off-grid Power", desc: "Solar-equipped houses for an uninterrupted stay." },
+              ].map((f, i) => (
+                <div key={i}>
+                  <FadeInWhenVisible delay={i * 0.08}>
+                    <div className="bg-white/60 backdrop-blur-sm rounded-xl p-5 border border-white/80">
+                      <f.icon className="w-5 h-5 text-rust/60 mb-3" />
+                      <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-forest mb-1.5">
+                        {f.title}
                       </h4>
-                      <p className="text-sm text-neutral-500 font-light">
-                        {feature.desc}
+                      <p className="text-[13px] text-neutral-400 leading-relaxed">
+                        {f.desc}
                       </p>
                     </div>
+                  </FadeInWhenVisible>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </FadeInWhenVisible>
+    </div>
+  </section>
+);
+
+/* ─── Packing List ───────────────────────────────────────────────────── */
+
+const PACKING_CATEGORIES = [
+  {
+    title: "Active Gear",
+    icon: Mountain,
+    accent: "forest",
+    items: [
+      "Walking / Hiking Shoes (expect mud!)",
+      "Workout / Gym Gear",
+      "Spare Socks",
+    ],
+  },
+  {
+    title: "Stay Warm",
+    icon: Flame,
+    accent: "rust",
+    items: [
+      "Thick Puffer / Winter Jacket",
+      "Beanie & Scarf",
+      "Thermal Layers",
+    ],
+  },
+  {
+    title: "Mountain Comfort",
+    icon: Home,
+    accent: "olive",
+    items: [
+      "Comfy Loungewear",
+      "Warm Pajamas",
+      "Indoor Slippers",
+    ],
+  },
+];
+
+const PackingList = () => (
+  <section id="packing" className="bg-white py-28 md:py-36">
+    <div className="max-w-5xl mx-auto px-6">
+      <FadeInWhenVisible>
+        <div className="text-center mb-16">
+          <p className="text-rust/50 text-xs font-bold uppercase tracking-[0.3em] mb-3">
+            Early Winter & Active Days
+          </p>
+          <h2 className="font-serif text-4xl md:text-6xl font-bold text-forest tracking-tight">
+            Packing List
+          </h2>
+        </div>
+      </FadeInWhenVisible>
+
+      <FadeInWhenVisible>
+        <div className="bg-cream/60 rounded-3xl border border-forest/[0.06] overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-5">
+            {/* Left — categories */}
+            <div className="md:col-span-3 p-8 md:p-12">
+              <div className="flex items-center gap-3 mb-10">
+                <div className="w-11 h-11 rounded-xl bg-rust/8 flex items-center justify-center">
+                  <Shirt className="w-5 h-5 text-rust" />
+                </div>
+                <h3 className="font-serif text-2xl font-bold text-forest tracking-tight">
+                  Mountain Essentials
+                </h3>
+              </div>
+
+              <div className="space-y-10">
+                {PACKING_CATEGORIES.map((cat, ci) => (
+                  <div key={ci}>
+                  <FadeInWhenVisible delay={ci * 0.1}>
+                    <div>
+                      <div className="flex items-center gap-2.5 mb-4">
+                        <cat.icon className={cn(
+                          "w-4 h-4",
+                          cat.accent === "forest" ? "text-forest/50" :
+                          cat.accent === "rust" ? "text-rust/50" : "text-olive/50"
+                        )} />
+                        <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400">
+                          {cat.title}
+                        </h4>
+                      </div>
+                      <ul className="space-y-3 pl-0.5">
+                        {cat.items.map((item, j) => (
+                          <li key={j} className="flex items-center gap-3 group">
+                            <div className={cn(
+                              "w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors duration-300",
+                              cat.accent === "forest" ? "border-forest/15 group-hover:bg-forest/5" :
+                              cat.accent === "rust" ? "border-rust/15 group-hover:bg-rust/5" :
+                              "border-olive/15 group-hover:bg-olive/5"
+                            )}>
+                              <div className={cn(
+                                "w-1.5 h-1.5 rounded-full",
+                                cat.accent === "forest" ? "bg-forest/25" :
+                                cat.accent === "rust" ? "bg-rust/25" : "bg-olive/25"
+                              )} />
+                            </div>
+                            <span className="text-sm text-neutral-600 leading-relaxed">
+                              {item}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </FadeInWhenVisible>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="absolute inset-0 opacity-[0.2] pointer-events-none -z-0">
-              <CitrusdalIllustration className="w-full h-full object-cover" />
+            {/* Right — illustration */}
+            <div className="md:col-span-2 bg-sand/15 border-t md:border-t-0 md:border-l border-forest/[0.06] flex items-center justify-center p-8">
+              <PackingListIllustration className="w-full h-full max-h-[420px]" />
             </div>
           </div>
-        </FadeInWhenVisible>
-      </div>
-    </div>
-  </section>
-);
-
-const PackingList = () => (
-  <section id="packing" className="bg-white py-32">
-    <div className="max-w-7xl mx-auto px-6">
-      <FadeInWhenVisible>
-        <div className="text-center mb-20">
-          <h2 className="font-serif text-3xl md:text-6xl font-bold text-forest mb-6 tracking-tight uppercase">
-            PACKING LIST
-          </h2>
-          <div className="w-24 h-1 bg-rust/20 mx-auto rounded-full"></div>
         </div>
       </FadeInWhenVisible>
-
-      <div className="max-w-4xl mx-auto">
-        <FadeInWhenVisible>
-          <div className="bg-sand/20 p-10 md:p-16 rounded-3xl border border-forest/5 shadow-sm overflow-hidden relative group">
-            <div className="relative z-10">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
-                <div>
-                  <h3 className="font-serif text-4xl font-bold text-forest mb-2">
-                    Mountain Essentials
-                  </h3>
-                  <p className="text-rust font-bold tracking-widest text-xs uppercase">
-                    Early Winter & Active Days
-                  </p>
-                </div>
-                <Shirt className="w-16 h-16 text-rust stroke-[0.5]" />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-10">
-                  {[
-                    {
-                      title: "The Active Gear",
-                      items: [
-                        "Walking/Hiking Shoes (expect mud!)",
-                        "Workout / Gym Gear",
-                        "Spare Socks",
-                      ],
-                    },
-                    {
-                      title: "Stay Warm",
-                      items: [
-                        "Thick Puffer / Winter Jacket",
-                        "Beanie & Scarf",
-                        "Thermal Layers",
-                      ],
-                    },
-                    {
-                      title: "Mountain Comfort",
-                      items: [
-                        "Comfy Loungewear",
-                        "Warm Pajamas",
-                        "Indoor Slippers",
-                      ],
-                    },
-                  ].map((category, i) => (
-                    <div key={i}>
-                      <h4 className="font-serif text-xl font-bold text-forest mb-4 border-b border-forest/10 pb-2">
-                        {category.title}
-                      </h4>
-                      <ul className="text-sm text-neutral-600 font-light space-y-3">
-                        {category.items.map((item, j) => (
-                          <li key={j} className="flex items-center gap-3">
-                            <div className="w-1 h-1 bg-rust rounded-full" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="relative h-full min-h-[400px] flex items-center justify-center bg-sand/10 rounded-2xl border border-forest/5 overflow-hidden">
-                  <PackingListIllustration className="w-full h-full p-8" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </FadeInWhenVisible>
-      </div>
     </div>
   </section>
 );
 
+/* ─── Footer ─────────────────────────────────────────────────────────── */
+
 const Footer = () => (
-  <footer className="bg-sand py-20 relative overflow-hidden">
-    <div className="absolute bottom-0 left-0 w-full h-64 opacity-[0.07] pointer-events-none">
+  <footer className="bg-sand relative overflow-hidden">
+    {/* Mountain silhouette */}
+    <div className="absolute bottom-0 left-0 w-full h-56 opacity-[0.05] pointer-events-none">
       <svg
         viewBox="0 0 1200 300"
         preserveAspectRatio="none"
@@ -832,56 +1000,50 @@ const Footer = () => (
           d="M0 300 L0 220 L80 190 L160 230 L240 170 L320 220 L400 150 L480 200 L560 130 L640 180 L720 120 L800 170 L880 140 L960 190 L1040 160 L1120 200 L1200 170 L1200 300 Z"
           fill="#3a5a40"
         />
-        <circle cx="200" cy="80" r="30" fill="#a64d32" opacity="0.3" />
-        <circle cx="800" cy="60" r="20" fill="#9a3324" opacity="0.2" />
-        <path
-          d="M100 300 L100 240 L110 220 L120 240 L120 300 Z"
-          fill="#1c2b1e"
-          opacity="0.4"
-        />
-        <circle cx="110" cy="210" r="25" fill="#3a5a40" opacity="0.5" />
-        <path
-          d="M1050 300 L1050 230 L1060 210 L1070 230 L1070 300 Z"
-          fill="#1c2b1e"
-          opacity="0.4"
-        />
-        <circle cx="1060" cy="200" r="20" fill="#3a5a40" opacity="0.5" />
       </svg>
     </div>
 
-    <div className="max-w-7xl mx-auto px-6 flex flex-col items-center relative z-10">
+    <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col items-center relative z-10">
+      {/* Back to top */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="group cursor-pointer mb-2"
+        className="group cursor-pointer mb-8"
         aria-label="Back to top"
       >
-        <ChevronUp className="w-5 h-5 text-wedding-brown/40 group-hover:text-wedding-brown transition-colors mx-auto mb-1" />
+        <ChevronUp className="w-4 h-4 text-wedding-brown/30 group-hover:text-wedding-brown/60 transition-colors mx-auto mb-2" />
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="font-display text-4xl font-black tracking-tighter text-wedding-brown uppercase"
+          whileHover={{ scale: 1.03 }}
+          className="font-display text-3xl font-bold tracking-tight text-wedding-brown/80 uppercase group-hover:text-wedding-brown transition-colors duration-300"
         >
           A&P
         </motion.div>
       </button>
 
-      <div className="flex flex-wrap justify-center gap-10 text-[11px] font-bold uppercase tracking-[0.3em] text-wedding-brown/60 mb-12 mt-8">
+      {/* Nav links */}
+      <div className="flex flex-wrap justify-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-wedding-brown/40 mb-10">
         {NAV_ITEMS.map((item) => (
           <a
             key={item}
             href={`#${item.toLowerCase()}`}
-            className="hover:text-wedding-brown transition-colors"
+            className="hover:text-wedding-brown/70 transition-colors duration-300"
           >
             {item}
           </a>
         ))}
       </div>
-      <div className="w-full h-px bg-wedding-brown/10 mb-10"></div>
-      <div className="text-[10px] text-wedding-brown/40 uppercase tracking-[0.4em] font-medium">
-        &copy; 2026 Piv & Amber — Made with Love
-      </div>
+
+      {/* Divider */}
+      <div className="w-16 h-px bg-wedding-brown/10 mb-8" />
+
+      {/* Copyright */}
+      <p className="text-[10px] text-wedding-brown/30 uppercase tracking-[0.35em] font-medium">
+        &copy; 2026 Piv & Amber &mdash; Made with Love
+      </p>
     </div>
   </footer>
 );
+
+/* ─── App ─────────────────────────────────────────────────────────────── */
 
 export default function App() {
   return (
